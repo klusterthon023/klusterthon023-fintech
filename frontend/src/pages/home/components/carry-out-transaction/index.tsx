@@ -7,9 +7,11 @@ function CarryOutTractions() {
       style={gradientStyle}
       className="md:relative p-16 mt-40 flex max-md:flex-col max-md:gap-10 justify-between items-center"
     >
+      <div className="container mx-auto">
       <LeftSideContext />
 
       <RightSideContext />
+      </div>
     </section>
   );
 }
