@@ -14,12 +14,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.get("/", (req, res) => {
+app.get("/v1", (req, res) => {
 	res.json({ message: "welcome to klusterthon023 Fintech Backend App" });
 });
 app.use("/v1/auth", ownerRoutes);
 app.use("/v1/customers", customerRoutes);
-// app.use("/v1/invoices", invoiceRoutes);
+app.use("/v1/invoices", invoiceRoutes);
+
 app.use("*", (req, res) => {
    res.status(404).json({ 
       message: "Invalid route",
