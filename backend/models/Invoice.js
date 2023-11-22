@@ -1,5 +1,23 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
+// Define the schema for the objects within the products array
+const productSchema = new Schema({
+	product_name: {
+		type: String,
+		required: [true, "Please enter product name"]
+	},
+	quantity: {
+		type: Number,
+		required: [true, "Please enter quantity"]
+	},
+	unit_price: {
+		type: Number,
+		required: [true, "Please enter unit price"]
+	}
+});
+
+// Define the main schema for the invoice model
 const invoiceSchema = new mongoose.Schema({
 	owner_id: {
 		required: [true, "Please enter owner id"],
@@ -15,7 +33,11 @@ const invoiceSchema = new mongoose.Schema({
 		type: String,
 		required: [true, "Please enter transaction details"]
 	},
-	amount: {
+	products: {
+		type: [productSchema],
+		required: [true, "Please enter products"]
+	},
+	total_amount: {
 		type: Number,
 		required: [true, "Please enter amount"]
 	},
