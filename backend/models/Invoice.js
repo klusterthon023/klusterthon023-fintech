@@ -15,10 +15,6 @@ const invoiceSchema = new mongoose.Schema({
       type: String,
 		required: [true, "Please enter transaction details"]
    },
-	name: {
-		type: String,
-		required: [true, "Please enter a fbusiness name"]
-	},
    amount: {
       type: Number,
       required: [true, "Please enter amount"]
