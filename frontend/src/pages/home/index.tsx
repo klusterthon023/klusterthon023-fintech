@@ -6,6 +6,7 @@ import AboutUs from "./components/about-us";
 
 import HeroSection from "./components/hero-section";
 import WhatWeDoSection from "./components/what-we-do-section";
+import KeyFeatures from "./components/key-features";
 
 function HomePage() {
   return (
@@ -13,9 +14,8 @@ function HomePage() {
       <Header />
       <HeroSection />
       <WhatWeDoSection />
-      
-
       <AboutUs />
+      <KeyFeatures />
       <CarryOutTractions />
 
 
