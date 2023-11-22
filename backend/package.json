@@ -8,6 +8,7 @@
     "start": "node server.js",
     "dev": "nodemon server.js"
   },
+  "nodeversion": "v16.9.1",
   "keywords": [],
   "author": "",
   "license": "ISC",
