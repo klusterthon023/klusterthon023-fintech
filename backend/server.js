@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
 	res.json({ message: "welcome to klusterthon023 Fintech Backend App" });
 });
 app.use("/v1/auth", ownerRoutes);
-app.use("/v1/clients", customerRoutes);
+app.use("/v1/customers", customerRoutes);
 // app.use("/v1/invoices", invoiceRoutes);
 app.use("*", (req, res) => {
    res.status(404).json({ 

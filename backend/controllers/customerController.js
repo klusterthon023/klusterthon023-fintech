@@ -1,4 +1,5 @@
 const Customer = require("../models/Customer");
+const mongoose = require("mongoose");
 
 exports.getAllCustomers = async (req, res) => {
 	try {
@@ -32,7 +33,6 @@ exports.getAllCustomers = async (req, res) => {
 // 	}
 // };
 
-
 exports.getOneCustomer = async (req, res) => {
 	try {
 		const customerId = req.params.id;
@@ -61,7 +61,7 @@ exports.createCustomer = async (req, res) => {
 		// const user = req.user; // After Implementing AUTH
 
 		const newCustomer = await Customer.create({
-			...req.body,
+			...req.body
 			// owner_id: `${req.user.id}` // also after implementing AUTH
 		});
 
