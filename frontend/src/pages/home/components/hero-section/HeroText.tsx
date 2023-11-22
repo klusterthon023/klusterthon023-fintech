@@ -9,11 +9,11 @@ export default function HeroText() {
             className=" absolute bottom-[-0%] left-[90%] hidden lg:block" />
             <div className="grid gap-4">
             <div className="flex gap-3 items-center">
-                <Typography color="secondary.200" fontWeight={500}>SIMPLE</Typography>
-                <Typography color="secondary.200" fontWeight={500} className="justify-self-center">.</Typography>
-                <Typography color="secondary.200" fontWeight={500}>TRANSPARENT</Typography>
-                <Typography color="secondary.200" fontWeight={500}>.</Typography>
-                <Typography color="secondary.200" fontWeight={500}>SECURE</Typography>
+                <Typography color="secondary.300" fontWeight={500}>SIMPLE</Typography>
+                <Typography color="secondary.300" fontWeight={500} className="justify-self-center">.</Typography>
+                <Typography color="secondary.300" fontWeight={500}>TRANSPARENT</Typography>
+                <Typography color="secondary.300" fontWeight={500}>.</Typography>
+                <Typography color="secondary.300" fontWeight={500}>SECURE</Typography>
             </div>
             <div className="">
                 <Typography className="!w-full !text-4xl md:!text-5xl lg:!text-6xl" variant="h1">The Efficient Way to Manage your
