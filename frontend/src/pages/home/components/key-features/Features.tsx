@@ -32,7 +32,7 @@ export default function Features() {
                 ullam corporis suscipit laboriosam, nisi ut al</Typography>
                 <img src="./src/assets/home/features-arrow.svg" alt="" className=" mx-auto" />
             </div>
-            <div className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch">
+            <div className="mx-auto hidden md:flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch">
                 <img src="./src/assets/home/object.svg" alt="" className=" mx-auto" />
             </div>
             <div className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch">

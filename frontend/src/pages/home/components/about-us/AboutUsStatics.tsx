@@ -3,7 +3,7 @@ import { Typography } from "../../../../design-system";
 
 export default function AboutUsStatics() {
     return (
-        <div className="flex flex-wrap md:flex-nowrap flex-row gap-6 md:gap-2 justify-center md:justify-between">
+        <div className="flex flex-wrap md:flex-nowrap flex-row gap-6 md:gap-2 justify-start md:justify-between">
             <div className="flex gap-3 md:!w-full">
                 <img src="./src/assets/home/total.svg" alt="customers" />
                 <div className="flex flex-col justify-between">
