@@ -4,8 +4,10 @@ import HeroAvatars from "./HeroAvatars";
 
 export default function HeroText() {
     return (
-        <section className="grid gap-12">
-            <div className="grid gap-2">
+        <section className="relative grid gap-12">
+            <img src="./src/assets/home/decorator.svg" alt="" 
+            className=" absolute bottom-[-0%] left-[90%] hidden lg:block" />
+            <div className="grid gap-4">
             <div className="flex gap-3 items-center">
                 <Typography color="secondary.200" fontWeight={500}>SIMPLE</Typography>
                 <Typography color="secondary.200" fontWeight={500} className="justify-self-center">.</Typography>
@@ -14,8 +16,8 @@ export default function HeroText() {
                 <Typography color="secondary.200" fontWeight={500}>SECURE</Typography>
             </div>
             <div className="">
-                <Typography className="w-full" variant="h1">The Efficient Way to Manage your
-                <Typography className="w-full" variant="h1" color="tertiary.300">Online Payment</Typography> Transaction</Typography>
+                <Typography className="!w-full !text-4xl md:!text-5xl lg:!text-6xl" variant="h1">The Efficient Way to Manage your
+                <Typography className="!w-full !text-4xl md:!text-5xl lg:!text-6xl" variant="h1" color="tertiary.300">Online Payment</Typography> Transaction</Typography>
             </div>
             </div>
             <div>
