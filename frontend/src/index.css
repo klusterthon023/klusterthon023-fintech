@@ -71,6 +71,7 @@ button:focus-visible {
   }
 } */
 
+
 .gradient-background {
   background: linear-gradient(
     82deg,
@@ -79,3 +80,9 @@ button:focus-visible {
     rgba(150, 192, 255, 0.75) 100%
   );
 }
+
+
+.bg-gradient {
+  background: linear-gradient(262deg, #EEF5EC 0%, rgba(255, 255, 255, 0.52) 26.29%, rgba(150, 192, 255, 0.75) 99.87%);
+}
+
