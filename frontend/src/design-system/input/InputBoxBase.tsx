@@ -9,7 +9,7 @@ const inputRootStyle = (disabled?: boolean) => css`
 `;
 
 const dangerBorderColor = (theme: Theme) => css`
-  border-color: ${theme.palette.error[500]};
+  border-color: ${theme.color.red};
 `;
 
 const getVariant = (variant?: string) => {
@@ -35,7 +35,7 @@ const inputContainerCss = (
   return css`
     width: 100%;
     border-radius: 8px;
-    border: 1px solid ${theme.palette.gray[300]};
+    border: 1px solid #ababc4;
     background: ${getVariant(variant)};
     transition: border-color 0.3s;
     display: flex;
@@ -44,7 +44,7 @@ const inputContainerCss = (
 
     ${status === "danger" && dangerBorderColor(theme)};
     font-size: 14px;
-    color: ${theme.palette.gray[100]};
+    color: ${theme.palette.gray[500]};
 
     &:focus-within {
       border-color: ${theme.palette.primary[300]};

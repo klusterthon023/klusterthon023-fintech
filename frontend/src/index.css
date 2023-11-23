@@ -121,3 +121,17 @@ button:focus-visible {
     scrollbar-width: auto;
   }
 }
+
+
+.placeholder::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ABABC4;
+  opacity: 1; /* Firefox */
+}
+
+.placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #ABABC4;
+}
+
+.placeholder::-ms-input-placeholder { /* Microsoft Edge */
+  color: #ABABC4;
+}
