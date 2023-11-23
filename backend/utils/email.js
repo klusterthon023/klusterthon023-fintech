@@ -6,11 +6,13 @@ const htmlToText = require('html-to-text');
 require('dotenv').config();
 
 module.exports = class Email {
-  constructor(user, url) {
+  constructor(user, url, invoice, business_name) {
     this.to = user.email;
-    this.name = user.owner_name.split(' ')[0];
+    this.name = user.owner_name ? user.owner_name.split(' ')[0] : user.name;
     this.url = url;
     this.from = `Chat <${process.env.EMAIL_FROM}>`;
+    this.invoice = invoice ? invoice : null;
+    this.business_name = business_name ? business_name : null;
   }
 
   newTransport() {
@@ -39,7 +41,9 @@ module.exports = class Email {
       {
         name: this.name,
         url: this.url,
-        subject
+        subject,
+        invoice: this.invoice ? this.invoice : null,
+        business_name: this.business_name ? this.business_name : null
       }
     );
 
@@ -62,5 +66,13 @@ module.exports = class Email {
       'passwordReset',
       'Your password reset token (valid for only 10 minutes)'
     );
+  }
+
+  async sendInvoice() {
+    await this.send('invoice', 'Your Invoice');
+  }
+
+  async sendReceipt() {
+    await this.send('paidInvoice', 'Your Receipt');
   }
 };

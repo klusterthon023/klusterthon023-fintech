@@ -3,17 +3,22 @@ const authController = require('../controllers/authController');
 
 const router = require('express').Router();
 
-router.use(authController.protect);
-router.use(authController.restrictTo('owner'));
+// router.use(authController.protect);
+// router.use(authController.restrictTo('owner'));
+
 router
   .route('/')
-  .get(invoiceController.getMyInvoices)
-  .post(invoiceController.createInvoice);
+  .get(authController.protect, authController.restrictTo('owner'), invoiceController.getMyInvoices)
+  .post(authController.protect, authController.restrictTo('owner'), invoiceController.createInvoice);
 
 router
   .route('/:id')
-  .get(invoiceController.getOneInvoice)
-  .patch(invoiceController.updateInvoice)
-  .delete(invoiceController.deleteOneInvoice);
+  .get(authController.protect, authController.restrictTo('owner'), invoiceController.getOneInvoice)
+  .patch(authController.protect, authController.restrictTo('owner'), invoiceController.updateInvoice)
+  .delete(authController.protect, authController.restrictTo('owner'), invoiceController.deleteOneInvoice);
+
+router
+  .route('/:id/pay')
+  .post(invoiceController.updateInvoiceToPaid);
 
 module.exports = router;

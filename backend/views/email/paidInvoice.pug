@@ -1,0 +1,16 @@
+extends baseEmail 
+
+block content 
+    p Hi #{name},
+        p You have sucessfully paid your invoice!
+        p Please find your receipt attached.
+
+        p Invoice From: #{business_name}
+        p Invoice To: #{name}
+         p Total Amount: #{invoice.total_amount}
+         p Invoice Details: #{invoice.products}
+         p Date Paid: #{invoice.date_paid}
+      
+        p For questions and enquiries you can reach us via-
+            p email: khlusterthon023@gmail.com
+        
