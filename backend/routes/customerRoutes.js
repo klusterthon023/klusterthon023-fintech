@@ -7,7 +7,7 @@ router.use(authController.protect);
 router.use(authController.restrictTo('owner'));
 router
   .route('/')
-  .get(customerController.getAllCustomers)
+  .get(customerController.getMyCustomers)
   .post(customerController.createCustomer);
 
 router

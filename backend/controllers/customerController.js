@@ -16,7 +16,7 @@ exports.getMyCustomers = catchAsync(async (req, res, next) => {
   const owner = req.owner;
   const allCustomers = await Customer.find({ owner_id: owner._id });
   return res.status(200).json({
-    message: `Customers for ${owner.first_name} ${owner.last_name}:`,
+    message: `Customers for ${owner.business_name}: `,
     data: allCustomers
   });
 });
