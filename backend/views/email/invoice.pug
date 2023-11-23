@@ -1,0 +1,27 @@
+extends baseEmail 
+
+block content 
+    p Hi #{name},
+        p A Business Invoice has been generated for you.
+        p Please find the attached invoice and make payment via the link after.
+
+        p Invoice From: #{business_name}
+        p Invoice To: #{name}
+         p Total Amount: #{invoice.total_amount}
+         p Invoice Details: #{invoice.products}
+         p Date Created: #{invoice.created_date}
+         p Invoice Due Date: #{invoice.due_date}
+      
+        p Click on the activation button to pay.
+        table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')
+            tbody
+                tr
+                    td(align='left')
+                        table(role='presentation', border='0', cellpadding='0', cellspacing='0')
+                            tbody
+                                tr
+                                    td
+                                        a(href=`${url}`, target='_blank') Go Ahead and Pay
+        p For questions and enquiries you can reach us via-
+            p email: khlusterthon023@gmail.com
+        
