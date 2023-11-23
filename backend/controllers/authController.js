@@ -20,15 +20,14 @@ const createSendToken = (foundUser, statusCode, req, res) => {
   const token = signToken(foundUser._id);
 
   res.cookie('jwt', token, {
-    maxAge: process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
-    // expires: new Date(
-    //   Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    // ),
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production'
   });
   // removes the password from the output
-  delete foundUser.password;
+  delete foundUser._doc.password;
   res.status(statusCode).json({
     status: 'success',
     token,
@@ -101,6 +100,10 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production'
   });
+  res.status(200).json({
+    status: 'success',
+    message: 'Account created!'
+  });
   // res.redirect('http://localhost:3000/home'); //This should redirect to the users dashboard on successful activation.
 });
 
@@ -112,35 +115,16 @@ exports.signin = catchAsync(async (req, res, next) => {
     return next(new AppError('Please provide email and password', 400));
   }
 
-  const foundOwner = await Owner.findOne({ email })
-    .select('+password -__v')
-    .lean();
+  const foundOwner = await Owner.findOne({ email }).select('+password -__v');
 
-  // if (
-  //   !foundOwner ||
-  //   !(await foundOwner.correctPassword(password, foundOwner.password))
-  // ) {
-  //   return next(new AppError(`Incorrect email or password.`, 401));
-  // }
-
-  // temporary password check
   if (
     !foundOwner ||
-    !(await bcrypt.compare(password, foundOwner.password))
+    !(await foundOwner.correctPassword(password, foundOwner.password))
   ) {
     return next(new AppError(`Incorrect email or password.`, 401));
   }
 
-  // createSendToken(foundOwner, 200, req, res);
-  const token = signToken(foundOwner._id);
-  res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
-  res.status(200).json({
-    status: 'success',
-    token,
-    data: {
-      user: foundOwner
-    }
-  });
+  createSendToken(foundOwner, 200, req, res);
 });
 
 // Gives the admin and owners different permissions.
@@ -166,7 +150,7 @@ exports.signout = (req, res) => {
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Getting token and check if it's there
   // console.log(req.cookies.jwt)
-  
+
   let token;
   if (req.cookies && req.cookies.jwt) {
     token = req.cookies.jwt;
