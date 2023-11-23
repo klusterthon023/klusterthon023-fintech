@@ -135,3 +135,7 @@ button:focus-visible {
 .placeholder::-ms-input-placeholder { /* Microsoft Edge */
   color: #ABABC4;
 }
+
+.error {
+  color: red;
+}
