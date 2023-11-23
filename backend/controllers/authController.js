@@ -20,9 +20,10 @@ const createSendToken = (foundUser, statusCode, req, res) => {
   const token = signToken(foundUser._id);
 
   res.cookie('jwt', token, {
-    expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
-    ),
+    maxAge: process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000,
+    // expires: new Date(
+    //   Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    // ),
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production'
   });
@@ -130,7 +131,16 @@ exports.signin = catchAsync(async (req, res, next) => {
     return next(new AppError(`Incorrect email or password.`, 401));
   }
 
-  createSendToken(foundOwner, 200, req, res);
+  // createSendToken(foundOwner, 200, req, res);
+  const token = signToken(foundOwner._id);
+  res.cookie("jwt", token, { httpOnly: true, maxAge: 3600000 });
+  res.status(200).json({
+    status: 'success',
+    token,
+    data: {
+      user: foundOwner
+    }
+  });
 });
 
 // Gives the admin and owners different permissions.
@@ -155,6 +165,7 @@ exports.signout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Getting token and check if it's there
+  console.log(req.cookies.jwt)
   let token;
   if (req.cookies && req.cookies.jwt) {
     token = req.cookies.jwt;
@@ -173,7 +184,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   // Check if user still exist
 
-  const freshOwner = await User.findById(decodedPayload.id);
+  const freshOwner = await Owner.findById(decodedPayload.id);
 
   if (!freshOwner) {
     return next(
