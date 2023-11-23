@@ -1,5 +1,8 @@
 import { Button, Typography } from "../../../design-system";
 import RegisterForm from "./form";
+import FaApple from "../../../assets/auth/FaApple.svg";
+import FaGoogle from "../../../assets/auth/FaGoogle.svg";
+import { Link} from "react-router-dom";
 
 
 export default function SignUpForm() {
@@ -16,11 +19,11 @@ export default function SignUpForm() {
                 </div>
                 <div className="flex flex-col md:flex-col xl:flex-row gap-6 justify-between">
                     <Button className="!bg-white !w-full !text-black">
-                        <img src="./src/assets/auth/FaGoogle.svg" alt="google" />
+                        <img src={FaGoogle} alt="google" />
                          Sign in with Google
                     </Button>
                     <Button className="!bg-white !w-full !text-black">
-                         <img src="./src/assets/auth/FaApple.svg" alt="apple" />
+                         <img src={FaApple} alt="apple" />
                         Sign in with Apple
                     </Button>
                 </div>
@@ -30,6 +33,9 @@ export default function SignUpForm() {
                     <div className="border-t-[1px] border-gray-100 w-full"></div>
                 </div>
                 <RegisterForm />
+                <div className=" mx-auto">
+                    <Link to="/login">Already have an account? <span className="text-[#0065FF]">Sign in</span></Link>
+                </div>
             </section>
         </div>
     )
