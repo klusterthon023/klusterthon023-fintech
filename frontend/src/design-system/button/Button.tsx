@@ -25,16 +25,16 @@ const getButtonSize = (size?: string) => {
   let buttonSize;
   switch (!!size) {
     case size === "small":
-      buttonSize = "32px";
-      break;
-    case size === "normal":
-      buttonSize = "36px";
-      break;
-    case size === "large":
       buttonSize = "40px";
       break;
+    case size === "normal":
+      buttonSize = "45px";
+      break;
+    case size === "large":
+      buttonSize = "48px";
+      break;
     default:
-      buttonSize = "36px";
+      buttonSize = "48px";
       break;
   }
   return buttonSize;
@@ -73,7 +73,7 @@ const baseStyles = (fullWidth?: boolean, size?: string) => css`
   cursor: pointer;
   width: ${fullWidth ? "100%" : "auto"};
   gap: ${getGapForIconWithButton(size)};
-  padding: ${size === ("small" || "normal") ? "8px 20px" : "12px 24px"};
+  padding: ${size === ("small" || "normal") ? "8px 20px" : "16px 36px"};
 
   &:disabled {
     opacity: 50%;
@@ -146,7 +146,7 @@ function Button(props: ButtonProps) {
     loading,
     disabled = false,
     className,
-    size = "normal",
+    size = "large",
     ...rest
   } = props;
 

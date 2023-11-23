@@ -50,7 +50,7 @@ function Input(props: InputProps) {
       status={status}
       disabled={rest.disabled}
       required={required}
-      inputContainerStyle={{ height: 40 }}
+      inputContainerStyle={{ height: 48 }}
       startIcon={startIcon}
     >
       <input

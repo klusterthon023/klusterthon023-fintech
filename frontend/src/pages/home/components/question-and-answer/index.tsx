@@ -6,7 +6,7 @@ function QuestionAndAnswer() {
     <section
       id="FAQ"
       style={gradientStyle}
-      className="bg-faqs bg-opacity-100 container p-16 max-md:p-8 w-full flex justify-between max-lg:justify-center max-lg:flex max-lg:flex-col max-lg:gap-10 items-center"
+      className="bg-faqs bg-opacity-100 container p-16 max-lg:p-8 w-full flex justify-between max-lg:justify-center max-lg:flex max-lg:flex-col max-lg:gap-10 items-center"
     >
       <LeftSideContext />
       <RightSideContext />

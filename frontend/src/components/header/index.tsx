@@ -38,7 +38,7 @@ function Header() {
   const { currentSection, updateCurrentSection } = useAppContext();
   return (
     <div className="px-16 max-md:px-8 items-center py-5 bg-white flex justify-between shadow">
-      <div className="bg-black p-3 h-[40px] flex justify-center items-center text-white rounded-lg">
+      <div className="bg-black p-3 h-12 flex justify-center items-center text-white rounded-lg">
         LOGO
       </div>
       <div className="flex items-center gap-6 max-md:hidden">

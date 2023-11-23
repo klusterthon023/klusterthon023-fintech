@@ -9,12 +9,15 @@ import QuestionAndAnswer from "./components/question-and-answer";
 import Footer from "../../components/footer";
 import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useAppContext } from "../../contexts";
 
 function HomePage() {
   const location = useLocation();
   const path = location?.state?.path;
 
   const navigate = useNavigate();
+
+  const { currentSection, updateCurrentSection } = useAppContext();
 
   const scrollToSection = (sectionId: string) => {
     const section = document.getElementById(sectionId);
@@ -32,6 +35,22 @@ function HomePage() {
       setTimeout(() => scrollToSection(path), 100);
     }
   }, [path]);
+
+  const handleScroll = () => {
+    const scrollY = window.scrollY;
+
+    if (scrollY === 0 && currentSection !== "Home") {
+      updateCurrentSection("Home");
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [currentSection, updateCurrentSection]);
 
   return (
     <div className="overflow-x-hidden">
