@@ -71,7 +71,6 @@ button:focus-visible {
   }
 } */
 
-
 .gradient-background {
   background: linear-gradient(
     82deg,
@@ -81,14 +80,44 @@ button:focus-visible {
   );
 }
 
-
 .bg-gradient {
-  background: linear-gradient(262deg, #EEF5EC 0%, rgba(255, 255, 255, 0.52) 26.29%, rgba(150, 192, 255, 0.75) 99.87%);
+  background: linear-gradient(
+    262deg,
+    #eef5ec 0%,
+    rgba(255, 255, 255, 0.52) 26.29%,
+    rgba(150, 192, 255, 0.75) 99.87%
+  );
 }
 
 .bg-hero {
   background-image: url("./src/assets/home/union.svg");
   background-repeat: no-repeat;
   background-position: top;
-  
+}
+
+.bg-faqs {
+  background-image: url("./src/assets/home/union.svg");
+  background-repeat: no-repeat;
+  background-position: bottom;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #2b7fff;
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #fff;
+}
+
+@supports (scrollbar-color: #2b7fff #fff) {
+  * {
+    scrollbar-color: #2b7fff #fff;
+    scrollbar-width: auto;
+  }
 }
