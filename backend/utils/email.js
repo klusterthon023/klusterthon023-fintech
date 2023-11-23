@@ -71,4 +71,8 @@ module.exports = class Email {
   async sendInvoice() {
     await this.send('invoice', 'Your Invoice');
   }
+
+  async sendReceipt() {
+    await this.send('paidInvoice', 'Your Receipt');
+  }
 };

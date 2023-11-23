@@ -1,6 +1,7 @@
 const Invoice = require('../models/Invoice');
 const Email = require('../utils/email');
 const Customer = require('../models/Customer');
+const Owner = require('../models/Owner');
 
 exports.getAllInvoices = async (req, res) => {
   try {
@@ -74,7 +75,7 @@ exports.createInvoice = async (req, res) => {
       });
     }
 
-	 // if customer is found for the user, create the invoice
+    // if customer is found for the user, create the invoice
     const newInvoice = await Invoice.create({
       ...req.body,
       owner_id: req.owner._id
@@ -85,15 +86,19 @@ exports.createInvoice = async (req, res) => {
     //   const url = `${req.protocol}://${req.get(
     //  	'host'
     //   )}/v1/auth/activate/${urlActivationToken}`;
-
     const url = 'Some Random URL for now';
     try {
-      await new Email(foundCustomer, url, newInvoice, req.owner.business_name).sendInvoice();
+      await new Email(
+        foundCustomer,
+        url,
+        newInvoice,
+        req.owner.business_name
+      ).sendInvoice();
       return res.status(201).json({
         status: 'success',
         message:
           'Invoice Successfully created. Your client will be notified via email.',
-			data: newInvoice
+        data: newInvoice
       });
     } catch (err) {
       await Owner.deleteOne({ email: req.body.email });
@@ -148,6 +153,7 @@ exports.updateInvoice = async (req, res) => {
 
 exports.updateInvoiceToPaid = async (req, res) => {
   try {
+	// find the invoice
     const invoiceId = req.params.id;
     const foundInvoice = await Invoice.findOne({
       _id: invoiceId
@@ -159,14 +165,44 @@ exports.updateInvoiceToPaid = async (req, res) => {
       });
     }
 
-    foundInvoice.status = true;
+	 // find the customer
+	 const foundCustomer = await Customer.findOne({
+		_id: foundInvoice.customer_id
+	 });
+
+	 // find the business owner
+	 const foundOwner = await Owner.findOne({
+		_id: foundInvoice.owner_id
+	 })
+
+	 // update the invoice
+    foundInvoice.status = "Paid";
     foundInvoice.date_paid = Date.now();
     foundInvoice.save();
 
-    return res.status(201).json({
-      message: 'Invoice Updated successfully',
-      data: 'updatedInvoice'
-    });
+    const url = 'Some Random URL for now';
+    try {
+      await new Email(
+        foundCustomer,
+        url,
+        foundInvoice,
+        foundOwner.business_name
+      ).sendReceipt();
+      return res.status(201).json({
+        status: 'success',
+        message:
+          'Invoice Successfully Paid. Your receipt has been sent to your mailbox.',
+        data: foundInvoice
+      });
+    } catch (err) {
+      await Owner.deleteOne({ email: req.body.email });
+      return next(err);
+    }
+
+    //  return res.status(201).json({
+    //    message: 'Invoice Updated successfully',
+    //    data: 'updatedInvoice'
+    //  });
   } catch (error) {
     res.status(500).json({
       message: error.message,
