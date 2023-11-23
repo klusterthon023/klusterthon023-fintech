@@ -3,24 +3,26 @@ const nodemailer = require('nodemailer');
 const pug = require('pug');
 const htmlToText = require('html-to-text');
 
+require('dotenv').config();
+
 module.exports = class Email {
   constructor(user, url) {
     this.to = user.email;
-    this.name = user.name.split(' ')[0];
+    this.name = user.owner_name.split(' ')[0];
     this.url = url;
     this.from = `Chat <${process.env.EMAIL_FROM}>`;
   }
 
   newTransport() {
-    if (process.env.NODE_ENV === 'production') {
-      return nodemailer.createTransport({
-        service: 'Gmail',
-        auth: {
-          user: process.env.EMAIL_PASSWORD,
-          pass: process.env.GMAIL_PASSWORD
-        }
-      });
-    }
+    // if (process.env.NODE_ENV === 'production') {
+    //   return nodemailer.createTransport({
+    //     service: 'Gmail',
+    //     auth: {
+    //       user: process.env.EMAIL_PASSWORD,
+    //       pass: process.env.GMAIL_PASSWORD
+    //     }
+    //   });
+    // }
     return nodemailer.createTransport({
       host: process.env.EMAIL_HOST,
       port: process.env.EMAIL_PORT,
