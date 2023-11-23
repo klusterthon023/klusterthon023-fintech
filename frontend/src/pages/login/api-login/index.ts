@@ -1,11 +1,12 @@
 import { ApiAxiosInterceptor } from "../../../react-query";
-import { ILoginPayload } from "../types";
+import { ILoginPayload, ILoginResponse } from "../types";
 
 export const loginUser = async (data: ILoginPayload) => {
   try {
-    const response = await ApiAxiosInterceptor.post("/auth/signin", {
-      data,
-    });
+    const response = await ApiAxiosInterceptor.post<ILoginResponse>(
+      "/auth/signin",
+      data
+    );
     return response.data;
   } catch (error) {
     console.error(error);

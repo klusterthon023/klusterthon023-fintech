@@ -45,6 +45,7 @@ export default {
           secondary: "#50D1B2",
           tertiary: "#EC8C56",
           red: "#E23738",
+          gray: "#F0F0F4",
         },
       },
     },

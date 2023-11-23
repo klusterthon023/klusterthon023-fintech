@@ -1,19 +1,11 @@
-// import { useMutation } from "react-query";
-// import { loginUser } from "./api-login";
-// import { ILoginPayload } from "./types";
-// import { Formik } from "formik";
+import LeftSideContext from "./components/LeftSideContext";
+import RightSideContext from "./components/RightSideContext";
 
 function LoginPage() {
-  // const { mutate, isLoading, isSuccess } = useMutation(loginUser);
-  // const handleSubmit = async (value: ILoginPayload) => {};
   return (
-    <div>
-      {/* <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-      ></Formik> */}
+    <div className="flex justify-between max-lg:flex-col w-full items-center">
+      <LeftSideContext />
+      <RightSideContext />
     </div>
   );
 }
