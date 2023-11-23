@@ -12,12 +12,31 @@ const dangerBorderColor = (theme: Theme) => css`
   border-color: ${theme.palette.error[500]};
 `;
 
-const inputContainerCss = (theme: Theme, status?: InputStatus) => {
+const getVariant = (variant?: string) => {
+  let variantValue;
+  switch (!!variant) {
+    case variant === "filled":
+      variantValue = "gray.300";
+      break;
+    case variant === "outlined":
+      variantValue = "#fff";
+      break;
+    default:
+      break;
+  }
+  return variantValue;
+};
+
+const inputContainerCss = (
+  theme: Theme,
+  status?: InputStatus,
+  variant?: "filled" | "outlined"
+) => {
   return css`
     width: 100%;
     border-radius: 8px;
     border: 1px solid ${theme.palette.gray[300]};
-    background: #fff;
+    background: ${getVariant(variant)};
     transition: border-color 0.3s;
     display: flex;
     align-items: center;
@@ -25,7 +44,7 @@ const inputContainerCss = (theme: Theme, status?: InputStatus) => {
 
     ${status === "danger" && dangerBorderColor(theme)};
     font-size: 14px;
-    color: ${theme.palette.gray[300]};
+    color: ${theme.palette.gray[100]};
 
     &:focus-within {
       border-color: ${theme.palette.primary[300]};
@@ -41,7 +60,7 @@ const labelTextStyle = (theme: Theme) => css`
   line-height: 16px;
   margin-bottom: 8px;
   display: inline-block;
-  color: ${theme.palette.gray[500]};
+  color: ${theme.palette.gray[300]};
 `;
 const helperTextStyles = (theme: Theme) => css`
   margin-top: 4px;
@@ -55,12 +74,12 @@ const labelTextAndRequiredStyle = () => css`
 `;
 
 const requiredStyle = (theme: Theme) => css`
-  color: ${theme.palette.error[500]};
+  color: ${theme.color.red};
   margin-top: -3px;
 `;
 
 const iconStyle = (theme: Theme) => css`
-  color: ${theme.palette.neutral[500]};
+  color: ${theme.palette.gray[100]};
   font-size: 16px;
   padding-left: 12px;
 `;
@@ -75,6 +94,7 @@ function InputBoxBase(props: InputBaseProps) {
     inputContainerStyle,
     required,
     startIcon,
+    variant = "outlined",
   } = props;
 
   return (
@@ -83,7 +103,10 @@ function InputBoxBase(props: InputBaseProps) {
         {label && <label css={labelTextStyle(theme)}>{label}</label>}
         {required && <p css={requiredStyle(theme)}>*</p>}
       </div>
-      <div css={inputContainerCss(theme, status)} style={inputContainerStyle}>
+      <div
+        css={inputContainerCss(theme, status, variant)}
+        style={inputContainerStyle}
+      >
         {startIcon && <span css={iconStyle(theme)}>{startIcon}</span>}{" "}
         {children}
       </div>

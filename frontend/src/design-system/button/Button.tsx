@@ -88,9 +88,15 @@ const variantStyles = (theme: Theme, color: PaletteKey) => ({
     color: ${theme.color.white};
     border: none;
     outline: none;
+
     &:hover {
       background-color: ${theme.palette[color][500]};
       box-shadow: ${theme.shadow.xsmall};
+    }
+
+    &:active {
+      color: ${theme.palette[color][600]};
+      background-color: ${theme.palette[color][200]};
     }
   `,
 
@@ -103,6 +109,11 @@ const variantStyles = (theme: Theme, color: PaletteKey) => ({
       background-color: ${theme.palette[color][100]};
       color: ${theme.palette[color][700]};
     }
+
+    &:active {
+      color: ${theme.palette[color][600]};
+      background-color: ${theme.palette[color][200]};
+    }
   `,
 
   text: css`
@@ -110,9 +121,15 @@ const variantStyles = (theme: Theme, color: PaletteKey) => ({
     color: ${theme.palette[color][400]};
     border: none;
     outline: none;
+
     &:hover {
       background-color: ${theme.palette[color][100]};
       color: ${theme.palette[color][400]};
+    }
+
+    &:active {
+      color: ${theme.palette[color][600]};
+      background-color: ${theme.palette[color][200]};
     }
   `,
 });

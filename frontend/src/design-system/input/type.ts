@@ -14,6 +14,7 @@ export interface InputBaseProps {
   required?: boolean;
   startIcon?: ReactNode;
   isClearable?: boolean;
+  variant?: "filled" | "outlined";
 }
 export interface InputProps
   extends InputHTMLAttributes<HTMLInputElement>,
