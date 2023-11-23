@@ -15,6 +15,10 @@ const inputStyles = () => css`
   padding: 0 12px;
   outline: none;
   border: none;
+
+  ::placeholder {
+    color: #ababc4;
+  }
 `;
 
 const endIconContainer = (theme: Theme) => css`

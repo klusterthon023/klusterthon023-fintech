@@ -62,7 +62,11 @@ function Header() {
         ))}
       </div>
       <div className="max-md:hidden">
-        <Button size="large" color="tertiary">
+        <Button
+          onClick={() => navigate(RouteNames.REGISTER)}
+          size="large"
+          color="tertiary"
+        >
           Sign Up
         </Button>
       </div>
