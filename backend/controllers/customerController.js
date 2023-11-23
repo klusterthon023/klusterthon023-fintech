@@ -1,127 +1,81 @@
-const Customer = require("../models/Customer");
-const mongoose = require("mongoose");
+const Customer = require('../models/Customer');
+const mongoose = require('mongoose');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.getAllCustomers = async (req, res) => {
-	try {
-		const allCustomers = await Customer.find({});
-		return res.json({
-			message: "All Customers fetched successfully",
-			data: allCustomers
-		});
-	} catch (error) {
-		return res.status(500).json({
-			message: error.message,
-			data: null
-		});
-	}
-};
+exports.getAllCustomers = catchAsync(async (req, res) => {
+  const allCustomers = await Customer.find({});
+  return res.json({
+    message: 'All Customers fetched successfully',
+    data: allCustomers
+  });
+});
 
-// //////// Implemented after AUTH
-// exports.getMyCustomers = async (req, res) => {
-// 	try {
-// 		const user = req.user;
-// 		const allCustomers = await Customer.find({ owner_id: user.id });
-// 		return res.json({
-// 			message: `Customers for ${user.first_name} ${user.last_name}:`,
-// 			data: allCustomers
-// 		});
-// 	} catch (error) {
-// 		return res.status(500).json({
-// 			message: error.message,
-// 			data: null
-// 		});
-// 	}
-// };
+// Implemented after AUTH
+exports.getMyCustomers = catchAsync(async (req, res, next) => {
+  const owner = req.owner;
+  const allCustomers = await Customer.find({ owner_id: owner._id });
+  return res.status(200).json({
+    message: `Customers for ${owner.first_name} ${owner.last_name}:`,
+    data: allCustomers
+  });
+});
 
-exports.getOneCustomer = async (req, res) => {
-	try {
-		const customerId = req.params.id;
-		const foundCustomer = await Customer.findById(customerId);
-		if (!foundCustomer) {
-			return res.status(404).json({
-				message: "Customer not found!",
-				data: null
-			});
-		}
+exports.getOneCustomer = catchAsync(async (req, res, next) => {
+  const customerId = req.params.id;
+  const foundCustomer = await Customer.findById(customerId);
+  if (!foundCustomer) {
+    return next(new AppError('Customer not found!', 404));
+  }
 
-		return res.status(200).json({
-			message: "Customer fetched successfully",
-			data: foundCustomer
-		});
-	} catch (error) {
-		return res.status(500).json({
-			message: error.message,
-			data: null
-		});
-	}
-};
+  return res.status(200).json({
+    message: 'Customer fetched successfully',
+    data: foundCustomer
+  });
+});
 
-exports.createCustomer = async (req, res) => {
-	try {
-		// const user = req.user; // After Implementing AUTH
+exports.createCustomer = catchAsync(async (req, res, next) => {
+  const newCustomerDetails = {
+    name: req.body.name,
+    customer_type: req.body.customer_type,
+    email: req.body.email,
+    contact_number: req.body.contact_number,
+    business_address: req.body.business_address,
+    owner_id: req.owner._id
+  };
+  const newCustomer = await Customer.create(newCustomerDetails);
+  return res.status(201).json({
+    message: 'Customer created successfully',
+    data: newCustomer
+  });
+});
 
-		const newCustomer = await Customer.create({
-			...req.body
-			// owner_id: `${req.user.id}` // also after implementing AUTH
-		});
+exports.updateCustomer = catchAsync(async (req, res, next) => {
+  const foundCustomer = await Customer.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+  if (!foundCustomer) {
+    return next('Customer not found!', 404);
+  }
+  return res.status(201).json({
+    message: 'Customer Updated successfully',
+    data: updatedCustomer
+  });
+});
 
-		return res.status(201).json({
-			message: "Customer created successfully",
-			data: newCustomer
-		});
-	} catch (error) {
-		return res.status(500).json({
-			message: error.message,
-			data: null
-		});
-	}
-};
-
-exports.updateCustomer = async (req, res) => {
-	try {
-		const customerId = req.params.id;
-		const foundCustomer = await Customer.findOne({ _id: customerId });
-		if (!foundCustomer) {
-			return res.status(404).json({
-				message: "Customer not found!",
-				data: null
-			});
-		}
-		const updatedCustomer = await Customer.findOneAndUpdate({ _id: customerId }, req.body);
-
-		return res.status(201).json({
-			message: "Customer Updated successfully",
-			data: updatedCustomer
-		});
-	} catch (error) {
-		res.status(500).json({
-			message: error.message,
-			data: null
-		});
-	}
-};
-
-exports.deleteOneCustomer = async (req, res) => {
-	try {
-		const customerId = req.params.id;
-		const foundCustomer = await Customer.findOne({ _id: customerId });
-		if (!foundCustomer) {
-			return res.status(404).json({
-				message: "Customer not found!",
-				data: null
-			});
-		}
-
-		const deletedCustomer = await Customer.findByIdAndDelete(customerId);
-
-		return res.status(204).json({
-			message: "Customer deleted successfully",
-			data: null
-		});
-	} catch (error) {
-		res.status(500).json({
-			message: error.message,
-			data: null
-		});
-	}
-};
+exports.deleteOneCustomer = catchAsync(async (req, res, next) => {
+  const customerId = req.params.id;
+  const deletedCustomer = await Customer.findByIdAndDelete(customerId);
+  if (!deletedCustomer) {
+    return next('Customer not found!', 404);
+  }
+  return res.status(204).json({
+    message: 'Customer deleted successfully',
+    data: null
+  });
+});

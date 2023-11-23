@@ -1,11 +1,19 @@
-const router = require("express").Router();
-const customerController = require("../controllers/customerController");
+const customerController = require('../controllers/customerController');
+const authController = require('../controllers/authController');
+
+const router = require('express').Router();
+
+router.use(authController.protect);
+router.use(authController.restrictTo('owner'));
+router
+  .route('/')
+  .get(customerController.getAllCustomers)
+  .post(customerController.createCustomer);
 
 router
-	.get("/", customerController.getAllCustomers)
-	.get("/:id", customerController.getOneCustomer)
-	.post("/", customerController.createCustomer)
-	.put("/:id", customerController.updateCustomer)
-	.delete("/:id", customerController.deleteOneCustomer);
+  .route('/:id')
+  .get(customerController.getOneCustomer)
+  .patch(customerController.updateCustomer)
+  .delete(customerController.deleteOneCustomer);
 
 module.exports = router;

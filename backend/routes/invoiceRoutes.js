@@ -1,11 +1,19 @@
-const router = require("express").Router();
-const invoiceController = require("../controllers/invoiceController");
+const invoiceController = require('../controllers/invoiceController');
+const authController = require('../controllers/authController');
+
+const router = require('express').Router();
+
+router.use(authController.protect);
+router.use(authController.restrictTo('owner'));
+router
+  .route('/')
+  .get(invoiceController.getAllInvoices)
+  .post(invoiceController.createInvoice);
 
 router
-	.get("/", invoiceController.getAllInvoices)
-	.get("/:id", invoiceController.getOneInvoice)
-	.post("/", invoiceController.createInvoice)
-	.put("/:id", invoiceController.updateInvoice)
-	.delete("/:id", invoiceController.deleteOneInvoice);
+  .route('/:id')
+  .get(invoiceController.getOneInvoice)
+  .patch(invoiceController.updateInvoice)
+  .delete(invoiceController.deleteOneInvoice);
 
 module.exports = router;
