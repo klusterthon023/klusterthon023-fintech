@@ -1,6 +1,7 @@
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const { promisify } = require('util');
+const bcrypt = require('bcrypt'); //temporary import
 
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
@@ -114,9 +115,17 @@ exports.signin = catchAsync(async (req, res, next) => {
     .select('+password -__v')
     .lean();
 
+  // if (
+  //   !foundOwner ||
+  //   !(await foundOwner.correctPassword(password, foundOwner.password))
+  // ) {
+  //   return next(new AppError(`Incorrect email or password.`, 401));
+  // }
+
+  // temporary password check
   if (
-    !user ||
-    !(await foundOwner.correctPassword(password, foundOwner.password))
+    !foundOwner ||
+    !(await bcrypt.compare(password, foundOwner.password))
   ) {
     return next(new AppError(`Incorrect email or password.`, 401));
   }
