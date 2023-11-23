@@ -8,9 +8,10 @@ const ownerSchema = new mongoose.Schema({
     required: [true, 'Please enter a fbusiness name'],
     validate: {
       validator: function (val) {
-        return !/([^\sa-zA-Z]+)/g.test(val);
+        return /^[a-zA-Z.\s]+$/.test(val);
       },
-      message: 'Please your Full name must contain letters and spaces only'
+      message:
+        'Please your business name must contain letters, spaces and dot(.) only'
     }
   },
   owner_name: {
@@ -20,7 +21,7 @@ const ownerSchema = new mongoose.Schema({
       validator: function (val) {
         return !/([^\sa-zA-Z]+)/g.test(val);
       },
-      message: 'Please your Full name must contain letters and spaces only'
+      message: 'Please your full name must contain letters and spaces only'
     }
   },
   email: {
