@@ -37,7 +37,7 @@ export default function WhatWeDoCard() {
       <div
         data-aos="zoom-in-up"
         data-aos-duration="5000"
-        className="grid gap-6 text-center lg:max-w-[350px] lg:transform lg:translate-y-[10rem] lg:mb-4"
+        className="grid gap-6 text-center lg:max-w-[350px] lg:transform lg:translate-y-[10rem] lg:mt-4"
       >
         <img src={searchIcon} alt="" className="mx-auto" />
         <Typography variant="h4">Invoice Tracking</Typography>

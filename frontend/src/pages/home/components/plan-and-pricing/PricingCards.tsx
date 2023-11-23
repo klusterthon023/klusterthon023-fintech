@@ -15,7 +15,9 @@ function PricingCards() {
           <div className="flex justify-between max-md:justify-center max-md:flex-col items-center">
             <div className="flex flex-col gap-1">
               <Typography variant="h6">{plan_type}</Typography>
-              <Typography variant="body4">{plan_type_description}</Typography>
+              <Typography variant="body4" color="gray.300">
+                {plan_type_description}
+              </Typography>
             </div>
             <div className="flex items-end gap-1">
               <Typography variant="h3">{price}</Typography>
