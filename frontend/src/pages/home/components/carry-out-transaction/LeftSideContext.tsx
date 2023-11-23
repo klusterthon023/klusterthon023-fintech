@@ -1,4 +1,7 @@
 import { Typography } from "../../../../design-system";
+import paymentIcon from "../../../../assets/home/icon _secure payment.svg";
+import foriegnFriendIcon from "../../../../assets/home/icon _foreigner friendly.svg";
+import supportIcon from "../../../../assets/home/icon _support.svg";
 
 function LeftSideContext() {
   return (
@@ -28,21 +31,21 @@ function LeftSideContext() {
 const LIST = [
   {
     id: 1,
-    icon: "./src/assets/home/icon _secure payment.svg",
+    icon: paymentIcon,
     title: "Secure",
     description:
       "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al",
   },
   {
     id: 2,
-    icon: "./src/assets/home/icon _foreigner friendly.svg",
+    icon: foriegnFriendIcon,
     title: "User Friendly",
     description:
       "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al",
   },
   {
     id: 3,
-    icon: "./src/assets/home/icon _support.svg",
+    icon: supportIcon,
     title: "Best Support",
     description:
       "Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut al",

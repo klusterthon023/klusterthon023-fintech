@@ -84,19 +84,19 @@ const baseStyles = (fullWidth?: boolean, size?: string) => css`
 // varint style for the button which can be filled, outlined and text
 const variantStyles = (theme: Theme, color: PaletteKey) => ({
   filled: css`
-    background-color: ${theme.palette[color][300]};
+    background-color: ${theme.palette[color][400]};
     color: ${theme.color.white};
     border: none;
     outline: none;
     &:hover {
-      background-color: ${theme.palette[color][400]};
+      background-color: ${theme.palette[color][500]};
       box-shadow: ${theme.shadow.xsmall};
     }
   `,
 
   outlined: css`
     background-color: transparent;
-    border: 0.5px solid ${theme.palette[color][300]};
+    border: 0.5px solid ${theme.palette[color][400]};
     color: ${theme.palette[color][500]};
 
     &:hover {
@@ -107,12 +107,12 @@ const variantStyles = (theme: Theme, color: PaletteKey) => ({
 
   text: css`
     background-color: transparent;
-    color: ${theme.palette[color][300]};
+    color: ${theme.palette[color][400]};
     border: none;
     outline: none;
     &:hover {
       background-color: ${theme.palette[color][100]};
-      color: ${theme.palette[color][300]};
+      color: ${theme.palette[color][400]};
     }
   `,
 });
