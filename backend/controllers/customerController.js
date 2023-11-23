@@ -16,14 +16,18 @@ exports.getMyCustomers = catchAsync(async (req, res, next) => {
   const owner = req.owner;
   const allCustomers = await Customer.find({ owner_id: owner._id });
   return res.status(200).json({
-    message: `Customers for ${owner.first_name} ${owner.last_name}:`,
+    message: `Customers for ${owner.business_name}: `,
     data: allCustomers
   });
 });
 
 exports.getOneCustomer = catchAsync(async (req, res, next) => {
   const customerId = req.params.id;
-  const foundCustomer = await Customer.findById(customerId);
+  const owner = req.owner;
+  const foundCustomer = await Customer.find({
+    _id: customerId,
+    owner_id: owner._id
+  });
   if (!foundCustomer) {
     return next(new AppError('Customer not found!', 404));
   }
@@ -51,8 +55,11 @@ exports.createCustomer = catchAsync(async (req, res, next) => {
 });
 
 exports.updateCustomer = catchAsync(async (req, res, next) => {
-  const foundCustomer = await Customer.findByIdAndUpdate(
-    req.params.id,
+  const foundCustomer = await Customer.findOneAndUpdate(
+    {
+      _id: req.params.id,
+      owner_id: req.owner._id
+    },
     req.body,
     {
       new: true,
@@ -68,9 +75,10 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
   });
 });
 
+
 exports.deleteOneCustomer = catchAsync(async (req, res, next) => {
   const customerId = req.params.id;
-  const deletedCustomer = await Customer.findByIdAndDelete(customerId);
+  const deletedCustomer = await Customer.findOneAndDelete({ _id: customerId, owner_id: req.owner._id });
   if (!deletedCustomer) {
     return next('Customer not found!', 404);
   }

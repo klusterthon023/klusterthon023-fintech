@@ -7,7 +7,7 @@ router.use(authController.protect);
 router.use(authController.restrictTo('owner'));
 router
   .route('/')
-  .get(invoiceController.getAllInvoices)
+  .get(invoiceController.getMyInvoices)
   .post(invoiceController.createInvoice);
 
 router
