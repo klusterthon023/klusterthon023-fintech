@@ -1,5 +1,12 @@
-function RegisterPage() {
-  return <div>RegisterPage</div>;
-}
+import SignUpImage from "../register/components/signup-image";
+import SignUpForm from "./components/signup-form";
 
-export default RegisterPage;
+
+export default function Register() {
+    return (
+        <main className="grid lg:grid-cols-2 w-full h-screen">
+          <SignUpForm />
+          <SignUpImage />
+        </main>
+    )
+}
