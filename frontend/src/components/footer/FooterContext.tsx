@@ -7,10 +7,10 @@ function FooterContext() {
   return (
     <footer className="flex justify-between max-lg:flex-col gap-20 items-center my-9">
       <div className="flex flex-col gap-6 max-w-[433px]">
-        <div className="bg-black p-3 h-10 w-[90px] flex justify-center items-center text-white rounded-lg">
+        <div className="bg-black p-3 h-12 w-[90px] flex justify-center items-center text-white rounded-lg">
           LOGO
         </div>
-        <Typography variant="body4">
+        <Typography variant="body4" color="gray.300">
           Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
           dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
           proident, sunt in culpa qui officia deserunt mollit anim id est
@@ -26,7 +26,7 @@ function FooterContext() {
           <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
             Quick Links
           </h2>
-          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-6" />
+          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {QUICK_LINKS.map((label, index) => (
               <Typography
@@ -49,7 +49,7 @@ function FooterContext() {
           <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
             Support
           </h2>
-          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-6" />
+          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {SUPPORT.map((label, index) => (
               <Typography
@@ -67,7 +67,7 @@ function FooterContext() {
           <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
             Contact Info
           </h2>
-          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-6" />
+          <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {CONTACTS.map((label, index) => (
               <Typography
