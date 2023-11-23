@@ -10,7 +10,7 @@ router
     ownerController.getAllOwners
   )
   .post('/register', authController.register)
-  .get('/activate/:token', authController.activate)
+  .get('/activate/:token', authController.activateAccount)
   .post('/signin', authController.signin)
   .get('/signout', authController.signout);
 
