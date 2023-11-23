@@ -165,7 +165,8 @@ exports.signout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Getting token and check if it's there
-  console.log(req.cookies.jwt)
+  // console.log(req.cookies.jwt)
+  
   let token;
   if (req.cookies && req.cookies.jwt) {
     token = req.cookies.jwt;
