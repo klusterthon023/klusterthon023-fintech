@@ -54,8 +54,7 @@ const ownerSchema = new mongoose.Schema({
   },
   active: {
     type: Boolean,
-    default: false,
-    select: false
+    default: false
   },
   role: {
     type: String,
