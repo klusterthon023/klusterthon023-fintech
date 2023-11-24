@@ -127,6 +127,15 @@ function Header() {
                     </Typography>
                   </div>
                 ))}
+                <div className="flex justify-center mt-5">
+                  <Button
+                    onClick={() => navigate(RouteNames.REGISTER)}
+                    size="large"
+                    color="tertiary"
+                  >
+                    Sign Up
+                  </Button>
+                </div>
               </div>
             </motion.div>
           </motion.div>
