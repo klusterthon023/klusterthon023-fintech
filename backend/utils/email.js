@@ -62,6 +62,10 @@ module.exports = class Email {
     await this.send('welcome', 'Welcome to Klusterthon!');
   }
 
+  async sendActivation() {
+    await this.send('welcome', 'Activate your account!');
+  }
+
   async sendPasswordReset(resetToken) {
     await this.send(
       'passwordReset',

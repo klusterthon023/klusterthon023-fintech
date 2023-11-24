@@ -2,21 +2,16 @@ const Invoice = require('../models/Invoice');
 const Email = require('../utils/email');
 const Customer = require('../models/Customer');
 const Owner = require('../models/Owner');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.getAllInvoices = async (req, res) => {
-  try {
-    const allInvoices = await Invoice.find({});
-    return res.json({
-      message: 'All Invoices fetched successfully',
-      data: allInvoices
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message,
-      data: null
-    });
-  }
-};
+exports.getAllInvoices = catchAsync(async (req, res) => {
+  const allInvoices = await Invoice.find({});
+  return res.json({
+    message: 'All Invoices fetched successfully',
+    data: allInvoices
+  });
+});
 
 //////// Implemented after AUTH
 exports.getMyInvoices = async (req, res) => {
@@ -24,9 +19,7 @@ exports.getMyInvoices = async (req, res) => {
     const owner = req.owner;
     const allInvoices = await Invoice.find({ owner_id: owner.id });
     return res.json({
-      message: `Invoices for ${
-        owner.business_name ? owner.business_name : owner.owner_name
-      }:`,
+      message: `Invoices for ${owner.business_name}:`,
       data: allInvoices
     });
   } catch (error) {
@@ -37,31 +30,21 @@ exports.getMyInvoices = async (req, res) => {
   }
 };
 
-exports.getOneInvoice = async (req, res) => {
-  try {
-    const invoiceId = req.params.id;
-    const foundInvoice = await Invoice.find({
-      _id: invoiceId,
-      owner_id: req.owner._id
-    });
-    if (!foundInvoice.length) {
-      return res.status(404).json({
-        message: 'Invoice not found!',
-        data: null
-      });
-    }
-
-    return res.status(200).json({
-      message: 'Invoice fetched successfully',
-      data: foundInvoice
-    });
-  } catch (error) {
-    return res.status(500).json({
-      message: error.message,
-      data: null
-    });
+exports.getOneInvoice = catchAsync(async (req, res, next) => {
+  const invoiceId = req.params.id;
+  const foundInvoice = await Invoice.find({
+    _id: invoiceId,
+    owner_id: req.owner._id
+  });
+  if (!foundInvoice.length) {
+    return next(new AppError('Invoice not found!', 400));
   }
-};
+
+  return res.status(200).json({
+    message: 'Invoice fetched successfully',
+    data: foundInvoice
+  });
+});
 
 exports.createInvoice = async (req, res) => {
   try {
@@ -80,7 +63,10 @@ exports.createInvoice = async (req, res) => {
     // if customer is found for the user, create the invoice
     const newInvoice = await Invoice.create({
       ...req.body,
-      total_amount: req.body.products.reduce((total, product) => total + product.quantity * product.unit_price, 0),
+      total_amount: req.body.products.reduce(
+        (total, product) => total + product.quantity * product.unit_price,
+        0
+      ),
       owner_id: req.owner._id
     });
 
@@ -170,9 +156,9 @@ exports.updateInvoiceToPaid = async (req, res) => {
         data: null
       });
     }
-    
+
     // check whether invoice has been paid
-    if(foundInvoice.status === 'Paid') {
+    if (foundInvoice.status === 'Paid') {
       return res.status(400).json({
         message: 'Invoice has already been paid!',
         data: null

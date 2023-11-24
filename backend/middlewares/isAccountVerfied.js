@@ -1,3 +1,6 @@
+
+const AppError = require('../utils/appError');
+
 exports.isAccountVerified = async (req, res, next) => {
    try {
       const currentUser = req.owner;
@@ -25,13 +28,18 @@ exports.isDetailsComplete = async (req, res, next) => {
             message: "Sorry, your account details are not complete. Please complete your account details.",
             data: null
          })
-      }
+      }}}
 
-      next();
-   } catch (error) {
-      return res.status(500).json({
-         message: error.message,
-         data: null
-      })
-   }
-}
+
+exports.isAccountVerified = (req, res, next) => {
+  const currentUser = req.owner;
+  if (!currentUser.active) {
+    return next(
+      new AppError(
+        "You haven't verified your account. Please check your mail.",
+        401
+      )
+    );
+  }
+  next();
+};

@@ -1,5 +1,5 @@
 const express = require('express');
-const path = require('path')
+const path = require('path');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 
@@ -17,7 +17,16 @@ const app = express();
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(cors());
+const allowedOrigins = [
+  'https://klusterthon023-fintech.vercel.app',
+  'http://localhost:5173'
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
+  credentials: true
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
