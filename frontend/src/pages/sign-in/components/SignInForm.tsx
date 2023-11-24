@@ -41,7 +41,7 @@ function SignInForm() {
   return (
     <div className="grid gap-5">
       <>
-        {error && (
+        {error && isError && (
           <div className="p-2 flex justify-center items-center bg-color-red rounded-lg">
             <Typography variant="body3" color="white">
               {(error as any)?.response.data.message}
