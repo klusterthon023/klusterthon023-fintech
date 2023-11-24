@@ -9,6 +9,6 @@ export const signupUser = async (data: ISignUpPayload) => {
     );
     return response.data;
   } catch (error) {
-    console.error(error);
+    throw new Error("An error occurred.");
   }
 };

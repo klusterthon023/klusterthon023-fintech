@@ -52,7 +52,9 @@ export default function SignUpForm() {
         <div className=" mx-auto">
           <Link to={RouteNames.SIGN_IN}>
             Already have an account?{" "}
-            <span className="text-[#0065FF] underline">Sign in</span>
+            <Typography color="primary" className="underline !inline-block">
+              Sign in
+            </Typography>
           </Link>
         </div>
       </section>
