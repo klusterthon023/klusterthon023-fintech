@@ -25,7 +25,7 @@ function SignInForm() {
     try {
       const result = await mutateAsync(value);
       setDataToLocalStorage("accessToken", result?.token);
-      navigate(RouteNames.HOME);
+      navigate(RouteNames.MAIN);
     } catch (error) {
       console.error(error);
     }

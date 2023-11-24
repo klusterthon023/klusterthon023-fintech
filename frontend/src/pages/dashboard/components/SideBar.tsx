@@ -1,11 +1,12 @@
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Typography } from "../../../design-system";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { RouteNames } from "../../../routers/interface";
 import logo from "../../../assets/invoice-hub-logo.svg";
+import { removeDataFromLocalStorage } from "../../../utils/helper";
 
 function SideBar() {
   const TAB_LIST = [
@@ -31,6 +32,8 @@ function SideBar() {
 
   const { pathname } = useLocation();
 
+  const navigate = useNavigate();
+
   const index = pathname.split("/")[0];
 
   const isActive = (itemPath: string) =>
@@ -51,7 +54,23 @@ function SideBar() {
           />
         ))}
       </div>
-      <div></div>
+      <div className="absolute bottom-3">
+        <div
+          onClick={() => {
+            removeDataFromLocalStorage("accessToken");
+            navigate(RouteNames.HOME);
+          }}
+          className={classNames(
+            "flex justify-start mt-2 !items-center !w-full cursor-pointer gap-[14px] h-[52px] px-4 py-3 hover:bg-color-gray",
+            "rounded-lg text-gray-400"
+          )}
+        >
+          <FontAwesomeIcon icon={faUser} />
+          <Typography fontWeight={400} variant={"body3"} color={"gray.400"}>
+            Logout
+          </Typography>
+        </div>
+      </div>
     </div>
   );
 }
