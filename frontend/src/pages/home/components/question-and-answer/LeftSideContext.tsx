@@ -1,17 +1,25 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Typography } from "../../../../design-system";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import orangeLine from "../../../../assets/home/faq-orange-line.svg";
 
 function LeftSideContext() {
   return (
     <div className="space-y-12 w-full">
       <div className="space-y-4">
-        <Typography fontWeight={600} color="gray.100" variant="body4">
+        <Typography fontWeight={600} color="gray.200" variant="body4">
           QUESTIONS & ANSWERS
         </Typography>
-        <Typography fontWeight={600} variant="h4">
-          Frequently Asked Questions
-        </Typography>
+        <div className="relative">
+          <Typography fontWeight={600} variant="h4" className="!z-20 relative">
+            Frequently Asked Questions
+          </Typography>
+          <img
+            src={orangeLine}
+            alt=""
+            className=" absolute left-36 md:left-[20%] top-6 md:top-[30%] lg:top-[60%] z-0"
+          />
+        </div>
       </div>
       <div className="space-y-4">
         <Typography fontWeight={600}>Didn’t get an Answer?</Typography>
