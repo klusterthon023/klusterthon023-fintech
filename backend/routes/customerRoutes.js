@@ -5,7 +5,6 @@ const { isAccountVerified } = require('../middlewares/isAccountVerfied');
 const router = require('express').Router();
 
 router.use(authController.protect);
-router.use(isAccountVerified);
 router.use(authController.restrictTo('owner'));
 router
   .route('/')

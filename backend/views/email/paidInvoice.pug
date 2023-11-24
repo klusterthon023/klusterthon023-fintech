@@ -3,13 +3,49 @@ extends baseEmail
 block content 
     p Hi #{name},
         p You have sucessfully paid your invoice!
+        p Invoice Details: 
+
+        style.
+            .myImage {
+                display: block;
+                width: 200px;
+                margin: 0 auto;
+            }
+
+        img.myImage(src="https://img.icons8.com/fluency/48/instagram-check-mark.png" alt="instagram-check-mark")
+
         p Please find your receipt attached.
 
         p Invoice From: #{business_name}
         p Invoice To: #{name}
-         p Total Amount: #{invoice.total_amount}
-         p Invoice Details: #{invoice.products}
-         p Date Paid: #{invoice.date_paid}
+        p Date Paid: #{invoice.date_paid}
+        p Invoice Details: 
+
+        style.
+            .myTable {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .myTable th, .myTable td {
+                border: 1px solid white;
+                text-align: center;
+                padding: 8px;
+            }
+        
+        table.myTable
+            tr
+                th Product
+                th Quantity
+                th Unit Price
+            each product in invoice.products
+                tr
+                td #{product.product_name}
+                td #{product.quantity}
+                td #{product.unit_price}
+            tr
+                td(colspan="2") Total Price
+                td #{invoice.total_amount}
+
       
         p For questions and enquiries you can reach us via-
             p email: khlusterthon023@gmail.com
