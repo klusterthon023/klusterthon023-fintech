@@ -7,7 +7,7 @@ function FooterContext() {
   const navigate = useNavigate();
   return (
     <footer className="flex justify-between max-lg:flex-col gap-20 items-center my-9">
-      <div className="flex flex-col gap-6 max-w-[433px] self-start">
+      <div className="flex flex-col gap-6 lg:max-w-[433px] self-start">
         <div className="">
           <img src={logo} alt="invoicehub" />
         </div>
@@ -25,7 +25,7 @@ function FooterContext() {
           </Button>
         </div>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 ma gap-[84px] max-sm:gap-3 item-center">
+      <div className="w-full md:w-auto flex flex-wrap justify-between md:grid md:grid-cols-3 gap-[84px] max-sm:gap-3 item-center">
         <div className="mb-8">
           <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
             Quick Links
