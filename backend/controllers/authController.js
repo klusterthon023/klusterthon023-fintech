@@ -75,6 +75,34 @@ exports.register = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.resendActivationToken = catchAsync(async (req, res, next) => {
+  const urlActivationToken = crypto.randomBytes(32).toString('hex');
+  const activationToken = crypto
+    .createHash('sha256')
+    .update(urlActivationToken)
+    .digest('hex');
+  const activationTokenExpire = Date.now() + 20 * 60 * 1000;
+  const newOwner = await Owner.findById(req.owner._id);
+
+  newOwner.activationTokenExpire = activationTokenExpire;
+  newOwner.activationToken = activationToken;
+
+  await newOwner.save({ validateBeforeSave: false });
+
+  const url = `${req.protocol}://${req.get(
+    'host'
+  )}/v1/auth/activate/${urlActivationToken}`;
+  try {
+    await new Email(newOwner, url).sendActivation();
+    return res.status(201).json({
+      status: 'success',
+      message: 'Please check your email and activate your account.'
+    });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 // This activates the owners account when the click the link sent to their emails
 exports.activateAccount = catchAsync(async (req, res, next) => {
   const hashedToken = crypto
@@ -207,6 +235,19 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 3. Send it to user email.
   try {
     await new Email(owner).sendPasswordReset(resetToken);
+    const signResetToken = (resetEmail, expiresin) => {
+      return jwt.sign({ resetEmail }, process.env.JWT_SECRET, {
+        expiresIn: expiresin
+      });
+    };
+    const resetEmail = signResetToken(req.body.email, '10m');
+
+    res.cookie('resetEmail', resetEmail, {
+      expires: new Date(Date.now() + 10 * 60 * 1000),
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production'
+    });
+
     res.status(200).json({
       status: 'success',
       message: 'A reset token was sent your email!'
@@ -257,6 +298,52 @@ exports.verifyPasswordResetToken = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.resendToken = catchAsync(async (req, res, next) => {
+  let token;
+  if (req.cookies && req.cookies.resetEmail) {
+    token = req.cookies.resetEmail;
+  }
+  if (!token) {
+    return next(new AppError('Bad email cookie', 400));
+  }
+
+  const decodedPayload = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET
+  );
+
+  const owner = await Owner.findOne({ email: decodedPayload.resetEmail });
+
+  if (!owner) {
+    return next(new AppError('Bad email cookie.', 404));
+  }
+
+  // 2. Generate the random reset token
+  const resetToken = owner.createPasswordResetToken();
+  await owner.save({ validateBeforeSave: false });
+
+  // 3. Send it to user email.
+  try {
+    await new Email(owner).sendPasswordReset(resetToken);
+    res.status(200).json({
+      status: 'success',
+      message: 'Another reset token was sent your email!'
+    });
+  } catch (err) {
+    // console.log(err);
+    owner.passwordResetToken = undefined;
+    owner.passwordResetExpires = undefined;
+    await owner.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500
+      )
+    );
+  }
+});
+
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // Get user based on the token
   let token;
@@ -285,5 +372,23 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // Update changedPasswordAt property for the user
 
   // log the user in, send JWT
+  createSendToken(owner, 200, req, res);
+});
+
+exports.updatePassword = catchAsync(async (req, res, next) => {
+  // Get the user from the collection
+  const owner = await Owner.findById(req.owner._id).select('+password');
+  // Check if POSTed current password is correct
+  if (
+    !(await owner.correctPassword(req.body.passwordCurrent, owner.password))
+  ) {
+    return next(new AppError('Current password is not correct.', 401));
+  }
+  // If so, update password
+  owner.password = req.body.password;
+
+  await owner.save();
+
+  // Log user in send JWT
   createSendToken(owner, 200, req, res);
 });

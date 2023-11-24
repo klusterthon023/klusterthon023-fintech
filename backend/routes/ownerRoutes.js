@@ -13,7 +13,13 @@ router
   .get('/activate/:token', authController.activateAccount)
   .post('/signin', authController.signin)
   .get('/signout', authController.signout);
+router.post(
+  '/resendActivationToken',
+  authController.protect,
+  authController.resendActivationToken
+);
 router.post('/forgotPassword', authController.forgotPassword);
+router.post('/resendToken', authController.resendToken);
 router.post(
   '/verifyPasswordResetToken',
   authController.verifyPasswordResetToken
