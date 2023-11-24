@@ -6,7 +6,7 @@ import logo5 from "../../assets/home/support-brand-logo-5.svg";
 
 function SupportBrands() {
   return (
-    <div className="flex justify-between items-center max-md:px-8 px-16 pb-16 pt-9">
+    <div className="flex justify-between items-center pb-16 pt-9 container mx-auto">
       {LOGOS.map((logo, index) => (
         <img
           data-aos="zoom-out-down"

@@ -1,74 +1,134 @@
 import { Typography } from "../../../../design-system";
 import paymentManagementIcon from "../../../../assets/home/payment-managment.svg";
 import featuresArrowIcon from "../../../../assets/home/features-arrow.svg";
+import arrowOrange from "../../../../assets/home/arrow-orange.svg";
 import trackingIcon from "../../../../assets/home/tracking.svg";
 import paymentTrackingIcon from "../../../../assets/home/payment-tracking.svg";
 import dashboardIcon from "../../../../assets/home/dashboard.svg";
 import clientManagementIcon from "../../../../assets/home/client-mangament.svg";
 import objectIcon from "../../../../assets/home/object.svg";
+import { useState } from "react";
 
 export default function Features() {
+  const [isHovered, setIsHovered] = useState({
+    paymentManagement: false,
+    invoiceTracking: false,
+    integratedPayments: false,
+    personalDashboard: false,
+    clientManagement: false,
+  });
+
+  const handleMouseEnter = (card: keyof typeof isHovered) => {
+    setIsHovered({
+      paymentManagement: false,
+      invoiceTracking: false,
+      integratedPayments: false,
+      personalDashboard: false,
+      clientManagement: false,
+      [card]: true,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered({
+      paymentManagement: false,
+      invoiceTracking: false,
+      integratedPayments: false,
+      personalDashboard: false,
+      clientManagement: false,
+    });
+  };
+
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
       <div
         data-aos="zoom-in-down"
         data-aos-duration="5000"
-        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch"
+        onMouseEnter={() => handleMouseEnter("paymentManagement")}
+        onMouseLeave={() => handleMouseLeave()}
+        className="mx-auto flex flex-col gap-6 md:max-w-[350px]
+        p-6 justify-center items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={paymentManagementIcon} alt="" className=" mx-auto" />
         <Typography className="!text-xl !font-semibold !mx-auto">
           Payment Management
         </Typography>
         <Typography color="gray.300" className="!text-center !text-base">
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut al
+          Facilitating secure transactions and overseeing financial flows via
+          seamless payment management solutions
         </Typography>
-        <img src={featuresArrowIcon} alt="" className="mx-auto" />
+        <img
+          src={isHovered.paymentManagement ? arrowOrange : featuresArrowIcon}
+          alt=""
+          className="mx-auto"
+        />
       </div>
       <div
         data-aos="zoom-in-down"
         data-aos-duration="5000"
-        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch"
+        onMouseEnter={() => handleMouseEnter("invoiceTracking")}
+        onMouseLeave={() => handleMouseLeave()}
+        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center
+        items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={trackingIcon} alt="" className=" mx-auto" />
         <Typography className="!text-xl !font-semibold !mx-auto">
           Invoice Tracking
         </Typography>
         <Typography color="gray.300" className="!text-center !text-base">
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut al
+          We enhance financial processes by automating accurate invoice tracking
+          for seamless management
         </Typography>
-        <img src={featuresArrowIcon} alt="" className=" mx-auto" />
+        <img
+          src={isHovered.invoiceTracking ? arrowOrange : featuresArrowIcon}
+          alt=""
+          className="mx-auto"
+        />
       </div>
       <div
         data-aos="zoom-in-down"
         data-aos-duration="5000"
-        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch"
+        onMouseEnter={() => handleMouseEnter("integratedPayments")}
+        onMouseLeave={() => handleMouseLeave()}
+        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center
+        items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={paymentTrackingIcon} alt="" className=" mx-auto" />
         <Typography className="!text-xl !font-semibold !mx-auto">
           Integrated Payments
         </Typography>
         <Typography color="gray.300" className="!text-center !text-base">
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut al
+          We specialize in delivering secure and efficient payment solutions,
+          ensuring seamless financial transactions for our clients
         </Typography>
-        <img src={featuresArrowIcon} alt="" className=" mx-auto" />
+        <img
+          src={isHovered.integratedPayments ? arrowOrange : featuresArrowIcon}
+          alt=""
+          className="mx-auto"
+        />
       </div>
       <div
         data-aos="zoom-in-down"
         data-aos-duration="5000"
-        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch"
+        onMouseEnter={() => handleMouseEnter("personalDashboard")}
+        onMouseLeave={() => handleMouseLeave()}
+        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center
+        items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={dashboardIcon} alt="" className=" mx-auto" />
         <Typography className="!text-xl !font-semibold !mx-auto">
           Personal Dashboard
         </Typography>
         <Typography color="gray.300" className="!text-center !text-base">
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut al
+          Integrated user-centric interface that offers insights, data, and
+          tools for organizing and facilitating informed decisions and task
+          management
         </Typography>
-        <img src={featuresArrowIcon} alt="" className=" mx-auto" />
+        <img
+          src={isHovered.personalDashboard ? arrowOrange : featuresArrowIcon}
+          alt=""
+          className="mx-auto"
+        />
       </div>
       <div
         data-aos="zoom-in-down"
@@ -80,17 +140,24 @@ export default function Features() {
       <div
         data-aos="zoom-in-down"
         data-aos-duration="5000"
-        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center items-stretch"
+        onMouseEnter={() => handleMouseEnter("clientManagement")}
+        onMouseLeave={() => handleMouseLeave()}
+        className="mx-auto flex flex-col gap-6 md:max-w-[350px] p-6 justify-center
+        items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={clientManagementIcon} alt="" className=" mx-auto" />
         <Typography className="!text-xl !font-semibold !mx-auto">
           Client Management
         </Typography>
         <Typography color="gray.300" className="!text-center !text-base">
-          Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-          suscipit laboriosam, nisi ut al
+          Our solution facilitate the process of creating, updating, and
+          managing clients ensuring seamless communication
         </Typography>
-        <img src={featuresArrowIcon} alt="" className=" mx-auto" />
+        <img
+          src={isHovered.clientManagement ? arrowOrange : featuresArrowIcon}
+          alt=""
+          className="mx-auto"
+        />
       </div>
     </div>
   );

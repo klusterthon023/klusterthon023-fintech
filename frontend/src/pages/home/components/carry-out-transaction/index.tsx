@@ -5,9 +5,9 @@ function CarryOutTractions() {
   return (
     <section
       style={gradientStyle}
-      className="md:relative p-16 max-md:p-8 mt-40 flex max-md:flex-col max-md:gap-10 justify-between items-center"
+      className="py-8 pb-12 px-4 bg-gradient mt-[11%]"
     >
-      <div className="container mx-auto">
+      <div className="container mx-auto flex flex-col-reverse lg:grid lg:grid-cols-2 items-center gap-4">
         <LeftSideContext />
         <RightSideContext />
       </div>

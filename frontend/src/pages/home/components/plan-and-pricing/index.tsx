@@ -3,7 +3,10 @@ import PricingCards from "./PricingCards";
 
 function PlanAndPricing() {
   return (
-    <section id="Pricing" className="p-16 max-md:p-8">
+    <section
+      id="Pricing"
+      className="py-16 px-4 md:px-0 max-md:py-8 container mx-auto"
+    >
       <Typography
         className="!text-center !mb-4"
         color="secondary.200"

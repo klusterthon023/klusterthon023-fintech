@@ -1,27 +1,31 @@
 import { useNavigate } from "react-router-dom";
 import { Button, Input, Typography } from "../../design-system";
 import { RouteNames } from "../../routers/interface";
+import logo from "../../assets/invoice-hub-logo.svg";
 
 function FooterContext() {
   const navigate = useNavigate();
   return (
     <footer className="flex justify-between max-lg:flex-col gap-20 items-center my-9">
-      <div className="flex flex-col gap-6 max-w-[433px]">
-        <div className="bg-black p-3 h-12 w-[90px] flex justify-center items-center text-white rounded-lg">
-          LOGO
+      <div className="flex flex-col gap-6 max-w-[433px] self-start">
+        <div className="">
+          <img src={logo} alt="invoicehub" />
         </div>
         <Typography variant="body4" color="gray.300">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est
-          laborum.
+          InvoiceHub, your go-to platform for effortless invoicing. Streamline
+          payments, manage transactions, and simplify invoicing processes with
+          ease and precision.
         </Typography>
-        <div className="flex items-center gap-2 w-full">
-          <Input placeholder="Enter email" className="w-full" />
-          <Button size="large">Subscribe</Button>
+        <div className="flex flex-col md:flex-row items-center gap-2 w-full">
+          <div className="w-full">
+            <Input placeholder="Enter email" />
+          </div>
+          <Button size="large" className="!w-full md:!w-auto">
+            Subscribe
+          </Button>
         </div>
       </div>
-      <div className="grid grid-cols-3 ma gap-[84px] max-sm:gap-3 item-center">
+      <div className="grid grid-cols-2 md:grid-cols-3 ma gap-[84px] max-sm:gap-3 item-center">
         <div className="mb-8">
           <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
             Quick Links
