@@ -24,7 +24,9 @@ exports.getMyInvoices = async (req, res) => {
     const owner = req.owner;
     const allInvoices = await Invoice.find({ owner_id: owner.id });
     return res.json({
-      message: `Invoices for ${owner.business_name ? owner.business_name : owner.owner_name}:`,
+      message: `Invoices for ${
+        owner.business_name ? owner.business_name : owner.owner_name
+      }:`,
       data: allInvoices
     });
   } catch (error) {
@@ -78,6 +80,7 @@ exports.createInvoice = async (req, res) => {
     // if customer is found for the user, create the invoice
     const newInvoice = await Invoice.create({
       ...req.body,
+      total_amount: req.body.products.reduce((total, product) => total + product.quantity * product.unit_price, 0),
       owner_id: req.owner._id
     });
 
@@ -101,8 +104,11 @@ exports.createInvoice = async (req, res) => {
         data: newInvoice
       });
     } catch (err) {
-      await Owner.deleteOne({ email: req.body.email });
-      return next(err);
+      // await Owner.deleteOne({ email: req.body.email });
+      return res.status(500).json({
+        message: err,
+        data: null
+      });
     }
 
     //  return res.status(201).json({
@@ -153,7 +159,7 @@ exports.updateInvoice = async (req, res) => {
 
 exports.updateInvoiceToPaid = async (req, res) => {
   try {
-	// find the invoice
+    // find the invoice
     const invoiceId = req.params.id;
     const foundInvoice = await Invoice.findOne({
       _id: invoiceId
@@ -164,19 +170,27 @@ exports.updateInvoiceToPaid = async (req, res) => {
         data: null
       });
     }
+    
+    // check whether invoice has been paid
+    if(foundInvoice.status === 'Paid') {
+      return res.status(400).json({
+        message: 'Invoice has already been paid!',
+        data: null
+      });
+    }
 
-	 // find the customer
-	 const foundCustomer = await Customer.findOne({
-		_id: foundInvoice.customer_id
-	 });
+    // find the customer
+    const foundCustomer = await Customer.findOne({
+      _id: foundInvoice.customer_id
+    });
 
-	 // find the business owner
-	 const foundOwner = await Owner.findOne({
-		_id: foundInvoice.owner_id
-	 })
+    // find the business owner
+    const foundOwner = await Owner.findOne({
+      _id: foundInvoice.owner_id
+    });
 
-	 // update the invoice
-    foundInvoice.status = "Paid";
+    // update the invoice
+    foundInvoice.status = 'Paid';
     foundInvoice.date_paid = Date.now();
     foundInvoice.save();
 
