@@ -24,7 +24,7 @@ exports.getMyInvoices = async (req, res) => {
     const owner = req.owner;
     const allInvoices = await Invoice.find({ owner_id: owner.id });
     return res.json({
-      message: `Invoices for ${owner.business_name}:`,
+      message: `Invoices for ${owner.business_name ? owner.business_name : owner.owner_name}:`,
       data: allInvoices
     });
   } catch (error) {
