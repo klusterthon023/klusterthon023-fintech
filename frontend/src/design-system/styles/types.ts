@@ -16,7 +16,8 @@ export type PaletteKey =
   | "white"
   | "transparent"
   | "transparentBlack"
-  | "red";
+  | "red"
+  | "gray";
 
 export type IPaletteColor =
   | "primary.100"
