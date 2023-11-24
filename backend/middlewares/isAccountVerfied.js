@@ -1,6 +1,6 @@
-<<<<<<< HEAD
+
 const AppError = require('../utils/appError');
-======
+
 exports.isAccountVerified = async (req, res, next) => {
    try {
       const currentUser = req.owner;
@@ -28,8 +28,8 @@ exports.isDetailsComplete = async (req, res, next) => {
             message: "Sorry, your account details are not complete. Please complete your account details.",
             data: null
          })
-      }
->>>>>>> main
+      }}}
+
 
 exports.isAccountVerified = (req, res, next) => {
   const currentUser = req.owner;
