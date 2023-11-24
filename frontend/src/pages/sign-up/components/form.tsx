@@ -1,13 +1,14 @@
-import { Formik, Field, ErrorMessage, FormikHelpers, Form } from "formik";
+import { Formik, Form } from "formik";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Button, Typography } from "../../../design-system";
-//import { ISignUpPayload } from '../types';
+import { Button, Checkbox, Input, Typography } from "../../../design-system";
+import { ISignUpPayload } from "../types";
 import { signupUser } from "../api-for-sign-up";
 import { useMutation } from "react-query";
 import { RouteNames } from "../../../routers/interface";
+import { formikHelper } from "../../../utils/helper";
 
 interface FormValues {
   owner_name: string;
@@ -41,21 +42,18 @@ const RegisterForm: React.FC = () => {
     acceptTerms: false,
   };
   const { mutateAsync, isLoading, error, isError } = useMutation(signupUser);
+
   const navigate = useNavigate();
   const handleSubmit = async (
-    values: FormValues,
-    { setSubmitting }: FormikHelpers<FormValues>
+    values: ISignUpPayload & { confirmPassword: string; acceptTerms: boolean }
   ) => {
     try {
-      const result = await mutateAsync(values);
+      const { confirmPassword, acceptTerms, ...others } = values;
+      const result = await mutateAsync(others);
       toast(result?.message);
-      setTimeout(() => {
-        navigate(RouteNames.SIGN_IN);
-      }, 5000);
+      navigate(RouteNames.SIGN_IN);
     } catch (error) {
-      toast("Email already exists, please use another one.");
-    } finally {
-      setSubmitting(false);
+      console.error(error);
     }
   };
 
@@ -65,7 +63,7 @@ const RegisterForm: React.FC = () => {
         {isError && error && (
           <div className="p-2 mb-5 flex justify-center items-center bg-color-red rounded-lg">
             <Typography variant="body3" color="white">
-              {(error as any)?.response.data.message}
+              {(error as any)?.response?.data?.message}
             </Typography>
           </div>
         )}
@@ -75,120 +73,58 @@ const RegisterForm: React.FC = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isValid, values, touched, errors }) => (
-          <Form className="grid gap-5 placeholder:text-gray-100">
-            <label className="flex flex-col">
-              <Field
-                type="text"
-                name="owner_name"
+        {(formik) => {
+          const { values, dirty, getFieldProps } = formik;
+
+          return (
+            <Form className="grid gap-5 placeholder:text-gray-100">
+              <Input
                 placeholder="Full Name"
-                className="placeholder"
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border:
-                    touched.owner_name && errors.owner_name
-                      ? "1px solid red"
-                      : "1px solid rgba(128, 128, 128, 0.3)",
-                }}
+                {...getFieldProps("owner_name")}
+                {...formikHelper(formik, "owner_name")}
+                className=" placeholder:text-sm"
               />
-              <ErrorMessage
-                name="owner_name"
-                component="div"
-                className="error"
-              />
-            </label>
 
-            <label className="flex flex-col">
-              <Field
+              <Input
                 type="email"
-                name="email"
                 placeholder="Email"
-                className="placeholder"
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border:
-                    touched.email && errors.email
-                      ? "1px solid red"
-                      : "1px solid rgba(128, 128, 128, 0.3)",
-                }}
+                {...getFieldProps("email")}
+                {...formikHelper(formik, "email")}
+                className=" placeholder:text-sm"
               />
-              <ErrorMessage name="email" component="div" className="error" />
-            </label>
 
-            <label className="flex flex-col">
-              <Field
+              <Input
                 type="password"
-                name="password"
                 placeholder="Password"
-                className="placeholder"
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border:
-                    touched.password && errors.password
-                      ? "1px solid red"
-                      : "1px solid rgba(128, 128, 128, 0.3)",
-                }}
+                {...getFieldProps("password")}
+                {...formikHelper(formik, "password")}
+                className=" placeholder:text-sm"
               />
-              <ErrorMessage name="password" component="div" className="error" />
-            </label>
-
-            <label className="flex flex-col">
-              <Field
+              <Input
                 type="password"
-                name="confirmPassword"
                 placeholder="Confirm Password"
-                className="placeholder"
-                style={{
-                  padding: "10px",
-                  borderRadius: "5px",
-                  border:
-                    touched.confirmPassword && errors.confirmPassword
-                      ? "1px solid red"
-                      : "1px solid rgba(128, 128, 128, 0.3)",
-                }}
+                {...getFieldProps("confirmPassword")}
+                {...formikHelper(formik, "confirmPassword")}
+                className=" placeholder:text-sm"
               />
-              <ErrorMessage
-                name="confirmPassword"
-                component="div"
-                className="error"
-              />
-            </label>
 
-            <label className="flex flex-col items-start">
-              <div className="flex items-center gap-2">
-                <Field
-                  type="checkbox"
-                  name="acceptTerms"
-                  style={{
-                    padding: "10px",
-                    borderRadius: "5px",
-                    border:
-                      touched.acceptTerms && errors.acceptTerms
-                        ? "1px solid red"
-                        : "1px solid rgba(128, 128, 128, 0.3)",
-                  }}
-                />
-                <span>I agree to the term and conditions.</span>
-              </div>
-              <ErrorMessage
-                name="acceptTerms"
-                component="div"
-                className="error block"
+              <Checkbox
+                checked={values.acceptTerms}
+                {...getFieldProps("acceptTerms")}
+                label="I agree to the term and conditions."
               />
-            </label>
-            <Button
-              type="submit"
-              loading={isLoading}
-              disabled={!(isValid && values.acceptTerms)}
-              fullWidth
-            >
-              Sign Up
-            </Button>
-          </Form>
-        )}
+
+              <Button
+                type="submit"
+                loading={isLoading}
+                disabled={!(dirty && values.acceptTerms)}
+                fullWidth
+              >
+                Sign Up
+              </Button>
+            </Form>
+          );
+        }}
       </Formik>
     </div>
   );

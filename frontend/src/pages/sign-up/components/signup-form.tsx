@@ -49,13 +49,17 @@ export default function SignUpForm() {
           <Divider />
         </div>
         <RegisterForm />
-        <div className=" mx-auto">
-          <Link to={RouteNames.SIGN_IN}>
-            Already have an account?{" "}
-            <Typography color="primary" className="underline !inline-block">
-              Sign in
-            </Typography>
-          </Link>
+        <div className="mx-auto">
+          Already have an account?{" "}
+          <Typography
+            variant={"body3"}
+            component={Link}
+            to={RouteNames.SIGN_IN}
+            color="primary"
+            className="underline !inline-block"
+          >
+            Sign in
+          </Typography>
         </div>
       </section>
     </div>

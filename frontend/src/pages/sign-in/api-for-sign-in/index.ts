@@ -1,6 +1,7 @@
 import { ApiAxiosInterceptor } from "../../../react-query";
 import {
   IForgetPasswordPayload,
+  IResetPasswordPayload,
   ISignInPayload,
   ISignInResponse,
   IVerifyTokenPayload,
@@ -32,10 +33,10 @@ export const forgetPassword = async (data: IForgetPasswordPayload) => {
   }
 };
 
-export const verifyToken = async (data: any) => {
+export const verifyToken = async (data: IVerifyTokenPayload) => {
   try {
     const response = await ApiAxiosInterceptor.post<any>(
-      "/auth/resetPassword",
+      "/auth/verifyPasswordResetToken",
       data
     );
     return response.data;
@@ -45,10 +46,10 @@ export const verifyToken = async (data: any) => {
   }
 };
 
-export const resetPassword = async (data: IVerifyTokenPayload) => {
+export const resetPassword = async (data: IResetPasswordPayload) => {
   try {
-    const response = await ApiAxiosInterceptor.post<any>(
-      "/auth/verifyPasswordResetToken",
+    const response = await ApiAxiosInterceptor.patch<any>(
+      "/auth/resetPassword",
       data
     );
     return response.data;

@@ -12,3 +12,14 @@ export type IForgetPasswordPayload = {
 export type IVerifyTokenPayload = {
   token: string;
 };
+
+export type IResetPasswordPayload = {
+  password: string;
+};
+
+export enum ResetPasswordFlowEnum {
+  FORGET_PASSWORD = "forget-password",
+  VERIFY_PASSWORD = "verify-password",
+  RESET_PASSWORD = "reset-password",
+  SUCCESS = "success",
+}

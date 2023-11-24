@@ -1,5 +1,5 @@
 import LeftSideContext from "./components/LeftSideContext";
-import ResetPasswordFlowModal from "./components/ResetPasswordFlowModal";
+import ResetPasswordFlowModal from "./components/reset-password-flow";
 import RightSideContext from "./components/RightSideContext";
 
 function LoginPage() {
