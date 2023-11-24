@@ -5,7 +5,7 @@ import dots from "../../../assets/auth/dots.svg";
 
 export default function SignUpImage() {
     return (
-        <section className="hidden lg:block relative pt-[70px]">
+        <section className="hidden lg:block relative pt-[70px] min-h-screen">
             <img src={FinanceDiscussion} alt="" className=" xl:mx-auto" />
             <img src={dots} alt="" className=" absolute top-0 right-5 z-0 opacity-90" />
             <img src={dots} alt="" className=" absolute bottom-0 left-6 z-[-1] opacity-90" />
