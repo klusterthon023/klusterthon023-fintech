@@ -57,7 +57,6 @@ exports.register = catchAsync(async (req, res, next) => {
   //   activationTokenExpire
   // };
 
-
   const newOwnerDetails = {
     owner_name: req.body.owner_name,
     email: req.body.email,
@@ -400,4 +399,35 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
 
   // Log user in send JWT
   createSendToken(owner, 200, req, res);
+});
+
+exports.updateBusinessAccount = catchAsync(async (req, res, next) => {
+  if (req.body.password) {
+    return next(new AppError('This form is not for password updating.', 401));
+  }
+
+  const ownerNewDetails = {
+    business_name: req.body.business_name,
+    owner_name: req.body.owner_name,
+    email: req.body.email,
+    business_address: req.body.business_address,
+    business_description: req.body.business_description,
+    contact_number: req.body.contact_number
+  };
+
+  const updatedOwner = await Owner.findByIdAndUpdate(
+    req.owner._id,
+    ownerNewDetails,
+    {
+      new: true,
+      runValidators: true
+    }
+  );
+
+  res.status(200).json({
+    status: 'success',
+    data: {
+      owner: updatedOwner
+    }
+  });
 });

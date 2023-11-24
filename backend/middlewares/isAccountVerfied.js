@@ -6,7 +6,7 @@ exports.isAccountVerified = async (req, res, next) => {
     if (currentUser.active !== true) {
       return res.status(401).json({
         message:
-          'Sorry, your account is not verified yet. Please check your email for verification link.',
+          'Sorry, your account is not verified yet. Please click on the button to verify your account.',
         data: null
       });
     }

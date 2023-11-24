@@ -25,5 +25,7 @@ router.post(
   authController.verifyPasswordResetToken
 );
 router.patch('/resetPassword', authController.resetPassword);
+router.patch('/updatePassword', authController.updatePassword);
+router.patch('/updateOwner', authController.updateBusinessAccount);
 
 module.exports = router;
