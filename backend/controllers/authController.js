@@ -9,15 +9,15 @@ const Owner = require('../models/Owner');
 const Email = require('../utils/email');
 
 // signing the jwt token
-const signToken = (id) => {
+const signToken = (id, expiresin) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRES_IN
+    expiresIn: expiresin
   });
 };
 
 // refactored the feedback
 const createSendToken = (foundUser, statusCode, req, res) => {
-  const token = signToken(foundUser._id);
+  const token = signToken(foundUser._id, process.env.JWT_EXPIRES_IN);
 
   res.cookie('jwt', token, {
     expires: new Date(
@@ -30,7 +30,6 @@ const createSendToken = (foundUser, statusCode, req, res) => {
   delete foundUser._doc.password;
   res.status(statusCode).json({
     status: 'success',
-    token,
     data: {
       user: foundUser
     }
@@ -92,7 +91,7 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
   owner.activationToken = undefined;
   owner.active = true;
   await owner.save({ validateBeforeSave: false });
-  const token = signToken(owner._id);
+  const token = signToken(owner._id, process.env.JWT_EXPIRES_IN);
   res.cookie('jwt', token, {
     expires: new Date(
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
@@ -186,4 +185,105 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   req.owner = freshOwner;
   next();
+});
+
+exports.forgotPassword = catchAsync(async (req, res, next) => {
+  // 1. Get user based on posted email\
+
+  if (!req.body.email) {
+    return next(new AppError('Please provide an email!', 400));
+  }
+
+  const owner = await Owner.findOne({ email: req.body.email });
+
+  if (!owner) {
+    return next(new AppError('There is no user with that email.', 404));
+  }
+
+  // 2. Generate the random reset token
+  const resetToken = owner.createPasswordResetToken();
+  await owner.save({ validateBeforeSave: false });
+
+  // 3. Send it to user email.
+  try {
+    await new Email(owner).sendPasswordReset(resetToken);
+    res.status(200).json({
+      status: 'success',
+      message: 'A reset token was sent your email!'
+    });
+  } catch (err) {
+    // console.log(err);
+    owner.passwordResetToken = undefined;
+    owner.passwordResetExpires = undefined;
+    await owner.save({ validateBeforeSave: false });
+
+    return next(
+      new AppError(
+        'There was an error sending the email. Try again later!',
+        500
+      )
+    );
+  }
+});
+
+exports.verifyPasswordResetToken = catchAsync(async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.body.token)
+    .digest('hex');
+  const owner = await Owner.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() }
+  });
+  if (!owner) {
+    return next(
+      new AppError('Invalid token or expired token, click resend.', 400)
+    );
+  }
+  const signResetToken = (resetToken, expiresin) => {
+    return jwt.sign({ resetToken }, process.env.JWT_SECRET, {
+      expiresIn: expiresin
+    });
+  };
+  const resetToken = signResetToken(hashedToken, '10m');
+  res.cookie('resetToken', resetToken, {
+    expires: new Date(Date.now() + 10 * 60 * 1000),
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production'
+  });
+  return res.status(200).json({
+    status: 'success',
+    message: 'Token verified!'
+  });
+});
+
+exports.resetPassword = catchAsync(async (req, res, next) => {
+  // Get user based on the token
+  let token;
+  if (req.cookies && req.cookies.resetToken) {
+    token = req.cookies.resetToken;
+  }
+  if (!token) {
+    return next(new AppError('Password reset session has expired', 400));
+  }
+
+  const decodedPayload = await promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET
+  );
+
+  const owner = await Owner.findOne({
+    passwordResetToken: decodedPayload.resetToken
+  });
+
+  // if owner exists update the owner.
+  owner.password = req.body.password;
+  owner.passwordResetExpires = undefined;
+  owner.passwordResetToken = undefined;
+  owner.passwordChangedAt = Date.now();
+  await owner.save();
+  // Update changedPasswordAt property for the user
+
+  // log the user in, send JWT
+  createSendToken(owner, 200, req, res);
 });

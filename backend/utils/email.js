@@ -35,13 +35,14 @@ module.exports = class Email {
     });
   }
 
-  async send(template, subject) {
+  async send(template, subject, resetToken) {
     const html = pug.renderFile(
       path.join(__dirname, `../views/email/${template}.pug`),
       {
         name: this.name,
         url: this.url,
         subject,
+        resetToken,
         invoice: this.invoice ? this.invoice : null,
         business_name: this.business_name ? this.business_name : null
       }
@@ -61,10 +62,11 @@ module.exports = class Email {
     await this.send('welcome', 'Welcome to Klusterthon!');
   }
 
-  async sendPasswordReset() {
+  async sendPasswordReset(resetToken) {
     await this.send(
       'passwordReset',
-      'Your password reset token (valid for only 10 minutes)'
+      'Your password reset token (valid for only 2 minutes)',
+      resetToken
     );
   }
 

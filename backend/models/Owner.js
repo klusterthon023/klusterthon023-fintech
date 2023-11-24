@@ -1,6 +1,9 @@
+const crypto = require('crypto');
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const validator = require('validator');
+const otpGenerator = require('otp-generator');
 
 const ownerSchema = new mongoose.Schema({
   business_name: {
@@ -96,6 +99,22 @@ ownerSchema.methods.changedPasswordAfter = function (JWTTimeStamp) {
 
   //False means not changed
   return false;
+};
+
+ownerSchema.methods.createPasswordResetToken = function () {
+  const resetOtp = otpGenerator.generate(6, {
+    digits: true,
+    alphabets: false,
+    upperCase: false,
+    specialChars: false
+  });
+  this.passwordResetToken = crypto
+    .createHash('sha256')
+    .update(resetOtp)
+    .digest('hex');
+
+  this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
+  return resetOtp;
 };
 
 module.exports = mongoose.model('Owner', ownerSchema);

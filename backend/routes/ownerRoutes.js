@@ -13,5 +13,11 @@ router
   .get('/activate/:token', authController.activateAccount)
   .post('/signin', authController.signin)
   .get('/signout', authController.signout);
+router.post('/forgotPassword', authController.forgotPassword);
+router.post(
+  '/verifyPasswordResetToken',
+  authController.verifyPasswordResetToken
+);
+router.patch('/resetPassword', authController.resetPassword);
 
 module.exports = router;
