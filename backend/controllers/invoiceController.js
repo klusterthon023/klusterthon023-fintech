@@ -170,6 +170,14 @@ exports.updateInvoiceToPaid = async (req, res) => {
         data: null
       });
     }
+    
+    // check whether invoice has been paid
+    if(foundInvoice.status === 'Paid') {
+      return res.status(400).json({
+        message: 'Invoice has already been paid!',
+        data: null
+      });
+    }
 
     // find the customer
     const foundCustomer = await Customer.findOne({
