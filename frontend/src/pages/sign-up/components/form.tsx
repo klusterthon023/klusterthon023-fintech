@@ -10,14 +10,11 @@ import { useMutation } from "react-query";
 import { RouteNames } from "../../../routers/interface";
 
 interface FormValues {
-  business_name: string;
   owner_name: string;
   email: string;
   password: string;
   confirmPassword: string;
   acceptTerms: boolean;
-  business_address: string;
-  business_description: string;
 }
 
 const validationSchema = Yup.object().shape({
@@ -37,14 +34,11 @@ const validationSchema = Yup.object().shape({
 
 const RegisterForm: React.FC = () => {
   const initialValues: FormValues = {
-    business_name: "Inc",
     owner_name: "",
     email: "",
     password: "",
     confirmPassword: "",
     acceptTerms: false,
-    business_address: "Lagos, Nigeria",
-    business_description: "Services",
   };
   const { mutateAsync, isLoading } = useMutation(signupUser);
   const navigate = useNavigate();
@@ -56,10 +50,10 @@ const RegisterForm: React.FC = () => {
       const result = await mutateAsync(values);
       toast(result?.message);
       setTimeout(() => {
-        navigate(RouteNames.HOME);
+        navigate(RouteNames.SIGN_IN);
       }, 5000);
     } catch (error) {
-      console.error(error);
+      toast("Email already exists, please use another one.");
     } finally {
       setSubmitting(false);
     }
@@ -74,7 +68,7 @@ const RegisterForm: React.FC = () => {
       >
         {({ isValid, values, touched, errors }) => (
           <Form className="grid gap-5 placeholder:text-gray-100">
-            <label htmlFor="owner_name" className="flex flex-col">
+            <label className="flex flex-col">
               <Field
                 type="text"
                 name="owner_name"
@@ -96,7 +90,7 @@ const RegisterForm: React.FC = () => {
               />
             </label>
 
-            <label htmlFor="email" className="flex flex-col">
+            <label className="flex flex-col">
               <Field
                 type="email"
                 name="email"
@@ -114,7 +108,7 @@ const RegisterForm: React.FC = () => {
               <ErrorMessage name="email" component="div" className="error" />
             </label>
 
-            <label htmlFor="password" className="flex flex-col">
+            <label className="flex flex-col">
               <Field
                 type="password"
                 name="password"
@@ -132,7 +126,7 @@ const RegisterForm: React.FC = () => {
               <ErrorMessage name="password" component="div" className="error" />
             </label>
 
-            <label htmlFor="confirmPassword" className="flex flex-col">
+            <label className="flex flex-col">
               <Field
                 type="password"
                 name="confirmPassword"
@@ -154,7 +148,7 @@ const RegisterForm: React.FC = () => {
               />
             </label>
 
-            <label htmlFor="acceptTerms" className="flex flex-col items-start">
+            <label className="flex flex-col items-start">
               <div className="flex items-center gap-2">
                 <Field
                   type="checkbox"
