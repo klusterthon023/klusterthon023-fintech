@@ -355,7 +355,7 @@ exports.resendToken = catchAsync(async (req, res, next) => {
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // Get user based on the token
   const cookieHeader = req.headers.cookie;
-
+  console.log(cookieHeader);
   let token;
   if (req.cookies && req.cookies.resetToken) {
     token = req.cookies.resetToken;
