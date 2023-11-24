@@ -50,7 +50,7 @@ export default {
       },
     },
     backgroundImage: {
-      union: "url('./src/assets/home/union.svg')",
+      union: "url('/src/assets/home/union.svg')",
     },
   },
   plugins: [],
