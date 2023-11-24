@@ -5,7 +5,7 @@ import supportIcon from "../../../../assets/home/icon _support.svg";
 
 function LeftSideContext() {
   return (
-    <div>
+    <div className="w-full">
       <Typography className="!mb-12 pt-3" variant="h5">
         Carry Out Transaction at a Touch
       </Typography>
