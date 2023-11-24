@@ -354,9 +354,20 @@ exports.resendToken = catchAsync(async (req, res, next) => {
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // Get user based on the token
+  const cookieHeader = req.headers.cookie;
+
   let token;
   if (req.cookies && req.cookies.resetToken) {
     token = req.cookies.resetToken;
+  }else if(cookieHeader){
+    if (cookieHeader) {
+      // Parse the 'cookie' header to extract individual cookies
+      const cookies = cookieHeader.split('; ').reduce((acc, cookie) => {
+        const [name, value] = cookie.split('=');
+        acc[name] = value;
+        return acc;
+      }, {});
+      token = cookies.resetToken
   }
   if (!token) {
     return next(new AppError('Password reset session has expired', 400));
