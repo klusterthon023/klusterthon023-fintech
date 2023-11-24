@@ -1,6 +1,6 @@
 export enum RouteNames {
-  LOGIN = "/login",
-  REGISTER = "/register",
+  SIGN_IN = "/sign-in",
+  SIGN_UP = "/sign-up",
   HOME = "/",
   DASHBOARD = "/dashboard",
   DESIGN_SYSTEM = "/design-system",

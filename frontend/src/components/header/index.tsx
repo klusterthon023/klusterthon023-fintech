@@ -63,7 +63,7 @@ function Header() {
       </div>
       <div className="max-md:hidden">
         <Button
-          onClick={() => navigate(RouteNames.REGISTER)}
+          onClick={() => navigate(RouteNames.SIGN_UP)}
           size="large"
           color="tertiary"
         >
@@ -129,7 +129,7 @@ function Header() {
                 ))}
                 <div className="flex justify-center mt-5">
                   <Button
-                    onClick={() => navigate(RouteNames.REGISTER)}
+                    onClick={() => navigate(RouteNames.SIGN_UP)}
                     size="large"
                     color="tertiary"
                   >
