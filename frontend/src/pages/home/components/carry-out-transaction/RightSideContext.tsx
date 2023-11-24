@@ -5,9 +5,9 @@ function RightSideContext() {
     <div
       data-aos="zoom-in-left"
       data-aos-duration="5000"
-      className="lg:absolute -top-14 right-16 max-lg:mt-10 flex max-lg:justify-center items-center"
+      className="lg:mt-[-12%] mx-auto md:mx-0 !w-full flex justify-end"
     >
-      <img src={logo} alt="logo" className="w-[427px] z-10" />
+      <img src={logo} alt="" className="w-full md:w-[500px]" />
     </div>
   );
 }
