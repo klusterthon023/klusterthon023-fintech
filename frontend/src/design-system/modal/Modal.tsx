@@ -41,17 +41,17 @@ export default function Modal(props: ModalProps) {
     <AnimatePresence>
       {isModalOpen && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
           onClick={closeModal}
           className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70 z-50 backdrop-blur-sm"
         >
           <motion.div
-            initial={{ scale: 0.5, opacity: 0 }}
+            initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.5, opacity: 0 }}
-            transition={{ ease: "easeInOut" }}
+            exit={{ scale: 0.8, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
             className={`relative bg-white !max-w-[700px] max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
           >
             <div
@@ -68,9 +68,9 @@ export default function Modal(props: ModalProps) {
               )}
               <div
                 onClick={onClose}
-                className="p-2 rounded-[6px] h-[26px] w-[26px] flex justify-center bg-color-gray cursor-pointer"
+                className="p-2 rounded-[6px] h-9 w-9 flex justify-center items-center bg-color-gray cursor-pointer"
               >
-                <FontAwesomeIcon icon={faClose} fontSize={10} />
+                <FontAwesomeIcon icon={faClose} fontSize={20} />
               </div>
             </div>
             {description && (

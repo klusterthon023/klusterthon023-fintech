@@ -49,7 +49,7 @@ function LeftSideContext() {
           <Divider />
         </div>
         <LoginForm />
-        <div className="text-center mt-5 mb-[124px]">
+        <div className="text-center mt-5 mb-[124px] max-md:mb-10">
           <Typography variant={"body3"}>
             Don’t have an account?{" "}
             <Typography
