@@ -359,7 +359,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   let token;
   if (req.cookies && req.cookies.resetToken) {
     token = req.cookies.resetToken;
-  }else if(cookieHeader){
+  } else if (cookieHeader) {
     if (cookieHeader) {
       // Parse the 'cookie' header to extract individual cookies
       const cookies = cookieHeader.split('; ').reduce((acc, cookie) => {
@@ -367,7 +367,8 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
         acc[name] = value;
         return acc;
       }, {});
-      token = cookies.resetToken
+      token = cookies.resetToken;
+    }
   }
   if (!token) {
     return next(new AppError('Password reset session has expired', 400));
