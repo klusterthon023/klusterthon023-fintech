@@ -9,6 +9,7 @@ export const signupUser = async (data: ISignUpPayload) => {
     );
     return response.data;
   } catch (error) {
-    throw new Error("An error occurred.");
+    console.error(error);
+    throw error;
   }
 };

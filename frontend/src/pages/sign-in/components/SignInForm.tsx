@@ -7,6 +7,7 @@ import { loginUser } from "../api-for-sign-in";
 import { ISignInPayload } from "../types";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../../routers/interface";
+import { useAppContext } from "../../../contexts";
 
 function SignInForm() {
   const initialValues = {
@@ -16,7 +17,9 @@ function SignInForm() {
 
   const navigate = useNavigate();
 
-  const { mutateAsync, isLoading } = useMutation(loginUser);
+  const { toggleIsForgetPasswordModalOpen } = useAppContext();
+
+  const { mutateAsync, isLoading, error, isError } = useMutation(loginUser);
 
   const handleSubmit = async (value: ISignInPayload) => {
     try {
@@ -37,6 +40,15 @@ function SignInForm() {
 
   return (
     <div className="grid gap-5">
+      <>
+        {error && isError && (
+          <div className="p-2 flex justify-center items-center bg-color-red rounded-lg">
+            <Typography variant="body3" color="white">
+              {(error as any)?.response.data.message}
+            </Typography>
+          </div>
+        )}
+      </>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -63,7 +75,12 @@ function SignInForm() {
 
               <div className="flex max-md:flex-col max-md:gap-3 justify-between items-center">
                 <Checkbox label="Remember me" />
-                <Typography variant="body4" color="primary.300">
+                <Typography
+                  className="!cursor-pointer"
+                  onClick={toggleIsForgetPasswordModalOpen}
+                  variant="body4"
+                  color="primary.300"
+                >
                   Forgot your password?
                 </Typography>
               </div>

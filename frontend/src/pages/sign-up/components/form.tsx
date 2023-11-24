@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { Button } from "../../../design-system";
+import { Button, Typography } from "../../../design-system";
 //import { ISignUpPayload } from '../types';
 import { signupUser } from "../api-for-sign-up";
 import { useMutation } from "react-query";
@@ -40,7 +40,7 @@ const RegisterForm: React.FC = () => {
     confirmPassword: "",
     acceptTerms: false,
   };
-  const { mutateAsync, isLoading } = useMutation(signupUser);
+  const { mutateAsync, isLoading, error, isError } = useMutation(signupUser);
   const navigate = useNavigate();
   const handleSubmit = async (
     values: FormValues,
@@ -60,7 +60,16 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <div className=" pb-6">
+    <div className="pb-6">
+      <>
+        {isError && error && (
+          <div className="p-2 mb-5 flex justify-center items-center bg-color-red rounded-lg">
+            <Typography variant="body3" color="white">
+              {(error as any)?.response.data.message}
+            </Typography>
+          </div>
+        )}
+      </>
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
