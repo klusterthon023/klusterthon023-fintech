@@ -44,11 +44,11 @@ function LoginForm() {
   });
 
   return (
-    <div>
-      <div className="flex max-md:flex-col max-md:gap-5 items-center justify-between">
+    <div className="grid gap-5">
+      <div className="flex flex-col lg:flex-row xl:flex-row gap-6 justify-between ">
         <Button
           disabled
-          className="!bg-white !border !border-gray-100 !text-black"
+          className="!bg-white !border !w-full !border-gray-100 !text-black"
           variant="outlined"
           startIcon={<img src={GoogleIcon} className="h-6 w-6" />}
         >
@@ -56,19 +56,17 @@ function LoginForm() {
         </Button>
         <Button
           disabled
-          className="!bg-white !border !border-gray-100 !text-black"
+          className="!bg-white !border !w-full !border-gray-100 !text-black"
           variant="outlined"
           startIcon={<img src={AppleIcon} className="h-6 w-6" />}
         >
           Sign in with Apple
         </Button>
       </div>
-      <div className="my-6 flex items-center">
-        <Divider />
-        <Typography className="w-full" variant="body5" color="gray.100">
-          or continue with
-        </Typography>
-        <Divider />
+      <div className="flex items-center">
+          <Divider/>
+          <Typography color="gray.300" className="!w-full text-center !text-sm">or continue with</Typography>
+          <Divider/>
       </div>
       <Formik
         initialValues={initialValues}
@@ -78,12 +76,13 @@ function LoginForm() {
         {(formik) => {
           const { getFieldProps, isValid } = formik;
           return (
-            <Form className="space-y-5">
+            <Form className="grid gap-5 placeholder:text-gray-100">
               <Input
                 type={"email"}
                 placeholder="Username or email"
                 {...getFieldProps("email")}
                 {...formikHelper(formik, "email")}
+                className=" placeholder:text-sm"
               />
 
               <Input
