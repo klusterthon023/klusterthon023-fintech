@@ -14,14 +14,21 @@ exports.getAllInvoices = catchAsync(async (req, res) => {
 });
 
 //////// Implemented after AUTH
-exports.getMyInvoices = catchAsync(async (req, res) => {
-  const owner = req.owner;
-  const allInvoices = await Invoice.find({ owner_id: owner.id });
-  return res.json({
-    message: `Invoices for ${owner.business_name}:`,
-    data: allInvoices
-  });
-});
+exports.getMyInvoices = async (req, res) => {
+  try {
+    const owner = req.owner;
+    const allInvoices = await Invoice.find({ owner_id: owner.id });
+    return res.json({
+      message: `Invoices for ${owner.business_name}:`,
+      data: allInvoices
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      data: null
+    });
+  }
+};
 
 exports.getOneInvoice = catchAsync(async (req, res, next) => {
   const invoiceId = req.params.id;
@@ -56,6 +63,10 @@ exports.createInvoice = async (req, res) => {
     // if customer is found for the user, create the invoice
     const newInvoice = await Invoice.create({
       ...req.body,
+      total_amount: req.body.products.reduce(
+        (total, product) => total + product.quantity * product.unit_price,
+        0
+      ),
       owner_id: req.owner._id
     });
 
@@ -79,8 +90,11 @@ exports.createInvoice = async (req, res) => {
         data: newInvoice
       });
     } catch (err) {
-      await Owner.deleteOne({ email: req.body.email });
-      return next(err);
+      // await Owner.deleteOne({ email: req.body.email });
+      return res.status(500).json({
+        message: err,
+        data: null
+      });
     }
 
     //  return res.status(201).json({
@@ -139,6 +153,14 @@ exports.updateInvoiceToPaid = async (req, res) => {
     if (!foundInvoice) {
       return res.status(404).json({
         message: 'Invoice not found!',
+        data: null
+      });
+    }
+
+    // check whether invoice has been paid
+    if (foundInvoice.status === 'Paid') {
+      return res.status(400).json({
+        message: 'Invoice has already been paid!',
         data: null
       });
     }

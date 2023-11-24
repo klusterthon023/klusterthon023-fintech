@@ -8,7 +8,7 @@ export default function HeroText() {
       <img
         src={decorator}
         alt=""
-        className=" absolute bottom-[-0%] left-[90%] hidden lg:block"
+        className=" absolute bottom-[-0%] left-[100%] hidden lg:block"
       />
       <div className="grid gap-4">
         <div className="flex gap-3 items-center">
@@ -25,10 +25,10 @@ export default function HeroText() {
           </Typography>
         </div>
         <div className="w-full">
-          <Typography className="!w-full !text-4xl md:!text-6xl" variant="h1">
+          <Typography className="!w-full !text-4xl md:!text-5xl" variant="h1">
             The Efficient Way to Manage your
             <Typography
-              className="!w-full !text-4xl md:!text-6xl"
+              className="!w-full !text-4xl md:!text-5xl"
               variant="h1"
               color="tertiary.300"
             >
@@ -40,12 +40,12 @@ export default function HeroText() {
       </div>
       <div>
         <Typography>
-          Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut
-          fugit, sed quia consequuntur ma
+          Streamlining your finances effortlessly, we simplify online payments
+          with our efficient payment management system.
         </Typography>
       </div>
       <div className="relative">
-        <div className="absolute left-[3px] top-[7px] bg-black w-[180px] h-[35px] rounded-lg z-10"></div>
+        <div className="absolute left-[3px] top-[7px] bg-black w-[205px] h-[47px] rounded-lg z-10"></div>
         <Button color="tertiary" className="z-30 relative">
           Open a Free Account
         </Button>

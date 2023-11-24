@@ -81,12 +81,8 @@ button:focus-visible {
 }
 
 .bg-gradient {
-  background: linear-gradient(
-    262deg,
-    #eef5ec 0%,
-    rgba(255, 255, 255, 0.52) 26.29%,
-    rgba(150, 192, 255, 0.75) 99.87%
-  );
+  background: linear-gradient(261.6deg, #EEF5EC 0%, rgba(255, 255, 255, 0.516081) 26.29%, rgba(150, 192, 255, 0.75) 99.87%);
+
 }
 
 .bg-hero {
@@ -98,7 +94,7 @@ button:focus-visible {
 .bg-faqs {
   background-image: url("./src/assets/home/union.svg");
   background-repeat: no-repeat;
-  background-position: bottom;
+  background-position: top;
 }
 
 ::-webkit-scrollbar {
@@ -122,20 +118,35 @@ button:focus-visible {
   }
 }
 
-
-.placeholder::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-  color: #ABABC4;
+.placeholder::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: #ababc4;
   opacity: 1; /* Firefox */
 }
 
-.placeholder:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  color: #ABABC4;
+.placeholder:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  color: #ababc4;
 }
 
-.placeholder::-ms-input-placeholder { /* Microsoft Edge */
-  color: #ABABC4;
+.placeholder::-ms-input-placeholder {
+  /* Microsoft Edge */
+  color: #ababc4;
 }
 
 .error {
   color: red;
+}
+
+@keyframes loading-bar {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.animate-loading-bar {
+  animation: loading-bar 2s linear infinite;
 }

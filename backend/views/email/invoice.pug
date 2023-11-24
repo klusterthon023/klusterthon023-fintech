@@ -7,10 +7,33 @@ block content
 
         p Invoice From: #{business_name}
         p Invoice To: #{name}
-         p Total Amount: #{invoice.total_amount}
-         p Invoice Details: #{invoice.products}
-         p Date Created: #{invoice.created_date}
-         p Invoice Due Date: #{invoice.due_date}
+        p Date Created: #{invoice.created_date}
+        p Invoice Due Date: #{invoice.due_date}
+
+        style.
+            .myTable {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .myTable th, .myTable td {
+                border: 1px solid white;
+                text-align: center;
+                padding: 8px;
+            }
+        
+        table.myTable
+            tr
+                th Product
+                th Quantity
+                th Unit Price
+            each product in invoice.products
+                tr
+                td #{product.product_name}
+                td #{product.quantity}
+                td #{product.unit_price}
+            tr
+                td(colspan="2") Total Price
+                td #{invoice.total_amount}
       
         p Click on the activation button to pay.
         table.btn.btn-primary(role='presentation', border='0', cellpadding='0', cellspacing='0')

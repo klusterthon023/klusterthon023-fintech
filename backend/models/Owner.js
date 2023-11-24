@@ -8,7 +8,6 @@ const otpGenerator = require('otp-generator');
 const ownerSchema = new mongoose.Schema({
   business_name: {
     type: String,
-    required: [true, 'Please enter a fbusiness name'],
     validate: {
       validator: function (val) {
         return /^[a-zA-Z.\s]+$/.test(val);
@@ -34,12 +33,10 @@ const ownerSchema = new mongoose.Schema({
     validate: [validator.isEmail, 'Please provide a valid email']
   },
   business_address: {
-    type: String,
-    required: [true, 'Please enter business address']
+    type: String
   },
   business_description: {
-    type: String,
-    required: [true, 'Please enter business description']
+    type: String
   },
   password: {
     type: String,
