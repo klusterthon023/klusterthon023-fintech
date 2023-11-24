@@ -56,7 +56,7 @@ function LeftSideContext() {
               variant={"body3"}
               component={Link}
               className={"underline"}
-              to={RouteNames.SIGN_UP}
+              to={RouteNames.DASHBOARD}
               color={"primary.300"}
             >
               Sign up
