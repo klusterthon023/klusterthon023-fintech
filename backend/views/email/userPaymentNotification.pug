@@ -1,0 +1,48 @@
+extends baseEmail 
+
+block content 
+    p Hi #{name},
+        p Your Client: #{customer.name}, has just paid your invoice: #{invoice._id}! 
+
+        style.
+            .myImage {
+                display: block;
+                width: 200px;
+                margin: 0 auto;
+            }
+
+        img.myImage(src="https://img.icons8.com/external-anggara-filled-outline-anggara-putra/32/external-receive-money-bank-and-finance-anggara-filled-outline-anggara-putra.png" alt="Payment Recieved")
+
+        p Date Paid: #{invoice.date_paid}
+        p Invoice Details: 
+
+        style.
+            .myTable {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .myTable th, .myTable td {
+                border: 1px solid white;
+                text-align: center;
+                padding: 8px;
+            }
+        
+        table.myTable
+            tr
+                th Product
+                th Quantity
+                th Unit Price
+            each product in invoice.products
+                tr
+                td #{product.product_name}
+                td #{product.quantity}
+                td #{product.unit_price}
+            tr
+                td(colspan="2") Total Price
+                td #{invoice.total_amount}
+
+      
+    p Login to your dashboard for view in details.
+    p For questions and enquiries you can reach us via-
+    p email: khlusterthon023@gmail.com
+        

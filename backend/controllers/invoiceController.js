@@ -83,6 +83,7 @@ exports.createInvoice = async (req, res) => {
         newInvoice,
         req.owner.business_name
       ).sendInvoice();
+
       return res.status(201).json({
         status: 'success',
         message:
@@ -180,6 +181,7 @@ exports.updateInvoiceToPaid = async (req, res) => {
     foundInvoice.date_paid = Date.now();
     foundInvoice.save();
 
+    // send mails to customer and owner
     const url = 'Some Random URL for now';
     try {
       await new Email(
@@ -188,15 +190,28 @@ exports.updateInvoiceToPaid = async (req, res) => {
         foundInvoice,
         foundOwner.business_name
       ).sendReceipt();
+
+      await new Email(
+        foundOwner,
+        url,
+        foundInvoice,
+        foundOwner.business_name,
+        foundCustomer
+      ).alertOwnerUponPayment();
+
       return res.status(201).json({
         status: 'success',
         message:
-          'Invoice Successfully Paid. Your receipt has been sent to your mailbox.',
+          'Invoice Successfully Paid. Your receipt has been sent to your mailbox. Your client will be notified as well.',
         data: foundInvoice
       });
     } catch (err) {
-      await Owner.deleteOne({ email: req.body.email });
-      return next(err);
+      // await Owner.deleteOne({ email: req.body.email });
+      // return next(err);
+      return res.status(500).json({
+        message: err.message,
+        data: null
+      });
     }
 
     //  return res.status(201).json({

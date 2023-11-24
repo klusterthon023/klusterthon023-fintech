@@ -6,13 +6,14 @@ const htmlToText = require('html-to-text');
 require('dotenv').config();
 
 module.exports = class Email {
-  constructor(user, url, invoice, business_name) {
+  constructor(user, url, invoice, business_name, customer) {
     this.to = user.email;
     this.name = user.owner_name ? user.owner_name.split(' ')[0] : user.name;
     this.url = url;
     this.from = `Chat <${process.env.EMAIL_FROM}>`;
     this.invoice = invoice ? invoice : null;
     this.business_name = business_name ? business_name : null;
+    this.customer = customer ? customer : null;
   }
 
   newTransport() {
@@ -44,7 +45,8 @@ module.exports = class Email {
         subject,
         resetToken,
         invoice: this.invoice ? this.invoice : null,
-        business_name: this.business_name ? this.business_name : null
+        business_name: this.business_name ? this.business_name : null,
+        customer: this.customer ? this.customer : null
       }
     );
 
@@ -80,5 +82,9 @@ module.exports = class Email {
 
   async sendReceipt() {
     await this.send('paidInvoice', 'Your Receipt');
+  }
+
+  async alertOwnerUponPayment() {
+    await this.send('userPaymentNotification', 'Payment Received');
   }
 };
