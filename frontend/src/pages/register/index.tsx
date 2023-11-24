@@ -5,7 +5,7 @@ import { ToastContainer } from "react-toastify"
 
 export default function Register() {
     return (
-        <main className="grid lg:grid-cols-2 w-full h-screen">
+        <main className="grid lg:grid-cols-2 w-full min-h-screen">
           <SignUpForm />
           <SignUpImage />
           <ToastContainer />

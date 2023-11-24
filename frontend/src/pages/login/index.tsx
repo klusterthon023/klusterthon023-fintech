@@ -3,7 +3,7 @@ import RightSideContext from "./components/RightSideContext";
 
 function LoginPage() {
   return (
-    <div className="flex justify-between max-lg:flex-col w-full items-center">
+    <div className="grid lg:grid-cols-2 w-full min-h-screen">
       <LeftSideContext />
       <RightSideContext />
     </div>

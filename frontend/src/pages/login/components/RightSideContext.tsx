@@ -1,9 +1,12 @@
 import LoginIllustration from "../../../assets/login/login_illustration.svg";
 import { Typography } from "../../../design-system";
+import dots from "../../../assets/auth/dots.svg";
 
 function RightSideContext() {
   return (
-    <div className="w-full px-5  flex flex-col justify-center items-center max-lg:hidden min-h-screen overflow-hidden">
+    <div className="relative w-full px-5 flex flex-col justify-center items-center max-lg:hidden overflow-hidden">
+      <img src={dots} alt="" className=" absolute top-0 right-5 z-0 opacity-90" />
+      <img src={dots} alt="" className=" absolute bottom-0 left-6 z-[-1] opacity-90" />
       <img
         className="xl:w-[700px] lg:w-[500px] "
         src={LoginIllustration}
