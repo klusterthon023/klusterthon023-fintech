@@ -1,7 +1,16 @@
 import { createBrowserRouter } from "react-router-dom";
 import Root from "../App";
 import { RouteNames } from "./interface";
-import { SignUp, SignIn, Home, Dashboard, DesignSystem } from "../pages";
+import {
+  SignUp,
+  SignIn,
+  Home,
+  DashboardIndexPage,
+  DesignSystem,
+  DashboardPage,
+  ClientPage,
+  InvoicePage,
+} from "../pages";
 
 export const CHILDREN_ROUTES = [
   {
@@ -17,8 +26,22 @@ export const CHILDREN_ROUTES = [
     element: <Home />,
   },
   {
-    path: RouteNames.DASHBOARD,
-    element: <Dashboard />,
+    path: RouteNames.MAIN,
+    element: <DashboardIndexPage />,
+    children: [
+      {
+        element: <DashboardPage />,
+        path: `${RouteNames.MAIN}${RouteNames.DASHBOARD}`,
+      },
+      {
+        element: <ClientPage />,
+        path: `${RouteNames.MAIN}${RouteNames.CLIENT}`,
+      },
+      {
+        element: <InvoicePage />,
+        path: `${RouteNames.MAIN}${RouteNames.INVOICE}`,
+      },
+    ],
   },
   {
     path: RouteNames.DESIGN_SYSTEM,
