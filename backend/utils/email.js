@@ -22,7 +22,7 @@ module.exports = class Email {
       return nodemailer.createTransport({
         service: 'Gmail',
         auth: {
-          user: process.env.EMAIL_FROM,
+          user: "khlusterthon023@gmail.com",
           pass: process.env.EMAIL_PASSWORDGMAIL
         }
       });
