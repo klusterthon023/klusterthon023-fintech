@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { useAppContext } from "../../../../contexts";
 import { Button, Input, Table, Typography } from "../../../../design-system";
 
@@ -46,7 +47,12 @@ function ClientPage() {
   const { toggleIsCreateInvoicedModalOpen } = useAppContext();
 
   return (
-    <div className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen"
+    >
       <div className="!border-color-gray !border !rounded-lg">
         <div className="flex justify-between px-4 py-5 bg-white">
           <Input className="!w-[400px]" placeholder="Search..." />
@@ -56,7 +62,7 @@ function ClientPage() {
         </div>
         <Table columns={columns} dataSource={users} />
       </div>
-    </div>
+    </motion.div>
   );
 }
 

@@ -5,7 +5,6 @@ import { Typography } from "../../../design-system";
 import {
   faChevronLeft,
   faChevronRight,
-  faUser,
 } from "@fortawesome/free-solid-svg-icons";
 import { useMediaQuery } from "react-responsive";
 import { RouteNames } from "../../../routers/interface";
@@ -131,7 +130,7 @@ function SideBar() {
               { ["px-2  text-xl"]: isSidebarCollapsed }
             )}
           >
-            <IoIosLogOut icon={faUser} />
+            <IoIosLogOut size={20} />
             {!isSidebarCollapsed && (
               <Typography fontWeight={400} variant={"body3"} color={"gray.400"}>
                 Logout
@@ -176,7 +175,7 @@ function ListItem({
             }
           )}
         >
-          {active ? <ActiveIcon /> : <Icon />}
+          {active ? <ActiveIcon size={20} /> : <Icon size={20} />}
           {!isSidebarCollapsed && (
             <Typography
               fontWeight={active ? 600 : 400}

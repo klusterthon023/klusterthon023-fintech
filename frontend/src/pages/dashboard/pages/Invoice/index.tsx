@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { Input, Table, Typography } from "../../../../design-system";
 import FirstRow from "./components/FirstRow";
 
@@ -44,7 +45,12 @@ const columns = [
 
 function InvoicePage() {
   return (
-    <div className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: "easeInOut" }}
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen"
+    >
       <FirstRow />
       <div className="!border-color-gray !border !rounded-lg">
         <div className="px-4 py-5 bg-white">
@@ -52,7 +58,7 @@ function InvoicePage() {
         </div>
         <Table columns={columns} dataSource={users} />
       </div>
-    </div>
+    </motion.div>
   );
 }
 
