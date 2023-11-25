@@ -18,7 +18,7 @@ exports.getAllOwners = async (req, res) => {
   }
 };
 
-exports.getOwner = catchAsync(async () => {
+exports.getOwner = catchAsync(async (req, res, next) => {
   const owner = await Owner.findById(req.owner._id);
   if (!owner) {
     return next(new AppError('Please log in to get access', 401));

@@ -1,13 +1,19 @@
-const express = require('express');
 const path = require('path');
-const cors = require('cors');
-const cookieParser = require('cookie-parser');
 
+const express = require('express');
+const cors = require('cors');
+const mongoSanitize = require('express-mongo-sanitize');
+const xss = require('xss-clean');
+const compression = require('compression');
+
+const cookieParser = require('cookie-parser');
+const rateLimit = require('express-rate-limit');
 const connectDB = require('./configs/dbConfig');
 const ownerRoutes = require('./routes/ownerRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const notificationRoutes = require('./routes/notificationRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -28,9 +34,20 @@ const corsOptions = {
   credentials: true
 };
 app.use(cors(corsOptions));
-app.use(express.json());
+
+const limiter = rateLimit({
+  max: 300,
+  windowMs: 60 * 60 * 1000,
+  message: 'Too many requests from this IP, try again in a hour!'
+});
+app.use('/v1', limiter);
+
+app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(mongoSanitize());
+app.use(xss());
+app.use(compression());
 
 app.get('/v1', (req, res) => {
   res.json({ message: 'welcome to klusterthon023 Fintech Backend App' });
@@ -39,6 +56,7 @@ app.use('/v1/auth', ownerRoutes);
 app.use('/v1/customers', customerRoutes);
 app.use('/v1/invoices', invoiceRoutes);
 app.use('/v1/dashboard', dashboardRoutes);
+app.use('/v1/notification', notificationRoutes);
 
 app.use('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
