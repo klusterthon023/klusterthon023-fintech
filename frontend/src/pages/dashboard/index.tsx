@@ -4,11 +4,8 @@ import { RouteNames } from "../../routers/interface";
 import SideBar from "./components/SideBar";
 import Layout from "./layout";
 import { getDataFromLocalStorage } from "../../utils/helper";
-<<<<<<< HEAD
 import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
-=======
 import { ToastContainer } from "react-toastify";
->>>>>>> bbc54d5 (Added react toastify)
 
 function DashboardPage() {
   const { pathname } = useLocation();
@@ -31,7 +28,6 @@ function DashboardPage() {
   }, [currentUser]);
 
   return (
-<<<<<<< HEAD
     <>
       <div className="flex">
         <SideBar />
@@ -42,15 +38,6 @@ function DashboardPage() {
       </div>
       <CreateInvoiceModal />
     </>
-=======
-    <div className="flex">
-      <SideBar />
-      <Layout>
-        <Outlet />
-        <ToastContainer />
-      </Layout>
-    </div>
->>>>>>> bbc54d5 (Added react toastify)
   );
 }
 
