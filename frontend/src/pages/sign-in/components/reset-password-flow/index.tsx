@@ -103,7 +103,7 @@ const ResetPasswordFlowModal = () => {
           setResetPasswordFlow(ResetPasswordFlowEnum.FORGET_PASSWORD);
         }}
       >
-        {renderStep()}
+        {isForgetPasswordModalOpen && <> {renderStep()}</>}
       </Modal>
     </>
   );

@@ -59,12 +59,9 @@ export const resetPassword = async (data: IResetPasswordPayload) => {
   }
 };
 
-export const resendToken = async (data: IResetPasswordPayload) => {
+export const resendToken = async () => {
   try {
-    const response = await ApiAxiosInterceptor.post<any>(
-      "/auth/resendToken",
-      data
-    );
+    const response = await ApiAxiosInterceptor.post<any>("/auth/resendToken");
     return response.data;
   } catch (error) {
     console.error(error);

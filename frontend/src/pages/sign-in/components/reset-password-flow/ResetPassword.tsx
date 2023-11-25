@@ -5,6 +5,7 @@ import { formikHelper } from "../../../../utils/helper";
 import { IResetPasswordPayload } from "../../types";
 import { useMutation } from "react-query";
 import { resetPassword } from "../../api-for-sign-in";
+import Loader from "../../../../components/loader/ApiLoadingState";
 
 function ResetPassword({ handleNext }: { handleNext: () => void }) {
   const { mutateAsync, isLoading, error, isError } = useMutation(resetPassword);
@@ -37,6 +38,7 @@ function ResetPassword({ handleNext }: { handleNext: () => void }) {
           </div>
         )}
       </>
+      {isLoading && <Loader />}
       <Formik
         initialValues={{ password: "", confirmPassword: "" }}
         validationSchema={validationSchemaForResetPassword}

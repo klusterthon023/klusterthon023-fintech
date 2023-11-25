@@ -4,13 +4,15 @@ import { RouteNames } from "../../routers/interface";
 import SideBar from "./components/SideBar";
 import Layout from "./layout";
 import { getDataFromLocalStorage } from "../../utils/helper";
+import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
 
 function DashboardPage() {
   const { pathname } = useLocation();
 
   const navigate = useNavigate();
 
-  const accessToken = getDataFromLocalStorage("accessToken");
+  const currentUserData = getDataFromLocalStorage("currentUser");
+  const currentUser = JSON.parse(currentUserData as any);
 
   useEffect(() => {
     if (pathname === RouteNames.MAIN) {
@@ -19,18 +21,21 @@ function DashboardPage() {
   }, []);
 
   useEffect(() => {
-    if (!accessToken) {
+    if (!currentUser) {
       navigate(RouteNames.HOME, { replace: true });
     }
-  }, [accessToken]);
+  }, [currentUser]);
 
   return (
-    <div className="flex">
-      <SideBar />
-      <Layout>
-        <Outlet />
-      </Layout>
-    </div>
+    <>
+      <div className="flex">
+        <SideBar />
+        <Layout>
+          <Outlet />
+        </Layout>
+      </div>
+      <CreateInvoiceModal />
+    </>
   );
 }
 

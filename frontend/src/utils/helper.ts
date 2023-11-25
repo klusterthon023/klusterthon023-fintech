@@ -1,5 +1,7 @@
 import { FormikProps } from "formik";
 
+import md5 from "md5";
+
 export const formikHelper = <T, key extends keyof T>(
   formik: FormikProps<T>,
   value: key
@@ -23,3 +25,8 @@ export const getDataFromLocalStorage = (key: string) =>
 
 export const removeDataFromLocalStorage = (key: string) =>
   localStorage.removeItem(key);
+
+export const getGravatarImage = (email: string = "") => {
+  const hashEmail = md5(email.trim().toLowerCase()).toString();
+  return `https://www.gravatar.com/avatar/${hashEmail}`;
+};
