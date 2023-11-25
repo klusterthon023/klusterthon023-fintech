@@ -1,4 +1,6 @@
 const Owner = require('../models/Owner');
+const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
 //temporary function to get all owners
 exports.getAllOwners = async (req, res) => {
@@ -15,3 +17,14 @@ exports.getAllOwners = async (req, res) => {
     });
   }
 };
+
+exports.getOwner = catchAsync(async () => {
+  const owner = await Owner.findById(req.owner._id);
+  if (!owner) {
+    return next(new AppError('Please log in to get access', 401));
+  }
+  res.status(200).json({
+    status: 'success',
+    owner
+  });
+});

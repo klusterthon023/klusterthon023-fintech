@@ -9,6 +9,12 @@ router
     authController.restrictTo('admin'),
     ownerController.getAllOwners
   )
+  .get(
+    '/owner',
+    authController.protect,
+    authController.restrictTo('owner'),
+    ownerController.getOwner
+  )
   .post('/register', authController.register)
   .get('/activate/:token', authController.activateAccount)
   .post('/signin', authController.signin)
@@ -25,7 +31,16 @@ router.post(
   authController.verifyPasswordResetToken
 );
 router.patch('/resetPassword', authController.resetPassword);
-router.patch('/updatePassword', authController.updatePassword);
-router.patch('/updateOwner', authController.updateBusinessAccount);
+
+router.patch(
+  '/updatePassword',
+  authController.protect,
+  authController.updatePassword
+);
+router.patch(
+  '/updateOwner',
+  authController.protect,
+  authController.updateBusinessAccount
+);
 
 module.exports = router;
