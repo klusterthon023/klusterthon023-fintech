@@ -22,7 +22,7 @@ module.exports = class Email {
         service: 'Gmail',
         auth: {
           user: process.env.EMAIL_FROM,
-          pass: process.env.EMAIL_PASSWORD
+          pass: process.env.EMAIL_PASSWORDGMAIL
         }
       });
     }
