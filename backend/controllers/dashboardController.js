@@ -3,29 +3,21 @@ const Invoice = require('../models/Invoice');
 
 exports.getDashboardDetails = async (req, res, next) => {
   try {
-    const totalCustomers = await Customer.countDocuments({
+    const customers = await Customer.find({
       owner_id: req.owner._id
     });
-    const invoicesGenerated = await Invoice.countDocuments({
-      owner_id: req.owner._id
-    });
+    const totalCustomers = customers.length;
 
     const invoices = await Invoice.find({ owner_id: req.owner._id });
-    const totalAmountGenerated = invoices.reduce((acc, cur) => {
-      if (cur.status === 'Paid') {
-        return acc + cur.total_amount;
-      }
+    const invoicesGenerated = invoices.length;
+
+    const totalInvoicesPaid = await Invoice.find({ owner_id: req.owner._id, status: 'Paid' });
+
+    const totalAmountGenerated = totalInvoicesPaid.reduce((acc, cur) => {
+      return acc + cur.total_amount;
     }, 0);
 
-    const numberOfUnpaidInvoices = await Invoice.countDocuments({
-      owner_id: req.owner._id,
-      status: 'unpaid'
-    });
-    const totalAmountOutstanding = invoices.reduce((acc, cur) => {
-      if (cur.status !== 'Paid') {
-        return acc + cur.total_amount;
-      }
-    });
+    const numberOfUnpaidInvoices = invoices.length - totalInvoicesPaid.length;
 
     return res.status(200).json({
       status: 'success',
@@ -33,8 +25,7 @@ exports.getDashboardDetails = async (req, res, next) => {
         totalCustomers,
         invoicesGenerated,
         totalAmountGenerated,
-        numberOfUnpaidInvoices,
-        totalAmountOutstanding
+        numberOfUnpaidInvoices
       }
     });
   } catch (error) {
