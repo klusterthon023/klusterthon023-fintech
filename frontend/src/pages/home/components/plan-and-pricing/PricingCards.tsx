@@ -29,7 +29,7 @@ function PricingCards() {
             {FEATURES.map((label, index) => {
               const allowed_plan = id === 1 && index > 3;
               return (
-                <div className="flex gap-2 items-center">
+                <div key={index} className="flex gap-2 items-center">
                   <FontAwesomeIcon
                     icon={allowed_plan ? faClose : faCheck}
                     className={
