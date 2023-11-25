@@ -24,7 +24,8 @@ const createSendToken = (foundUser, statusCode, req, res) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None'
   });
   // removes the password from the output
   delete foundUser._doc.password;
@@ -133,7 +134,8 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
       Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production'
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'None'
   });
   res.status(200).json({
     status: 'success',
@@ -248,12 +250,13 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
         expiresIn: expiresin
       });
     };
-    const resetEmail = signResetToken(req.body.email, '10m');
+    const resetEmail = signResetToken(req.body.email, '15m');
 
     res.cookie('resetEmail', resetEmail, {
-      expires: new Date(Date.now() + 10 * 60 * 1000),
+      expires: new Date(Date.now() + 15 * 60 * 1000),
       httpOnly: true,
-      secure: process.env.NODE_ENV === 'production'
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'None'
     });
 
     res.status(200).json({
@@ -354,24 +357,11 @@ exports.resendToken = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
-  // Get user based on the token
-  // const cookieHeader = req.headers.cookie;
-  // console.log(cookieHeader, req.headers);
   let token;
   if (req.cookies && req.cookies.resetToken) {
     token = req.cookies.resetToken;
   }
-  // else if (cookieHeader) {
-  //   if (cookieHeader) {
-  //     // Parse the 'cookie' header to extract individual cookies
-  //     const cookies = cookieHeader.split('; ').reduce((acc, cookie) => {
-  //       const [name, value] = cookie.split('=');
-  //       acc[name] = value;
-  //       return acc;
-  //     }, {});
-  //     token = cookies.resetToken;
-  //   }
-  // }
+
   if (!token) {
     return next(new AppError('Password reset session has expired', 400));
   }
