@@ -84,7 +84,7 @@ exports.createInvoice = async (req, res) => {
 
     // send email to customer
 
-    const url = `${req.protocol}://${req.get(
+    const url = `${req.protocol}://${req.get( // to be changed to the frontend url
       'host'
     )}/v1/invoices/${urlPaymentToken}/pay`;
 
