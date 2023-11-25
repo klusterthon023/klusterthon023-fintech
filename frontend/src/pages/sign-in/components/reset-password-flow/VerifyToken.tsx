@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { Button, Typography } from "../../../../design-system";
 import DialPad from "../DialPad";
 import { useMutation } from "react-query";
-import { verifyToken } from "../../api-for-sign-in";
+import { resendToken, verifyToken } from "../../api-for-sign-in";
 import { IVerifyTokenPayload } from "../../types";
 
 function VerifyToken({ handleNext }: { handleNext: () => void }) {
@@ -47,17 +47,7 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
                 onChange={handleChange}
                 value={values?.token}
               />
-
-              <div className="flex justify-center">
-                <Typography
-                  variant="body4"
-                  className="!underline"
-                  color="primary.300"
-                >
-                  Send the code again
-                </Typography>
-              </div>
-
+              <ResendToken />
               <Button
                 fullWidth
                 disabled={values?.token.length !== 6}
@@ -75,3 +65,22 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
 }
 
 export default VerifyToken;
+
+const ResendToken = () => {
+  const { mutateAsync } = useMutation(resendToken);
+
+  const handleSubmitResendToken = async (value: any) => {
+    try {
+      await mutateAsync(value);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return (
+    <div onClick={handleSubmitResendToken} className="flex justify-center">
+      <Typography variant="body4" className="!underline" color="primary.300">
+        Send the code again
+      </Typography>
+    </div>
+  );
+};
