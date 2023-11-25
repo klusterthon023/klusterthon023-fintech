@@ -4,4 +4,6 @@ export * from "./typography";
 export * from "./divider";
 export * from "./checkbox";
 export * from "./modal";
+export * from "./chip";
+export * from "./table";
 export * from "./styles";

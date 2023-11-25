@@ -1,6 +1,6 @@
 import { Typography } from "../../../../../design-system";
-import createClient from "../../../../../assets/dashaord/create-client.svg";
-import createInvoice from "../../../../../assets/dashaord/create-invoice.svg";
+import createClient from "../../../../../assets/dashboard/create-client.svg";
+import createInvoice from "../../../../../assets/dashboard/create-invoice.svg";
 
 export default function QuickActions() {
   return (

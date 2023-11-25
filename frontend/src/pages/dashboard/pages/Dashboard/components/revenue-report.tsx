@@ -1,4 +1,4 @@
-import graphs from "../../../../../assets/dashaord/graphs.svg";
+import graphs from "../../../../../assets/dashboard/graphs.svg";
 
 export default function RevenueReports() {
   return (

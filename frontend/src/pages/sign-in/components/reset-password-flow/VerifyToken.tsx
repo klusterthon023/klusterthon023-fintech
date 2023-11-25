@@ -5,6 +5,8 @@ import DialPad from "../DialPad";
 import { useMutation } from "react-query";
 import { resendToken, verifyToken } from "../../api-for-sign-in";
 import { IVerifyTokenPayload } from "../../types";
+import { toast } from "react-toastify";
+import Loader from "../../../../components/loader/ApiLoadingState";
 
 function VerifyToken({ handleNext }: { handleNext: () => void }) {
   const { mutateAsync, isLoading, error, isError } = useMutation(verifyToken);
@@ -33,6 +35,7 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
           </div>
         )}
       </>
+      {isLoading && <Loader />}
       <Formik
         initialValues={{ token: "" }}
         validationSchema={validationSchemaVerifyToken}
@@ -67,20 +70,30 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
 export default VerifyToken;
 
 const ResendToken = () => {
-  const { mutateAsync } = useMutation(resendToken);
+  const { mutateAsync, isLoading } = useMutation(resendToken);
 
-  const handleSubmitResendToken = async (value: any) => {
+  const handleSubmitResendToken = async () => {
     try {
-      await mutateAsync(value);
+      await mutateAsync();
+      toast.success("Token resend successfully");
     } catch (error) {
       console.error(error);
+      toast.error("An Error occurred");
     }
   };
+
   return (
-    <div onClick={handleSubmitResendToken} className="flex justify-center">
-      <Typography variant="body4" className="!underline" color="primary.300">
-        Send the code again
-      </Typography>
-    </div>
+    <>
+      {isLoading && <Loader />}
+      <div onClick={handleSubmitResendToken} className="flex justify-center ">
+        <Typography
+          variant="body4"
+          className="!underline !cursor-pointer"
+          color="primary.300"
+        >
+          Send the code again
+        </Typography>
+      </div>
+    </>
   );
 };
