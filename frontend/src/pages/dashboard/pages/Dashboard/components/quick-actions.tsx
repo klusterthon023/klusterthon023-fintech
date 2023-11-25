@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, Typography } from "../../../../../design-system";
-import createClient from "../../../../../assets/dashaord/create-client.svg";
-import createInvoice from "../../../../../assets/dashaord/create-invoice.svg";
+import createClient from "../../../../../assets/dashboard/create-client.svg";
+import createInvoice from "../../../../../assets/dashboard/create-invoice.svg";
 import CreateClient from "./create-client";
 import CreateInvoice from "./create-invoice";
 
