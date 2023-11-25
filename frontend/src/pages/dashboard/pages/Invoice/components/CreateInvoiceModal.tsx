@@ -41,7 +41,7 @@ function CreateInvoiceModal() {
       }}
     >
       {isCreateInvoiceModalOpen && (
-        <div className="!w-full">
+        <div className="!w-[500px]">
           <Formik
             initialValues={{
               email: "",

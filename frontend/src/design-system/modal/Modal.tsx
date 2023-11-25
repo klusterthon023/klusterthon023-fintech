@@ -64,7 +64,7 @@ export default function Modal(props: ModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className={`relative bg-white !max-w-[700px] !max-h-[70vh] overflow-y-scroll max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
+            className={`relative bg-white !max-w-[700px] !max-h-[80vh] overflow-y-scroll max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
           >
             <div
               className={ClassNames("flex justify-between items-center", {
