@@ -17,6 +17,7 @@ module.exports = class Email {
   }
 
   newTransport() {
+    console.log(process.env.EMAIL_FROM, process.env.EMAIL_PASSWORDGMAIL)
     if (process.env.NODE_ENV === 'production') {
       return nodemailer.createTransport({
         service: 'Gmail',
