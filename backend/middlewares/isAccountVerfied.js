@@ -1,4 +1,5 @@
 const AppError = require('../utils/appError');
+const catchAsync = require('../utils/catchAsync');
 
 exports.isAccountVerified = async (req, res, next) => {
   try {
@@ -35,6 +36,8 @@ exports.isDetailsComplete = async (req, res, next) => {
         data: null
       });
     }
+
+    next();
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -43,15 +46,21 @@ exports.isDetailsComplete = async (req, res, next) => {
   }
 };
 
-exports.isAccountVerified = (req, res, next) => {
-  const currentUser = req.owner;
-  if (!currentUser.active) {
-    return next(
-      new AppError(
-        "You haven't verified your account. Please check your mail.",
-        401
-      )
-    );
+exports.isAccountVerified = catchAsync(async (req, res, next) => {
+  try {
+    const currentUser = req.owner;
+    if (!currentUser.active) {
+      return res.status(401).json({
+        message: "You have not verified your account. Please check your mail",
+        data: null
+      });
+    }
+
+    next();
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+      data: null
+    });
   }
-  next();
-};
+});

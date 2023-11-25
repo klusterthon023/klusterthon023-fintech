@@ -48,6 +48,6 @@ router
     invoiceController.deleteOneInvoice
   );
 
-router.route('/:id/pay').post(invoiceController.updateInvoiceToPaid);
+router.route('/:token/pay').post(invoiceController.updateInvoiceToPaid);
 
 module.exports = router;

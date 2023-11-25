@@ -56,7 +56,8 @@ const invoiceSchema = new mongoose.Schema({
   },
   date_paid: {
     type: Date
-  }
+  },
+  paymentToken: String
 });
 
 module.exports = mongoose.model('Invoice', invoiceSchema);

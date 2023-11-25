@@ -20,7 +20,7 @@ function DashboardPage() {
 
   useEffect(() => {
     if (!accessToken) {
-      navigate(RouteNames.HOME);
+      navigate(RouteNames.HOME, { replace: true });
     }
   }, [accessToken]);
 
