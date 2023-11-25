@@ -7,6 +7,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Owner = require('../models/Owner');
 const Email = require('../utils/email');
+const Notification = require('../models/Notifications');
 
 // signing the jwt token
 const signToken = (id, expiresin) => {
@@ -128,6 +129,7 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
   owner.activationToken = undefined;
   owner.active = true;
   await owner.save({ validateBeforeSave: false });
+
   const token = signToken(owner._id, process.env.JWT_EXPIRES_IN);
   res.cookie('jwt', token, {
     expires: new Date(
@@ -160,6 +162,14 @@ exports.signin = catchAsync(async (req, res, next) => {
   ) {
     return next(new AppError(`Incorrect email or password.`, 401));
   }
+
+  // Notification
+  const newNotification = {
+    notification_type: 'OwnerSignedIn',
+    owner: foundOwner._id,
+    description: 'You signed in.'
+  };
+  await Notification.create(newNotification);
 
   createSendToken(foundOwner, 200, req, res);
 });
@@ -383,6 +393,13 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   await owner.save();
   // Update changedPasswordAt property for the user
 
+  // Notification
+  const newNotification = {
+    notification_type: 'OwnerDetialsUpdate',
+    owner: req.owner._id,
+    description: 'You reset your password'
+  };
+  await Notification.create(newNotification);
   // log the user in, send JWT
   createSendToken(owner, 200, req, res);
 });
@@ -400,6 +417,14 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   owner.password = req.body.password;
 
   await owner.save();
+
+  // Notification
+  const newNotification = {
+    notification_type: 'OwnerDetialsUpdate',
+    owner: req.owner._id,
+    description: 'You updated your password!'
+  };
+  await Notification.create(newNotification);
 
   // Log user in send JWT
   createSendToken(owner, 200, req, res);
@@ -427,6 +452,13 @@ exports.updateBusinessAccount = catchAsync(async (req, res, next) => {
       runValidators: true
     }
   );
+  // Notification
+  const newNotification = {
+    notification_type: 'OwnerDetialsUpdate',
+    owner: req.owner._id,
+    description: 'You updated your business details!'
+  };
+  await Notification.create(newNotification);
 
   res.status(200).json({
     status: 'success',

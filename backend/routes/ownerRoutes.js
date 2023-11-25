@@ -1,6 +1,6 @@
-const router = require('express').Router();
 const ownerController = require('../controllers/ownerController');
 const authController = require('../controllers/authController');
+const router = require('express').Router();
 
 router
   .get(
@@ -40,6 +40,7 @@ router.patch(
 router.patch(
   '/updateOwner',
   authController.protect,
+  authController.restrictTo('owner'),
   authController.updateBusinessAccount
 );
 
