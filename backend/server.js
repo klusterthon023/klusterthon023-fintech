@@ -7,6 +7,7 @@ const connectDB = require('./configs/dbConfig');
 const ownerRoutes = require('./routes/ownerRoutes');
 const customerRoutes = require('./routes/customerRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
+const dashboardRoutes = require('./routes/dashboardRoutes');
 const globalErrorHandler = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -37,6 +38,7 @@ app.get('/v1', (req, res) => {
 app.use('/v1/auth', ownerRoutes);
 app.use('/v1/customers', customerRoutes);
 app.use('/v1/invoices', invoiceRoutes);
+app.use('/v1/dashboard', dashboardRoutes);
 
 app.use('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
