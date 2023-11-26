@@ -139,11 +139,11 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'None'
   });
-  res.status(200).json({
-    status: 'success',
-    message: 'Account created!'
-  });
-  res.redirect('https://klusterthon023-fintech.vercel.app/sign-in'); //This should redirect the users to the login page
+  // res.status(200).json({
+  //   status: 'success',
+  //   message: 'Account created!'
+  // });
+  res.redirect('https://klusterthon023-fintech.vercel.app/sign-in?success="true"'); //This should redirect the users to the login page
 });
 
 // signs in users
