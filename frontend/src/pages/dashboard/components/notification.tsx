@@ -24,7 +24,7 @@ export default function NotificationsWindow() {
   return (
     <section
       className="bg-white rounded-lg border border-gray-200 border-opacity-20 absolute top-[130%]
-    right-[-200%] w-[300px] h-[300px]"
+    right-[-200%] w-[300px] h-[300px] z-20"
     >
       <div className="grid gap-5 bg-white  rounded-lg p-4">
         <Typography variant="h6">Notification</Typography>
