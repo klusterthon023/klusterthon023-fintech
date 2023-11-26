@@ -38,20 +38,16 @@ export default function CreateInvoice() {
 
   const { toggleIsCreateInvoicedModalOpen, isCreateInvoiceModalOpen } =
     useAppContext();
+
   const [showMore, setShowMore] = useState(false);
 
   const { mutateAsync, isLoading, isError, error } = useMutation(createInvoice);
 
-  const handleSubmit = async (
-    values: FormValues,
-    FormikHelpers: FormikHelpers<FormValues>
-  ) => {
-    console.log(values);
+  const handleSubmit = async (values: FormValues) => {
     try {
       const result = await mutateAsync(values);
-      console.log(result);
       toast(result?.message);
-      FormikHelpers.resetForm();
+      toggleIsCreateInvoicedModalOpen();
     } catch (error) {
       console.error(error);
     }

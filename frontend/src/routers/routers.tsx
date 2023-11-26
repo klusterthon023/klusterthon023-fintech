@@ -10,6 +10,7 @@ import {
   DashboardPage,
   ClientPage,
   InvoicePage,
+  ClientDetailPage,
 } from "../pages";
 import VerificationSucessfull from "../pages/account-verification/components/verification-successfull";
 import VerificationFailed from "../pages/account-verification/components/verification-failed";
@@ -40,9 +41,17 @@ export const CHILDREN_ROUTES = [
         path: `${RouteNames.MAIN}${RouteNames.CLIENT}`,
       },
       {
+        element: <ClientDetailPage />,
+        path: `${RouteNames.MAIN}${RouteNames.CLIENT}/:clientId`,
+      },
+      {
         element: <InvoicePage />,
         path: `${RouteNames.MAIN}${RouteNames.INVOICE}`,
       },
+      // {
+      //   element: <InvoiceDetailPage />,
+      //   path: `${RouteNames.MAIN}${RouteNames.CLIENT}/:invoiceId`,
+      // },
     ],
   },
   {

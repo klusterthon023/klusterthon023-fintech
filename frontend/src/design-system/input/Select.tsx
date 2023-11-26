@@ -23,10 +23,11 @@ const selectCss = (theme: Theme) => css`
 
   .css-cp01gg-control {
     min-height: 34px;
+    margin-top: 7px;
   }
 
   .select__placeholder {
-    font-size: 12px;
+    font-size: 15px;
     color: ${theme.palette.gray[500]};
     font-weight: 300;
   }
@@ -38,7 +39,7 @@ const selectCss = (theme: Theme) => css`
     border: 1px solid ${theme.palette.gray[100]};
     border-radius: 8px;
     max-height: 200px !important;
-    margin-top: 20px;
+    margin-top: 4px;
     padding: 4px;
   }
 
@@ -73,23 +74,23 @@ const selectCss = (theme: Theme) => css`
   }
 
   .select__option--selected {
-    background-color: ${theme.palette.gray[100]};
-    color: ${theme.palette.gray[600]};
+    background-color: ${theme.color.gray};
+    color: ${theme.palette.gray[300]};
   }
 
   .select__option:hover {
-    background-color: ${theme.palette.gray[100]};
-    color: ${theme.palette.gray[600]};
+    background-color: ${theme.color.gray};
+    color: ${theme.palette.gray[300]};
   }
 
   .select__singleValue {
     ${css(theme.typography.body4)};
-    color: ${theme.palette.gray[600]};
+    color: ${theme.palette.gray[300]};
     font-weight: 500;
   }
 
   .cancel__icon {
-    color: ${theme.palette.gray[500]};
+    color: ${theme.palette.gray[300]};
     cursor: pointer;
   }
 `;
