@@ -7,9 +7,10 @@ import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage,
 } from "../../utils/helper";
-import dayjs from "dayjs";
-import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
 import { ToastContainer } from "react-toastify";
+import CreateInvoice from "./components/create-invoice";
+import CreateClient from "./components/create-client";
+import Footer from "./components/Footer";
 
 function DashboardPage() {
   const { pathname } = useLocation();
@@ -18,10 +19,6 @@ function DashboardPage() {
 
   const currentUserData = getDataFromLocalStorage("currentUser");
   const currentUser = JSON.parse(currentUserData as any);
-
-  const isTokenExpired = dayjs().isAfter(
-    dayjs(currentUser?.activationTokenExpire)
-  );
 
   useEffect(() => {
     if (pathname === RouteNames.MAIN) {
@@ -43,9 +40,11 @@ function DashboardPage() {
         <Layout>
           <Outlet />
           <ToastContainer />
+          <Footer />
         </Layout>
       </div>
-      <CreateInvoiceModal />
+      <CreateClient />
+      <CreateInvoice />
     </>
   );
 }

@@ -7,6 +7,7 @@ import { resendToken, verifyToken } from "../../api-for-sign-in";
 import { IVerifyTokenPayload } from "../../types";
 import { toast } from "react-toastify";
 import Loader from "../../../../components/loader/ApiLoadingState";
+import { removeDataFromLocalStorage } from "../../../../utils/helper";
 
 function VerifyToken({ handleNext }: { handleNext: () => void }) {
   const { mutateAsync, isLoading, error, isError } = useMutation(verifyToken);
@@ -19,6 +20,7 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
     try {
       await mutateAsync(value);
       handleNext();
+      removeDataFromLocalStorage("verification_email");
     } catch (error) {
       console.error(error);
     }

@@ -4,7 +4,6 @@ import {
   Input,
   Modal,
   Select,
-  Typography,
 } from "../../../../../design-system";
 import { useState } from "react";
 import * as Yup from "yup";
@@ -62,16 +61,6 @@ function CreateInvoiceModal() {
                     {...formikHelper(formik, "email")}
                     className=" placeholder:text-sm"
                   />
-                  <div className="flex justify-start">
-                    <Typography
-                      onClick={() => setShowMore(true)}
-                      variant="body4"
-                      className="!cursor-pointer"
-                      color="primary.300"
-                    >
-                      Add manually
-                    </Typography>
-                  </div>
 
                   {showMore && (
                     <>

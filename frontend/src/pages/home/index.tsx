@@ -53,17 +53,21 @@ function HomePage() {
   }, [currentSection, updateCurrentSection]);
 
   return (
-    <div className="overflow-x-hidden">
-      <Header />
-      <HeroSection />
-      <WhatWeDoSection />
-      <AboutUs />
-      <KeyFeatures />
-      <CarryOutTractions />
-      <PlanAndPricing />
-      <QuestionAndAnswer />
-      <Footer />
-    </div>
+    <>
+      <div className="sticky top-0 z-50">
+        <Header />
+      </div>
+      <div className="overflow-x-hidden">
+        <HeroSection />
+        <WhatWeDoSection />
+        <AboutUs />
+        <KeyFeatures />
+        <CarryOutTractions />
+        <PlanAndPricing />
+        <QuestionAndAnswer />
+        <Footer />
+      </div>
+    </>
   );
 }
 

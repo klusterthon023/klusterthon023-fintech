@@ -38,7 +38,7 @@ function Header() {
 
   const { currentSection, updateCurrentSection } = useAppContext();
   return (
-    <div className="px-4 py-5 bg-white shadow">
+    <div className="px-4 py-5 max-sm:px-2 bg-white shadow">
       <div className="flex justify-between items-center container mx-auto">
         <div className="flex justify-center items-center">
           <img src={logo} alt="invoicehub" />

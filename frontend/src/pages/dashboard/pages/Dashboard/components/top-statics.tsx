@@ -1,8 +1,6 @@
-import { useMutation } from "react-query";
+import { useQuery } from "react-query";
 import { Typography } from "../../../../../design-system";
 import { showStatics } from "../api-dashboard";
-import { useEffect, useState } from "react";
-import { dashboard } from "../types";
 import graphesRed from "../../../../../assets/dashboard/graphes-red.svg";
 import graphesGreen from "../../../../../assets/dashboard/graphs-green.svg";
 import arrowUp from "../../../../../assets/dashboard/arrow-up.svg";
@@ -10,23 +8,8 @@ import arrowDown from "../../../../../assets/dashboard/arrow-down.svg";
 import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
 
 export default function TopStatics() {
-  const [data, setData] = useState<dashboard | null>(null);
-  const { mutateAsync, isLoading } = useMutation(showStatics);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const result = await mutateAsync();
-        setData(result.data);
-        console.log(result.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    fetchData();
-  }, [mutateAsync]);
-
+  const { data, isLoading } = useQuery(["showStatics"], showStatics);
+  console.log(data);
   if (isLoading) {
     return <TopStaticsLoadingSkeleton />;
   }
@@ -43,7 +26,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.totalCustomers}
+              {data?.numberOfClients}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowUp} alt="" />
@@ -68,7 +51,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.invoicesGenerated}
+              {data?.numberOfInvoices}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowDown} alt="" />
@@ -93,7 +76,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.totalAmountGenerated}
+              {data?.totalRevenueGenerated}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowUp} alt="" />

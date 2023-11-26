@@ -26,11 +26,11 @@ export const tableStyles = () => css`
   width: 100%;
 `;
 
-export const headerStyles = () => css`
-  position: sticky;
-  top: 0;
-  z-index: 10;
-`;
+// export const headerStyles = () => css`
+//   position: sticky;
+//   top: 0;
+//   z-index: 10;
+// `;
 
 const headerCellStyles = (theme: Theme) => css`
   padding: 8px 12px;
@@ -42,10 +42,6 @@ const headerCellStyles = (theme: Theme) => css`
 const dataCellStyles = (theme: Theme) => css`
   border-bottom: 1px solid ${theme.color.gray};
   padding: 8px 12px;
-
-  &:hover {
-    background-color: ${theme.color.gray};
-  }
 `;
 
 const bodyCellStyles = (theme: Theme) => css`
@@ -54,7 +50,7 @@ const bodyCellStyles = (theme: Theme) => css`
   color: ${theme.palette.gray[600]};
 
   &:hover {
-    background-color: ${theme.palette.gray};
+    background-color: ${theme.color.gray};
   }
 `;
 
@@ -130,7 +126,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
 
   return (
     <table className={cx(tableStyles())}>
-      <thead className={cx(headerStyles())}>
+      <thead>
         <tr>
           {columns.map(({ title, key, dataIndex, sortable, sorter }) => {
             return (
@@ -169,7 +165,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
           })}
         </tr>
       </thead>
-      <tbody className="bg-color-white overflow-y-scroll">
+      <tbody className="bg-color-white">
         {items.map((row, rowIndex) => (
           <tr key={rowIndex} className={cx(bodyCellStyles(theme))}>
             {columns.map((column, colIndex) => (

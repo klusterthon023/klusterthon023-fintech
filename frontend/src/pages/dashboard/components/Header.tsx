@@ -1,7 +1,5 @@
-import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import lang from "../../../assets/dashboard/en.svg";
-import notificationicon from "../../../assets/dashboard/notification-icon.svg";
 import { Input, Typography } from "../../../design-system";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -18,10 +16,6 @@ function Header() {
   const currentUser = JSON.parse(currentUserData as any);
 
   const { pathname } = useLocation();
-  const [openNotification, setOpenNotification] = useState(false);
-  function handleNotification() {
-    setOpenNotification(!openNotification);
-  }
 
   function capitalizeFirstLetter(inputString: string) {
     return inputString.replace(/^[a-z]/, (match) => match.toUpperCase());
@@ -40,10 +34,12 @@ function Header() {
           startIcon={<FontAwesomeIcon icon={faSearch} />}
         />
       </div>
-      <div className="flex gap-6 items-center">
+      <div className="flex gap-2 md:gap-6 items-center">
+        <img src={lang} alt="" />
         <Dropdown
-          className={"!bg-color-white rounded-lg shadow-lg !p-0 !mt-10"}
-          overlay={<Notifications />}
+          overlayClassName={"!pt-5"}
+          className={"!bg-color-white rounded-lg !shadow-lg !p-0"}
+          overlay={<NotificationsWindow />}
           trigger={["click"]}
         >
           <div className="rounded-full cursor-pointer bg-color-gray p-2">
@@ -60,23 +56,3 @@ function Header() {
 }
 
 export default Header;
-
-const Notifications = () => {
-  return (
-    <div className="px-5 py-6 w-[460px] max-h-[620px] overflow-y-scroll rounded-lg bg-color-white">
-      <div className="flex justify-between items-center pb-3 border-b border-color-gray mb-3">
-        <Typography variant="h6">Notification</Typography>
-        <Typography variant="body4" color="primary">
-          Mark all as read
-        </Typography>
-      </div>
-      {NOTIFICATION_LIST.map((label) => (
-        <div className="py-3 border-b border-color-gray">
-          <Typography variant="body5">{label}</Typography>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-const NOTIFICATION_LIST = ["Hello", "Wow", "This is the last Notification"];

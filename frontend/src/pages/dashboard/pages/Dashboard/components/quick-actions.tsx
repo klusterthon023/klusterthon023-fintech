@@ -1,40 +1,26 @@
-import { useState } from "react";
-import { Button, Modal, Typography } from "../../../../../design-system";
+import { Button, Typography } from "../../../../../design-system";
 import createClient from "../../../../../assets/dashboard/create-client.svg";
 import createInvoice from "../../../../../assets/dashboard/create-invoice.svg";
-import CreateClient from "./create-client";
-import CreateInvoice from "./create-invoice";
+import { useAppContext } from "../../../../../contexts";
 
 export default function QuickActions() {
-  const [modalClient, setModalClient] = useState(false);
-  const [modalInvoice, setModalInvoice] = useState(false);
-
-  function openModalInvoice() {
-    setModalInvoice(true);
-  }
-  function closeModalInvoice() {
-    setModalInvoice(false);
-  }
-  function openModalClient() {
-    setModalClient(true);
-  }
-  function closeModalClient() {
-    setModalClient(false);
-  }
-
+  const { toggleIsCreateClientModalOpen, toggleIsCreateInvoicedModalOpen } =
+    useAppContext();
   return (
     <section className="flex flex-col gap-4">
       <Typography variant="body4" className="!font-semibold">
         Quick Actions
       </Typography>
       <div className="flex flex-col md:flex-row gap-5 w-full">
-        <div className="flex gap-3 items-center w-full bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+        <div
+          onClick={toggleIsCreateClientModalOpen}
+          className="flex gap-3 items-center cursor-pointer w-full bg-white border border-gray-200 border-opacity-20 rounded-lg p-4"
+        >
           <Button
             size="small"
             className="!px-[1px]"
             startIcon={<img src={createClient} alt="create client" />}
-            onClick={openModalClient}
-          ></Button>
+          />
           <div>
             <Typography className="!text-base !font-bold">
               Create client
@@ -44,13 +30,15 @@ export default function QuickActions() {
             </Typography>
           </div>
         </div>
-        <div className="flex gap-3 items-center w-full bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+        <div
+          onClick={toggleIsCreateInvoicedModalOpen}
+          className="flex gap-3 items-center cursor-pointer w-full bg-white border border-gray-200 border-opacity-20 rounded-lg p-4"
+        >
           <Button
             size="small"
             className="!px-[1px]"
             startIcon={<img src={createInvoice} alt="create client" />}
-            onClick={openModalInvoice}
-          ></Button>
+          />
           <div>
             <Typography className="!text-base !font-bold">
               Create new invoice
@@ -61,23 +49,6 @@ export default function QuickActions() {
           </div>
         </div>
       </div>
-      {modalClient && (
-        <div className="">
-          <Modal isModalOpen={modalClient} onClose={closeModalClient}>
-            <CreateClient />
-          </Modal>
-          <button onClick={closeModalClient}>Close Modal</button>
-        </div>
-      )}
-
-      {modalInvoice && (
-        <div className="">
-          <Modal isModalOpen={modalInvoice} onClose={closeModalInvoice}>
-            <CreateInvoice />
-          </Modal>
-          <button onClick={closeModalInvoice}>Close Modal</button>
-        </div>
-      )}
     </section>
   );
 }
