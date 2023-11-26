@@ -24,7 +24,9 @@ export default function QuickActions() {
 
   return (
     <section className="flex flex-col gap-4">
-      <Typography>Quick Actions</Typography>
+      <Typography variant="body4" className="!font-semibold">
+        Quick Actions
+      </Typography>
       <div className="flex flex-col md:flex-row gap-5 w-full">
         <div className="flex gap-3 items-center w-full bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
           <Button
