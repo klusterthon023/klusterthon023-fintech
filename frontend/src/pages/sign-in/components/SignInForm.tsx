@@ -8,6 +8,7 @@ import { ISignInPayload } from "../types";
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../../routers/interface";
 import { useAppContext } from "../../../contexts";
+import Loader from "../../../components/loader/AppLoader";
 
 function SignInForm() {
   const initialValues = {
@@ -24,7 +25,10 @@ function SignInForm() {
   const handleSubmit = async (value: ISignInPayload) => {
     try {
       const result = await mutateAsync(value);
-      setDataToLocalStorage("accessToken", result?.token);
+      setDataToLocalStorage(
+        "currentUser",
+        JSON.stringify((result as any).data.user)
+      );
       navigate(RouteNames.MAIN);
     } catch (error) {
       console.error(error);
@@ -49,6 +53,7 @@ function SignInForm() {
           </div>
         )}
       </>
+      {isLoading && <Loader isLoading={isLoading} />}
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}

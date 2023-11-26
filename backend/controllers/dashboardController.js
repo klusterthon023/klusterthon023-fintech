@@ -2,39 +2,6 @@ const Customer = require('../models/Customer');
 const Invoice = require('../models/Invoice');
 const catchAsync = require('../utils/catchAsync');
 
-const calculateStatsPerMonth = (invoices, type) => {
-  return invoices.reduce((acc, doc) => {
-    const monthYear = new Date(doc.created_date).toLocaleString('default', {
-      month: 'long',
-      year: 'numeric'
-    });
-    if (type == 'invoice') {
-      if (!acc[monthYear]) {
-        acc[monthYear] = {
-          revenue: 0,
-          paidInvoiceCount: 0,
-          unpaid: 0,
-          unpaidInvoiceCount: 0
-        };
-      }
-      if (doc.status === 'Paid') {
-        acc[monthYear].revenue = acc[monthYear].revenue + doc.total_amount;
-        acc[monthYear].paidInvoiceCount++;
-      } else if (type == 'invoice' && doc.status !== 'Paid') {
-        acc[monthYear].unpaid = acc[monthYear].unpaid + doc.total_amount;
-        acc[monthYear].unpaidInvoiceCount++;
-      }
-    } else {
-      if (!acc[monthYear]) {
-        acc[monthYear] = { count: 0 };
-      }
-      acc[monthYear].count++;
-    }
-
-    return acc;
-  }, {});
-};
-
 const calculatePercentage = (numberOfClientsPerMonth, prop) => {
   const monthYears = Object.keys(numberOfClientsPerMonth);
   const lastMonthCount =
