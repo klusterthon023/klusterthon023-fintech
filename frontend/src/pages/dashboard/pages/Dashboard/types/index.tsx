@@ -78,7 +78,7 @@ export type IProduct = {
   _id: string;
 };
 
-export type IGetAllInvoices = {
+export type IInvoice = {
   _id: string;
   owner_id: string;
   customer_id: string;
@@ -91,4 +91,9 @@ export type IGetAllInvoices = {
   paymentToken: string;
   __v: number;
   id: string;
+};
+
+export type IGetAllInvoices = {
+  message: string;
+  data: IInvoice[];
 };
