@@ -8,11 +8,46 @@ const calculatePercentage = (numberOfClientsPerMonth, prop) => {
     numberOfClientsPerMonth[monthYears[monthYears.length - 1]][prop];
   const secondToLastMonthCount =
     numberOfClientsPerMonth[monthYears[monthYears.length - 2]][prop];
-  console.log(prop, lastMonthCount, secondToLastMonthCount);
   const percentageChange =
     ((lastMonthCount - secondToLastMonthCount) / secondToLastMonthCount) * 100;
 
   return percentageChange.toFixed(2) * 1;
+};
+
+const calculateStatsPerMonth = (data, type) => {
+  return data.reduce((acc, doc) => {
+    const monthYear = new Date(doc.created_date).toLocaleString('default', {
+      month: 'long',
+      year: 'numeric'
+    });
+
+    if (type === 'invoice') {
+      if (!acc[monthYear]) {
+        acc[monthYear] = {
+          revenue: 0,
+          paidInvoiceCount: 0,
+          unpaid: 0,
+          unpaidInvoiceCount: 0
+        };
+      }
+      if (doc.status === 'Paid') {
+        acc[monthYear].revenue = acc[monthYear].revenue + doc.total_amount;
+        acc[monthYear].paidInvoiceCount++;
+      } else if (doc.status !== 'Paid') {
+        acc[monthYear].unpaid = acc[monthYear].revenue + doc.total_amount;
+        acc[monthYear].unpaidInvoiceCount++;
+      }
+    } else {
+      if (!acc[monthYear]) {
+        acc[monthYear] = {
+          count: 0
+        };
+      }
+      acc[monthYear].count++;
+    }
+
+    return acc;
+  }, {});
 };
 
 exports.getStats = catchAsync(async (req, res, next) => {
@@ -20,7 +55,7 @@ exports.getStats = catchAsync(async (req, res, next) => {
     'customers'
   );
   const customers = await Customer.find({ owner_id: req.owner._id });
-  console.log(!!invoices, !!customers);
+
   // For client Logic
   let percentageChangeInNumberOFClients = 0;
   let numberOfClientsPerMonth = {};
