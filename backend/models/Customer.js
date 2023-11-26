@@ -43,6 +43,10 @@ const customerSchema = new mongoose.Schema(
       required: [true, 'Please enter owner id'],
       type: mongoose.Schema.ObjectId,
       ref: 'Owner'
+    },
+    created_date: {
+      type: Date,
+      default: Date.now()
     }
   },
   {
