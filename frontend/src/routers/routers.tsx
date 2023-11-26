@@ -11,6 +11,8 @@ import {
   ClientPage,
   InvoicePage,
 } from "../pages";
+import VerificationSucessfull from "../pages/account-verification/components/verification-successfull";
+import VerificationFailed from "../pages/account-verification/components/verification-failed";
 
 export const CHILDREN_ROUTES = [
   {
@@ -46,6 +48,14 @@ export const CHILDREN_ROUTES = [
   {
     path: RouteNames.DESIGN_SYSTEM,
     element: <DesignSystem />,
+  },
+  {
+    path: RouteNames.ACCOUNT_VERIFIED,
+    element: <VerificationSucessfull />,
+  },
+  {
+    path: RouteNames.ACCOUNT_NOT_VERIFIED,
+    element: <VerificationFailed />,
   },
 ];
 
