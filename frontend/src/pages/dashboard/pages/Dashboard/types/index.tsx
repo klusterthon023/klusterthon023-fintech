@@ -65,3 +65,8 @@ export type IGetNotifications = {
   status: string;
   notifications: notifications[];
 };
+
+export type IResendEmail = {
+  status: string;
+  message: string;
+};

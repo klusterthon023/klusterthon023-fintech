@@ -9,7 +9,6 @@ import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
 
 export default function TopStatics() {
   const { data, isLoading } = useQuery(["showStatics"], showStatics);
-  console.log(data);
   if (isLoading) {
     return <TopStaticsLoadingSkeleton />;
   }
@@ -26,7 +25,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.numberOfClients}
+              {data?.numberOfClients ? data?.numberOfClients : 0}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowUp} alt="" />
@@ -51,7 +50,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.numberOfInvoices}
+              {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowDown} alt="" />
@@ -76,7 +75,7 @@ export default function TopStatics() {
               variant="h5"
               className="!flex !items-center gap-1 !font-bold"
             >
-              {data?.totalRevenueGenerated}
+              {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
             <div className=" flex items-center gap-1">
               <img src={arrowUp} alt="" />
