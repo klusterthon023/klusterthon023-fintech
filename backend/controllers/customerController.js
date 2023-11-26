@@ -65,7 +65,7 @@ exports.createCustomer = async (req, res) => {
     });
   } catch (error) {
     return res.status(500).json({
-      message: 'An error occurred while creating customer',
+      message: 'An error occurred while creating customer: ' + error.message,
       data: null
     })
   }
