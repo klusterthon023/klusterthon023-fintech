@@ -2377,6 +2377,11 @@ react-otp-input@^3.1.0:
   resolved "https://registry.yarnpkg.com/react-otp-input/-/react-otp-input-3.1.0.tgz#50095dfb037d27725a17ecd7d354a4e0e7d12e18"
   integrity sha512-SNDwqPemy5DYLVQJrOEfZXvJePcDIDmjkln0QyHdje8hRcB1TnrqthxHs0M+E9MWQAyxM84R5yPe2wYjqnH4UA==
 
+react-paystack@^4.0.3:
+  version "4.0.3"
+  resolved "https://registry.yarnpkg.com/react-paystack/-/react-paystack-4.0.3.tgz#f4a38966295e990a5bcbf587966083a5f0b5f5ab"
+  integrity sha512-ruu94Qrvi7QHK1axrHRShUebka68G3UyGIndVFPCjs3rddBOkLiorF6GJ98FW9lq4ov5M4adh4g03F6aOuJmRA==
+
 react-phone-number-input@^3.3.7:
   version "3.3.7"
   resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.3.7.tgz#2925340c0aa260df549d2bf9f91f0d0c67b421ee"

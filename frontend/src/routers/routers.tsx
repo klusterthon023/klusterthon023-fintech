@@ -11,6 +11,7 @@ import {
   ClientPage,
   InvoicePage,
   ClientDetailPage,
+  PaymentPage,
 } from "../pages";
 import VerificationSucessfull from "../pages/account-verification/components/verification-successfull";
 import VerificationFailed from "../pages/account-verification/components/verification-failed";
@@ -28,6 +29,11 @@ export const CHILDREN_ROUTES = [
     path: RouteNames.HOME,
     element: <Home />,
   },
+  {
+    path: RouteNames.PAYMENT,
+    element: <PaymentPage />,
+  },
+
   {
     path: RouteNames.MAIN,
     element: <DashboardIndexPage />,
