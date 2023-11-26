@@ -1,6 +1,8 @@
 import { Button, Typography } from "../../../../design-system";
 import HeroAvatars from "./HeroAvatars";
 import decorator from "../../../../assets/home/decorator.svg";
+import { Link } from "react-router-dom";
+import { RouteNames } from "../../../../routers/interface";
 
 export default function HeroText() {
   return (
@@ -44,12 +46,12 @@ export default function HeroText() {
           with our efficient payment management system.
         </Typography>
       </div>
-      <div className="relative">
+      <Link to={RouteNames.SIGN_UP} className="relative">
         <div className="absolute left-[3px] top-[7px] bg-black w-[205px] h-[47px] rounded-lg z-10"></div>
         <Button color="tertiary" className="z-30 relative">
           Open a Free Account
         </Button>
-      </div>
+      </Link>
 
       <HeroAvatars />
     </section>
