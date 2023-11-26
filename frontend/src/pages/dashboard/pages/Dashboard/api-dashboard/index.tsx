@@ -5,6 +5,7 @@ import {
   ICreateInvoiceRequest,
   IGetNotifications,
   IGetStatics,
+  IResendEmail,
 } from "../types";
 
 export const createClient = async (data: ICreateClientRequest) => {
@@ -27,6 +28,18 @@ export const createInvoice = async (data: ICreateInvoiceRequest) => {
       data
     );
     return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const resendEmail = async () => {
+  try {
+    const response = await ApiAxiosInterceptor.post<IResendEmail>(
+      "/auth/resendActivationToken"
+    );
+    return response?.data;
   } catch (error) {
     console.error(error);
     throw error;
