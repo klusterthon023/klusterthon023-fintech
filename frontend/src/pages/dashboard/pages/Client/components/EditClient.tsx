@@ -1,18 +1,17 @@
-import { Formik, Form } from "formik";
-import * as Yup from "yup";
-import { useMutation } from "react-query";
 import {
   Button,
   Input,
   Modal,
   Select,
   Typography,
-} from "../../../design-system";
-import { createClient } from "../pages/Dashboard/api-dashboard";
-import { formikHelper } from "../../../utils/helper";
-import { toast } from "react-toastify";
-import { useAppContext } from "../../../contexts";
+} from "../../../../../design-system";
+import { useMutation } from "react-query";
+import { editClient } from "../client-api";
+import { Formik, Form } from "formik";
+import * as Yup from "yup";
 import { useState } from "react";
+import { formikHelper } from "../../../../../utils/helper";
+import { toast } from "react-toastify";
 
 interface FormValues {
   name: string;
@@ -37,31 +36,37 @@ const validationSchema = Yup.object().shape({
   business_address: Yup.string().required("A location is required"),
 });
 
-export default function CreateClient() {
+export default function EditClient({
+  isEditModalOpen,
+  onClose,
+  id,
+  refetchData,
+  client,
+}: any) {
   const [type, setType] = useState("");
 
   const initialValues: FormValues = {
-    name: "",
-    email: "",
+    name: client?.name,
+    email: client?.email,
     customer_type: "",
     phone_number: "",
-    business_address: "",
+    business_address: client?.business_address,
   };
 
-  const {
-    toggleIsCreateClientModalOpen,
-    refetchClient,
-    isCreateClientModalOpen,
-  } = useAppContext();
-
-  const { mutateAsync, isLoading, isError, error } = useMutation(createClient);
+  const { mutateAsync, isLoading, isError, error } = useMutation(editClient);
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const result = await mutateAsync({ ...values, customer_type: type });
-      refetchClient();
-      toast(result?.message);
-      toggleIsCreateClientModalOpen();
+      const result = await mutateAsync({
+        id: id,
+        data: {
+          ...values,
+          customer_type: type,
+        },
+      });
+      toast((result as any)?.message);
+      refetchData();
+      onClose();
     } catch (error) {
       console.error(error);
     }
@@ -71,13 +76,11 @@ export default function CreateClient() {
 
   return (
     <Modal
-      title={"New Client"}
-      isModalOpen={isCreateClientModalOpen}
-      onClose={() => {
-        toggleIsCreateClientModalOpen();
-      }}
+      title={"Edit Client Information"}
+      isModalOpen={isEditModalOpen}
+      onClose={onClose}
     >
-      {isCreateClientModalOpen && (
+      {isEditModalOpen && (
         <section className="sm:!w-auto md:!w-[500px] mt-4">
           <>
             {isError && error && (
@@ -116,6 +119,10 @@ export default function CreateClient() {
                   />
 
                   <Select
+                    defaultValue={{
+                      label: client?.customer_type,
+                      value: client?.customer_type,
+                    }}
                     onChange={(e: any) => {
                       setType(e.value);
                     }}

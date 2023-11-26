@@ -7,7 +7,6 @@ import {
   getDataFromLocalStorage,
   removeDataFromLocalStorage,
 } from "../../utils/helper";
-import { ToastContainer } from "react-toastify";
 import CreateInvoice from "./components/create-invoice";
 import CreateClient from "./components/create-client";
 import Footer from "./components/Footer";
@@ -39,7 +38,6 @@ function DashboardPage() {
         <SideBar />
         <Layout>
           <Outlet />
-          <ToastContainer />
           <Footer />
         </Layout>
       </div>

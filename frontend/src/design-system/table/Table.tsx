@@ -132,7 +132,7 @@ function Table<RecordType>(props: TableProps<RecordType>) {
             return (
               <th key={key} scope="col" className={cx(headerCellStyles(theme))}>
                 <div className={cx(titleCellStyles())}>
-                  <Typography fontWeight={500} variant="body5" color="gray.500">
+                  <Typography fontWeight={500} variant="body5" color="gray.200">
                     {title}
                   </Typography>
                   {sortable && dataIndex && (

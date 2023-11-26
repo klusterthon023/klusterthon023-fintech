@@ -6,3 +6,4 @@ export { default as DashboardIndexPage } from "./dashboard";
 export { default as DashboardPage } from "./dashboard/pages/Dashboard";
 export { default as ClientPage } from "./dashboard/pages/Client";
 export { default as InvoicePage } from "./dashboard/pages/Invoice";
+export { default as ClientDetailPage } from "./dashboard/pages/Client/components";
