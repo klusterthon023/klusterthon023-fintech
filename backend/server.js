@@ -35,12 +35,12 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
-const limiter = rateLimit({
-  max: 300,
-  windowMs: 60 * 60 * 1000,
-  message: 'Too many requests from this IP, try again in a hour!'
-});
-app.use('/v1', limiter);
+// const limiter = rateLimit({
+//   max: 300,
+//   windowMs: 60 * 60 * 1000,
+//   message: 'Too many requests from this IP, try again in a hour!'
+// });
+// app.use('/v1', limiter);
 
 app.use(express.json({ limit: '10kb' }));
 app.use(express.urlencoded({ extended: false }));
