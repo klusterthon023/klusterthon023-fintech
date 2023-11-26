@@ -124,7 +124,12 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
     activationToken: hashedToken,
     activationTokenExpire: { $gt: Date.now() }
   });
-  if (!owner) return next(new AppError('Invalid or expired token', 400));
+  if (!owner) {
+    // return next(new AppError('Invalid or expired token', 400))
+    return res.redirect(
+      'https://klusterthon023-fintech.vercel.app/verification-failed?msg=Invalid or expired token'
+    );
+  }
   owner.activationTokenExpire = undefined;
   owner.activationToken = undefined;
   owner.active = true;
@@ -143,7 +148,9 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
   //   status: 'success',
   //   message: 'Account created!'
   // });
-  res.redirect('https://klusterthon023-fintech.vercel.app/sign-in?success="true"'); //This should redirect the users to the login page
+  res.redirect(
+    'https://klusterthon023-fintech.vercel.app/verification-completed'
+  );
 });
 
 // signs in users
