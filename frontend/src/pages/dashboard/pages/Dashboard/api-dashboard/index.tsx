@@ -69,7 +69,7 @@ export const recentNotifications = async (): Promise<IGetNotifications> => {
   }
 };
 
-export const recentTransactions = async () => {
+export const getRecentTransactions = async () => {
   try {
     const response = await ApiAxiosInterceptor.get<IGetAllInvoices>(
       "/invoices"
