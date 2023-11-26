@@ -70,3 +70,30 @@ export type IResendEmail = {
   status: string;
   message: string;
 };
+
+export type IProduct = {
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  _id: string;
+};
+
+export type IInvoice = {
+  _id: string;
+  owner_id: string;
+  customer_id: string;
+  transcation_details: string;
+  products: Product[];
+  total_amount: number;
+  status: "Pending" | "Paid";
+  created_date: string;
+  due_date: string;
+  paymentToken: string;
+  __v: number;
+  id: string;
+};
+
+export type IGetAllInvoices = {
+  message: string;
+  data: IInvoice[];
+};
