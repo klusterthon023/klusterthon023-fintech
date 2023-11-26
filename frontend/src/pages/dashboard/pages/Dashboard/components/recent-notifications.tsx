@@ -3,10 +3,11 @@ import { Typography } from "../../../../../design-system";
 import { notifications } from "../types";
 import { useMutation } from "react-query";
 import { recentNotifications } from "../api-dashboard";
+import RecentNotificationsLoadingSkeleton from "./recent-notifications-skeleton";
 
 export default function RecentNotifications() {
   const [data, setData] = useState<notifications[] | null>(null);
-  const { mutateAsync } = useMutation(recentNotifications);
+  const { mutateAsync, isLoading } = useMutation(recentNotifications);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,21 +22,28 @@ export default function RecentNotifications() {
     fetchData();
   }, [mutateAsync]);
 
+  if (isLoading) {
+    return <RecentNotificationsLoadingSkeleton />;
+  }
   return (
     <section className="bg-white rounded-lg border border-gray-200 border-opacity-20">
       <div className="grid gap-5 bg-white  rounded-lg p-4">
-        <Typography className="!text-base !font-bold">
+        <Typography variant="body3" className="!font-bold">
           Recent Notifications
         </Typography>
         {data &&
           data.map((notification: notifications, index: number) => {
             return (
               <div className="border-b border-gray-100 border-opacity-20 flex justify-between">
-                <Typography className=" pb-3" key={index}>
+                <Typography variant="body4" className=" pb-3" key={index}>
                   {notification?.description}
                 </Typography>
-                <Typography className=" pb-3" key={index}>
-                  {notification?.createAt}
+                <Typography variant="body5" className=" pb-3" key={index}>
+                  {notification?.createAt
+                    .split("T")[0]
+                    .split("-")
+                    .reverse()
+                    .join("/")}
                 </Typography>
               </div>
             );
