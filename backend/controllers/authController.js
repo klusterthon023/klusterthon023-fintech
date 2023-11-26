@@ -143,7 +143,7 @@ exports.activateAccount = catchAsync(async (req, res, next) => {
     status: 'success',
     message: 'Account created!'
   });
-  // res.redirect('http://localhost:3000/home'); //This should redirect to the users dashboard on successful activation.
+  res.redirect('https://klusterthon023-fintech.vercel.app/sign-in'); //This should redirect the users to the login page
 });
 
 // signs in users
