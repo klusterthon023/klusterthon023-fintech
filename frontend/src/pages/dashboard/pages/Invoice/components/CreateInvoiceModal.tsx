@@ -12,6 +12,8 @@ import { Formik } from "formik";
 import { Form } from "react-router-dom";
 import { formikHelper } from "../../../../../utils/helper";
 import { useAppContext } from "../../../../../contexts";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 function CreateInvoiceModal() {
   const { toggleIsCreateInvoicedModalOpen, isCreateInvoiceModalOpen } =
@@ -41,7 +43,7 @@ function CreateInvoiceModal() {
       }}
     >
       {isCreateInvoiceModalOpen && (
-        <div className="!w-[500px]">
+        <div className="md:!w-[600px] sm:!w-auto">
           <Formik
             initialValues={{
               email: "",
@@ -79,13 +81,25 @@ function CreateInvoiceModal() {
                         placeholder="Enter email address"
                         {...getFieldProps("email")}
                         {...formikHelper(formik, "email")}
-                        className=" placeholder:text-sm"
+                        className=" placeholder:text-sm  !w-full"
                       />
                       <Select
                         label="Type"
                         placeholder="Select category"
-                        options={[]}
+                        options={[
+                          { label: "Business", value: "Business" },
+                          { label: "Individual", value: "Individual" },
+                        ]}
                       />
+                      <PhoneInput
+                        {...getFieldProps("email")}
+                        style={{ height: 48 }}
+                        className="!h-12 bg-color-white !outline-none border border-color-gray"
+                        placeholder="Enter phone number"
+                        onChange={() => {}} // value={value}
+                        // onChange={setValue}
+                      />
+
                       <Input
                         label="Location"
                         type={"email"}

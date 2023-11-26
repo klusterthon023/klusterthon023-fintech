@@ -3,7 +3,11 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routers/interface";
 import SideBar from "./components/SideBar";
 import Layout from "./layout";
-import { getDataFromLocalStorage } from "../../utils/helper";
+import {
+  getDataFromLocalStorage,
+  removeDataFromLocalStorage,
+} from "../../utils/helper";
+import dayjs from "dayjs";
 import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
 
 function DashboardPage() {
@@ -14,6 +18,10 @@ function DashboardPage() {
   const currentUserData = getDataFromLocalStorage("currentUser");
   const currentUser = JSON.parse(currentUserData as any);
 
+  const isTokenExpired = dayjs().isAfter(
+    dayjs(currentUser?.activationTokenExpire)
+  );
+
   useEffect(() => {
     if (pathname === RouteNames.MAIN) {
       navigate(`${RouteNames.DASHBOARD}`, { replace: true });
@@ -23,6 +31,7 @@ function DashboardPage() {
   useEffect(() => {
     if (!currentUser) {
       navigate(RouteNames.HOME, { replace: true });
+      removeDataFromLocalStorage("currentUser");
     }
   }, [currentUser]);
 

@@ -85,8 +85,9 @@ const ResendToken = () => {
   return (
     <>
       {isLoading && <Loader />}
-      <div onClick={handleSubmitResendToken} className="flex justify-center ">
+      <div className="flex justify-center ">
         <Typography
+          onClick={handleSubmitResendToken}
           variant="body4"
           className="!underline !cursor-pointer"
           color="primary.300"
