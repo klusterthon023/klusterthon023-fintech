@@ -5,6 +5,7 @@ import SideBar from "./components/SideBar";
 import Layout from "./layout";
 import { getDataFromLocalStorage } from "../../utils/helper";
 import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
+import { ToastContainer } from "react-toastify";
 
 function DashboardPage() {
   const { pathname } = useLocation();
@@ -32,6 +33,7 @@ function DashboardPage() {
         <SideBar />
         <Layout>
           <Outlet />
+          <ToastContainer />
         </Layout>
       </div>
       <CreateInvoiceModal />
