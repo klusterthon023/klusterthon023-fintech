@@ -9,6 +9,7 @@ import {
 } from "../../utils/helper";
 import dayjs from "dayjs";
 import CreateInvoiceModal from "./pages/Invoice/components/CreateInvoiceModal";
+import { ToastContainer } from "react-toastify";
 
 function DashboardPage() {
   const { pathname } = useLocation();
@@ -41,6 +42,7 @@ function DashboardPage() {
         <SideBar />
         <Layout>
           <Outlet />
+          <ToastContainer />
         </Layout>
       </div>
       <CreateInvoiceModal />

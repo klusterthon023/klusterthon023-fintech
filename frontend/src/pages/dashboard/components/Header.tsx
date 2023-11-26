@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import lang from "../../../assets/dashboard/en.svg";
+import notificationicon from "../../../assets/dashboard/notification-icon.svg";
 import { Input, Typography } from "../../../design-system";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -8,12 +11,17 @@ import {
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { useLocation } from "react-router-dom";
 import { Dropdown } from "../../../components/dropdown";
+import NotificationsWindow from "./notification";
 
 function Header() {
   const currentUserData = getDataFromLocalStorage("currentUser");
   const currentUser = JSON.parse(currentUserData as any);
 
   const { pathname } = useLocation();
+  const [openNotification, setOpenNotification] = useState(false);
+  function handleNotification() {
+    setOpenNotification(!openNotification);
+  }
 
   function capitalizeFirstLetter(inputString: string) {
     return inputString.replace(/^[a-z]/, (match) => match.toUpperCase());
@@ -26,7 +34,7 @@ function Header() {
       <Typography variant="h5" className="max-sm:!text-lg !text-[28px]">
         {capitalizeFirstLetter(title)}
       </Typography>
-      <div className="max-md:hidden">
+      <div className="max-lg:hidden w-full mx-auto max-w-[350px]">
         <Input
           placeholder="Search..."
           startIcon={<FontAwesomeIcon icon={faSearch} />}
