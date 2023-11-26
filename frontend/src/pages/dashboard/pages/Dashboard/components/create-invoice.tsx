@@ -54,7 +54,7 @@ export default function CreateInvoice() {
   const axiosError = error as AxiosError;
 
   return (
-    <section className="">
+    <section className="sm:!w-auto md:!w-[500px]">
       <Typography className="!text-3xl !font-semibold">New Invoice</Typography>
       <>
         {isError && error && (
