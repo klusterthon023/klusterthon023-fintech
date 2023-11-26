@@ -9,6 +9,7 @@ import {
 import { useMediaQuery } from "react-responsive";
 import { RouteNames } from "../../../routers/interface";
 import logo from "../../../assets/invoice-hub-logo.svg";
+import sidebarIcon from "../../../assets/dashboard/sidebarIcon.svg";
 import { removeDataFromLocalStorage } from "../../../utils/helper";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -76,12 +77,12 @@ function SideBar() {
           }
         )}
       >
-        <div
-          className={classNames("relative pb-12", {
-            ["mt-12"]: isSidebarCollapsed,
-          })}
-        >
-          <img src={logo} alt="invoicehub" />
+        <div className={classNames("relative pb-12")}>
+          <img
+            src={isSidebarCollapsed ? sidebarIcon : logo}
+            className={classNames("", { ["w-7"]: isSidebarCollapsed })}
+            alt="invoicehub"
+          />
         </div>
         <motion.div
           className={ClassNames(
@@ -121,7 +122,7 @@ function SideBar() {
         >
           <div
             onClick={() => {
-              removeDataFromLocalStorage("email");
+              removeDataFromLocalStorage("currentUser");
               navigate(RouteNames.SIGN_IN);
             }}
             className={classNames(
@@ -130,7 +131,7 @@ function SideBar() {
               { ["px-2  text-xl"]: isSidebarCollapsed }
             )}
           >
-            <IoIosLogOut size={20} />
+            <IoIosLogOut size={25} />
             {!isSidebarCollapsed && (
               <Typography fontWeight={400} variant={"body3"} color={"gray.400"}>
                 Logout
@@ -175,7 +176,7 @@ function ListItem({
             }
           )}
         >
-          {active ? <ActiveIcon size={20} /> : <Icon size={20} />}
+          {active ? <ActiveIcon size={25} /> : <Icon size={25} />}
           {!isSidebarCollapsed && (
             <Typography
               fontWeight={active ? 600 : 400}
