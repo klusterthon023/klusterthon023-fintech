@@ -7,4 +7,5 @@ export enum RouteNames {
   CLIENT = "/client",
   INVOICE = "/invoice",
   DESIGN_SYSTEM = "/design-system",
+  ACCOUNT_Verification="/verify-account"
 }

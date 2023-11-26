@@ -11,6 +11,7 @@ import {
   ClientPage,
   InvoicePage,
 } from "../pages";
+import VerifyAccount from "../pages/account-verification";
 
 export const CHILDREN_ROUTES = [
   {
@@ -46,6 +47,10 @@ export const CHILDREN_ROUTES = [
   {
     path: RouteNames.DESIGN_SYSTEM,
     element: <DesignSystem />,
+  },
+  {
+    path: `${RouteNames.ACCOUNT_Verification}/:token`,
+    element: <VerifyAccount />,
   },
 ];
 
