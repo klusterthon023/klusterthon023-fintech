@@ -22,7 +22,9 @@ exports.getAllInvoices = catchAsync(async (req, res) => {
 exports.getMyInvoices = async (req, res) => {
   try {
     const owner = req.owner;
-    const allInvoices = await Invoice.find({ owner_id: owner.id });
+    const allInvoices = await Invoice.find({ owner_id: owner.id }).populate(
+      'customers'
+    );
     return res.json({
       message: `Invoices for ${owner.business_name}:`,
       data: allInvoices
@@ -40,7 +42,7 @@ exports.getOneInvoice = catchAsync(async (req, res, next) => {
   const foundInvoice = await Invoice.find({
     _id: invoiceId,
     owner_id: req.owner._id
-  });
+  }).populate('customers');
   if (!foundInvoice.length) {
     return next(new AppError('Invoice not found!', 400));
   }
@@ -84,7 +86,8 @@ exports.createInvoice = async (req, res) => {
 
     // send email to customer
 
-    const url = `${req.protocol}://${req.get( // to be changed to the frontend url
+    const url = `${req.protocol}://${req.get(
+      // to be changed to the frontend url
       'host'
     )}/v1/invoices/${urlPaymentToken}/pay`;
 

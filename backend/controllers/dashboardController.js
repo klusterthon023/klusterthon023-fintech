@@ -6,8 +6,11 @@ const calculatePercentage = (numberOfClientsPerMonth, prop) => {
   const monthYears = Object.keys(numberOfClientsPerMonth);
   const lastMonthCount =
     numberOfClientsPerMonth[monthYears[monthYears.length - 1]][prop];
-  const secondToLastMonthCount =
-    numberOfClientsPerMonth[monthYears[monthYears.length - 2]][prop];
+  let secondToLastMonthCount = lastMonthCount;
+  if (monthYears.length >= 2) {
+    secondToLastMonthCount =
+      numberOfClientsPerMonth[monthYears[monthYears.length - 2]][prop];
+  }
   const percentageChange =
     ((lastMonthCount - secondToLastMonthCount) / secondToLastMonthCount) * 100;
 
@@ -55,7 +58,7 @@ exports.getStats = catchAsync(async (req, res, next) => {
     'customers'
   );
   const customers = await Customer.find({ owner_id: req.owner._id });
-
+  console.log(invoices, customers);
   // For client Logic
   let percentageChangeInNumberOFClients = 0;
   let numberOfClientsPerMonth = {};
@@ -67,7 +70,7 @@ exports.getStats = catchAsync(async (req, res, next) => {
     );
   }
 
-  // For invoices Logic
+  // For invoice Logic
   let paidInvoices = [];
   let unpaidInvoices = [];
   let numUnpaidInvoices = 0;
