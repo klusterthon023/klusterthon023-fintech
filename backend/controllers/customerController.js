@@ -38,31 +38,38 @@ exports.getOneCustomer = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createCustomer = catchAsync(async (req, res, next) => {
-  const newCustomerDetails = {
-    name: req.body.name,
-    customer_type: req.body.customer_type,
-    email: req.body.email,
-    contact_number: req.body.contact_number,
-    business_address: req.body.business_address,
-    owner_id: req.owner._id
-  };
-
-  // check if a customer with this email already exists for the current owner
-  const foundCustomer = await Customer.findOne({ email: req.body.email, owner_id: req.owner._id });
-  if(foundCustomer) {
-    return res.status(400).json({
-      message: 'Customer with this email already exists',
-      data: foundCustomer
+exports.createCustomer = async (req, res) => {
+  try {
+    const newCustomerDetails = {
+      name: req.body.name,
+      customer_type: req.body.customer_type,
+      email: req.body.email,
+      contact_number: req.body.contact_number,
+      business_address: req.body.business_address,
+      owner_id: req.owner._id
+    };
+  
+    // check if a customer with this email already exists for the current owner
+    const foundCustomer = await Customer.findOne({ email: req.body.email, owner_id: req.owner._id });
+    if(foundCustomer) {
+      return res.status(400).json({
+        message: 'Customer with this email already exists',
+        data: null
+      })
+    }
+  
+    const newCustomer = await Customer.create(newCustomerDetails);
+    return res.status(201).json({
+      message: 'Customer created successfully',
+      data: newCustomer
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: 'An error occurred while creating customer',
+      data: null
     })
   }
-
-  const newCustomer = await Customer.create(newCustomerDetails);
-  return res.status(201).json({
-    message: 'Customer created successfully',
-    data: newCustomer
-  });
-});
+};
 
 exports.updateCustomer = catchAsync(async (req, res, next) => {
   const foundCustomer = await Customer.findOneAndUpdate(
