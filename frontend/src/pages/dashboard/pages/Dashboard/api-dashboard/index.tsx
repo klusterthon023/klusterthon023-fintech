@@ -3,6 +3,7 @@ import {
   ICreateClientRequest,
   ICreateClientResponse,
   ICreateInvoiceRequest,
+  IGetAllInvoices,
   IGetNotifications,
   IGetStatics,
   IResendEmail,
@@ -60,6 +61,18 @@ export const recentNotifications = async (): Promise<IGetNotifications> => {
   try {
     const response = await ApiAxiosInterceptor.get<IGetNotifications>(
       "/notification?page=1&limit=3"
+    );
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export const recentTransactions = async () => {
+  try {
+    const response = await ApiAxiosInterceptor.get<IGetAllInvoices>(
+      "/invoices"
     );
     return response?.data;
   } catch (error) {
