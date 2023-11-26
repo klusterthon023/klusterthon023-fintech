@@ -44,7 +44,7 @@ const columns = [
 ];
 
 function ClientPage() {
-  const { toggleIsCreateInvoicedModalOpen } = useAppContext();
+  const { toggleIsCreateClientModalOpen } = useAppContext();
 
   return (
     <motion.div
@@ -56,9 +56,7 @@ function ClientPage() {
       <div className="!border-color-gray !border !rounded-lg">
         <div className="flex justify-between px-4 py-5 bg-white">
           <Input className="!w-[400px]" placeholder="Search..." />
-          <Button onClick={toggleIsCreateInvoicedModalOpen}>
-            Create Client
-          </Button>
+          <Button onClick={toggleIsCreateClientModalOpen}>Create Client</Button>
         </div>
         <Table columns={columns} dataSource={users} />
       </div>

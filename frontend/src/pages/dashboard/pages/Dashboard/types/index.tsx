@@ -31,16 +31,24 @@ export type ICreateInvoiceRequest = {
   due_date: string;
 };
 
-export type dashboard = {
-  totalCustomers: number;
-  invoicesGenerated: number;
-  totalAmountGenerated: number | null;
-  numberOfUnpaidInvoices: number;
-};
-
 export type IGetStatics = {
+  groupedByMonthForBusiness: Object;
+  groupedByMonthForIndividual: Object;
+  numberOfClients: number;
+  numberOfClientsPerMonth: Object;
+  numberOfInvoices: number;
+  numberOfInvoicesPerMonth: Object;
+  numberOfPaidInvoices: number;
+  numberOfUnpaidInvoices: number;
+  percentageChangeInNumberOFClients: number;
+  percentageChangeInNumberOfInvoices: number;
+  percentageChangeInOutstanding: number;
+  percentageChangeInRevenue: number;
   status: string;
-  data: dashboard;
+  totalAmountOutstanding: number;
+  totalAmountOutstandingPerMonth: Object;
+  totalRevenueGenerated: number;
+  totalRevenuePerMonth: Object;
 };
 
 export type notifications = {
@@ -55,5 +63,5 @@ export type notifications = {
 
 export type IGetNotifications = {
   status: string;
-  notifications: notifications;
+  notifications: notifications[];
 };

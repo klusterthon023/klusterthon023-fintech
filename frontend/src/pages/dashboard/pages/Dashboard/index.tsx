@@ -4,7 +4,6 @@ import RecentNotifications from "./components/recent-notifications";
 import RecentTransactions from "./components/recent-transaction";
 import RevenueReports from "./components/revenue-report";
 import TopStatics from "./components/top-statics";
-import Footer from "../../components/Footer";
 
 function DashBoard() {
   return (
@@ -25,7 +24,6 @@ function DashBoard() {
           <RecentNotifications />
         </div>
       </motion.div>
-      <Footer />
     </>
   );
 }

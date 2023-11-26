@@ -59,37 +59,37 @@ const typography: TypographyTypes = {
   h1: {
     fontSize: "56px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "120%",
   },
   h2: {
     fontSize: "48px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "120%",
   },
   h3: {
     fontSize: "40px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "120%",
   },
   h4: {
     fontSize: "32px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "130%",
   },
   h5: {
     fontSize: "24px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "28px",
   },
   h6: {
     fontSize: "20px",
     fontStyle: "normal",
-    fontWeight: 700,
+    fontWeight: 600,
     lineHeight: "140%",
   },
 
