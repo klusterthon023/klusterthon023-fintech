@@ -69,4 +69,10 @@ const invoiceSchema = new mongoose.Schema(
 invoiceSchema.index({ owner_id: 1 });
 invoiceSchema.index({ customer_id: 1 });
 
+invoiceSchema.virtual('customers', {
+  ref: 'Customer',
+  foreignField: '_id',
+  localField: 'customer_id'
+});
+
 module.exports = mongoose.model('Invoice', invoiceSchema);

@@ -396,7 +396,7 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
   // Notification
   const newNotification = {
     notification_type: 'OwnerDetialsUpdate',
-    owner: req.owner._id,
+    owner: owner._id,
     description: 'You reset your password'
   };
   await Notification.create(newNotification);
