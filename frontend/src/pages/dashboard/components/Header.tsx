@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import lang from "../../../assets/dashboard/en.svg";
 import notificationicon from "../../../assets/dashboard/notification-icon.svg";
 import { Input, Typography } from "../../../design-system";
-import { faL, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import {
   getDataFromLocalStorage,
   getGravatarImage,

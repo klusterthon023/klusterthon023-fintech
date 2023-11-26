@@ -12,7 +12,7 @@ export default function NotificationsWindow() {
     const fetchData = async () => {
       try {
         const result = await mutateAsync();
-        setData(result?.notifications);
+        setData(result?.notifications as any);
       } catch (error) {
         console.error(error);
       }
