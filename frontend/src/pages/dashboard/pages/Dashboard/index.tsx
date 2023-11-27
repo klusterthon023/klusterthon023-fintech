@@ -5,6 +5,7 @@ import RecentTransactions from "./components/recent-transaction";
 import RevenueReports from "./components/revenue-report";
 import TopStatics from "./components/top-statics";
 import VerifyAccount from "./components/verify-account";
+import UpdateProfile from "./components/set-up-profile";
 
 function DashBoard() {
   return (
@@ -25,6 +26,7 @@ function DashBoard() {
           <RecentNotifications />
         </div>
         <VerifyAccount />
+        <UpdateProfile />
       </motion.div>
     </>
   );

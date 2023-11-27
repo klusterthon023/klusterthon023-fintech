@@ -9,7 +9,6 @@ import { RouteNames } from "../../../../../routers/interface";
 
 export default function DeleteInvoice() {
   const { invoiceId } = useParams();
-  console.log(invoiceId);
   const navigate = useNavigate();
   const { isDeleteInvoiceModalOpen, toggleDeleteInvoiceModel } =
     useAppContext();
@@ -22,7 +21,6 @@ export default function DeleteInvoice() {
   async function handleDelete() {
     try {
       const result = mutateAsync(invoiceId as string);
-      console.log(result);
       toast("You've sucessfully deleted the the invoice.");
       toggleDeleteInvoiceModel();
       navigate(RouteNames.INVOICE);

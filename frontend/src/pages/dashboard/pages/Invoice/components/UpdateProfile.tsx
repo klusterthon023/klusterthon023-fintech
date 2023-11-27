@@ -38,7 +38,6 @@ export default function UpdateProfile() {
   }
   async function handleSubmit(values: FormValues) {
     try {
-      console.log(initialValues);
       const result = await mutateAsync(values);
       removeDataFromLocalStorage("currentUser");
       setDataToLocalStorage(
