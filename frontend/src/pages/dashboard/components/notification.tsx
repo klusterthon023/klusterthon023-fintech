@@ -7,7 +7,7 @@ export default function NotificationsWindow() {
   const { data, isLoading } = useQuery(["NOTIFICATION"], recentNotifications);
 
   return (
-    <section className="border shadow-lg border-color-gray border-opacity-20 px-5 py-6 w-[460px] max-h-[620px]   overflow-y-scroll rounded-lg bg-color-white ">
+    <section className="border shadow-lg border-color-gray border-opacity-20 px-5 py-6 w-[460px] max-sm:w-[300px] max-sm:px-2 max-sm:h-[300px] max-h-[400px]   overflow-y-scroll rounded-lg bg-color-white ">
       <div className="grid gap-5 bg-white  rounded-lg p-4">
         <div className="flex justify-between items-center pb-3 border-b border-color-gray">
           <Typography variant="h6">Notification</Typography>

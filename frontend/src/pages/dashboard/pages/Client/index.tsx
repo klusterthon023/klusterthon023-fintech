@@ -115,10 +115,10 @@ function ClientPage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen"
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray min-h-screen"
     >
-      <div className="!border-gray-100 !border !rounded-lg">
-        <div className="flex justify-between px-4 py-5 bg-white">
+      <div className="!border-gray-100 !border !rounded-lg max-sm:w-[300px]">
+        <div className="flex max-sm:flex-col max-sm:gap-5 justify-between px-4 py-5 bg-white">
           <Input
             onChange={handleSearch}
             className="!w-[400px]"
@@ -126,9 +126,19 @@ function ClientPage() {
           />
           <Button onClick={toggleIsCreateClientModalOpen}>Create Client</Button>
         </div>
-        <div className="bg-white">
-          <Table columns={columns} dataSource={searchedClient || data?.data!} />
+        <div className="max-h-[430px] overflow-y-scroll bg-white">
+          <Table
+            stickyHeaderBackgroundColor={"#F0F0F4"}
+            stickyHeader={true}
+            columns={columns}
+            dataSource={searchedClient || data?.data!}
+          />
         </div>
+        {!data?.data?.length && (
+          <div className="text-center py-4">
+            <Typography variant="body3">No Client Yet</Typography>
+          </div>
+        )}
       </div>
     </motion.div>
   );

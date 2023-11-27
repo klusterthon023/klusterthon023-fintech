@@ -2,8 +2,8 @@ import { PaystackButton } from "react-paystack";
 import logo from "../../assets/invoice-hub-logo.svg";
 import payment_illustration from "../../assets/payment_illustration.svg";
 import { Button, Typography } from "../../design-system";
-import { useMutation } from "react-query";
-import { paymentForInvoice } from "./payment-api";
+import { useMutation, useQuery } from "react-query";
+import { getAllInvoices, paymentForInvoice } from "./payment-api";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import AppLoadingState from "../../components/loader/AppLoader";
 import { RouteNames } from "../../routers/interface";
@@ -19,6 +19,10 @@ function PaymentPage() {
   const token = searchParams.get("token") || "";
 
   const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice);
+
+  const { data } = useQuery(["getAllInvoices"], getAllInvoices);
+
+  const invoice = data?.data?.find((invoice) => invoice.paymentToken === token);
 
   const navigate = useNavigate();
 
@@ -44,36 +48,49 @@ function PaymentPage() {
       <img src={payment_illustration} className="mb-8" />
 
       <div className="w-[444px] max-sm:w-[300px] mb-8">
-        <Typography variant="body4" color="gray.400" fontWeight={600}>
-          Payment Information
-        </Typography>
-        <div className="flex justify-between items-center mt-4">
-          <Typography variant="body3">Payment to</Typography>
-          <Typography variant="body3" fontWeight={600}>
-            InvoiceHub Initiative
-          </Typography>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <Typography variant="body3">Business Name</Typography>
-          <Typography variant="body3" fontWeight={600}>
-            {name}
-          </Typography>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <Typography variant="body3">Email</Typography>
-          <Typography variant="body3" fontWeight={600}>
-            {email}
-          </Typography>
-        </div>
-        <div className="flex justify-between items-center mt-2">
-          <Typography variant="body3">Grand Total</Typography>
-          <Typography variant="body3" fontWeight={600}>
-            ₦{amount}
-          </Typography>
-        </div>
+        {invoice?.status === "Pending" && (
+          <>
+            <Typography variant="body4" color="gray.400" fontWeight={600}>
+              Payment Information
+            </Typography>
+            <div className="flex justify-between items-center mt-4">
+              <Typography variant="body3">Payment to</Typography>
+              <Typography variant="body3" fontWeight={600}>
+                InvoiceHub Initiative
+              </Typography>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <Typography variant="body3">Business Name</Typography>
+              <Typography variant="body3" fontWeight={600}>
+                {name}
+              </Typography>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <Typography variant="body3">Email</Typography>
+              <Typography variant="body3" fontWeight={600}>
+                {email}
+              </Typography>
+            </div>
+            <div className="flex justify-between items-center mt-2">
+              <Typography variant="body3">Grand Total</Typography>
+              <Typography variant="body3" fontWeight={600}>
+                ₦{amount}
+              </Typography>
+            </div>
+          </>
+        )}
+        {invoice?.status === "Paid" && (
+          <div>
+            <div className="flex  items-center mt-4">
+              <Typography variant="body3" fontWeight={600}>
+                Invoice as already be paid
+              </Typography>
+            </div>
+          </div>
+        )}
       </div>
-      <div>
-        {!isSuccess ? (
+      <div className="mt-3">
+        {!isSuccess && invoice?.status === "Pending" && (
           <>
             {/* @ts-ignore */}
             <PaystackButton
@@ -81,11 +98,16 @@ function PaymentPage() {
               className="h-12 bg-primary-400 hover:bg-primary-500 outline-none border-none text-white rounded-lg px-5 flex justify-center text-center items-center py-4"
             />
           </>
-        ) : (
-          <Button onClick={() => navigate(RouteNames.CLIENT)}>
-            Go to Client Dashboard
-          </Button>
         )}
+
+        {isSuccess ||
+          (invoice?.status === "Paid" && (
+            <>
+              <Button onClick={() => navigate(RouteNames.CLIENT)}>
+                Go to Client Dashboard
+              </Button>
+            </>
+          ))}
       </div>
     </div>
   );

@@ -87,7 +87,7 @@ export default function CreateInvoice() {
       }}
     >
       {isCreateInvoiceModalOpen && (
-        <section className="sm:!w-auto md:!w-[500px] mt-5">
+        <div className="sm:!w-auto md:!w-[500px] !rounded-lg mt-5">
           <>
             {isError && error && (
               <div className="p-2 mb-5 flex justify-center items-center bg-color-red rounded-lg">
@@ -209,7 +209,7 @@ export default function CreateInvoice() {
               );
             }}
           </Formik>
-        </section>
+        </div>
       )}
     </Modal>
   );

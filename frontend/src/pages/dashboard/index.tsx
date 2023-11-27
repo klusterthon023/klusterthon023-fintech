@@ -3,10 +3,7 @@ import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { RouteNames } from "../../routers/interface";
 import SideBar from "./components/SideBar";
 import Layout from "./layout";
-import {
-  getDataFromLocalStorage,
-  removeDataFromLocalStorage,
-} from "../../utils/helper";
+import { getDataFromLocalStorage } from "../../utils/helper";
 import CreateInvoice from "./components/create-invoice";
 import CreateClient from "./components/create-client";
 import Footer from "./components/Footer";
@@ -28,7 +25,6 @@ function DashboardPage() {
   useEffect(() => {
     if (!currentUser) {
       navigate(RouteNames.HOME, { replace: true });
-      removeDataFromLocalStorage("currentUser");
     }
   }, [currentUser]);
 

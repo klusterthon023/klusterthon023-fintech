@@ -15,11 +15,11 @@ function FirstRow() {
   }
   return (
     <section>
-      <div className="flex flex-col lg:flex-row gap-5 w-full">
+      <div className="flex flex-col lg:flex-row gap-5 w-full mx-auto">
         <div className="w-full">
           <CreateInvoice />
         </div>
-        <div className="w-full flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+        <div className="w-full max-sm:w-[300px] flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
           <div className="grid gap-2 w-full">
             <Typography variant="body4" className="!font-semibold !pb-2">
               Total Transaction
@@ -44,7 +44,7 @@ function FirstRow() {
             <img src={graphesGreen} alt="" className="mx-auto" />
           </div>
         </div>
-        <div className="w-full flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+        <div className="w-full max-sm:w-[300px] flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
           <div className="grid gap-2 w-full">
             <Typography variant="body4" className="!font-semibold !pb-2">
               Invoice Generated
