@@ -6,6 +6,8 @@ interface AppContextType {
   updateCurrentSection: (state: string) => void;
   isForgetPasswordModalOpen: boolean;
   toggleIsForgetPasswordModalOpen: () => void;
+  toggleIsUpdateProfileModalOpen: () => void;
+  isUpdateProfileModalOpen: boolean;
   isCreateInvoiceModalOpen: boolean;
   toggleIsCreateInvoicedModalOpen: () => void;
   isCreateClientModalOpen: boolean;
@@ -16,6 +18,8 @@ interface AppContextType {
   refetchInvoice: () => void;
   clientDetailsForNewTransaction: IClientType;
   updateClientDetailsForNewTransaction: (value: IClientType) => void;
+  isDeleteInvoiceModalOpen: boolean;
+  toggleDeleteInvoiceModel: () => void;
 }
 
 export const defaultClientDetails = {
@@ -45,6 +49,12 @@ const AppContext = createContext<AppContextType>({
   refetchInvoice: () => {},
   clientDetailsForNewTransaction: defaultClientDetails,
   updateClientDetailsForNewTransaction: () => {},
+
+  isUpdateProfileModalOpen: false,
+  toggleIsUpdateProfileModalOpen: () => {},
+  isDeleteInvoiceModalOpen: false,
+  toggleDeleteInvoiceModel: () => {},
+
 });
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
@@ -52,17 +62,28 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [isForgetPasswordModalOpen, setIsForgetPasswordModalOpen] =
     useState<boolean>(false);
 
+  const [isUpdateProfileModalOpen, setIsUpdateProfileModalOpen] =
+    useState(false);
   const [isCreateInvoiceModalOpen, setIsCreateInvoiceModalOpen] =
     useState(false);
 
   const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
   const [isClientDataRefetched, setIsClientDataRefetched] = useState(false);
   const [isInvoiceDataRefetched, setIsInvoiceDataRefetched] = useState(false);
+
   const [clientDetailsForNewTransaction, setClientDetailsForNewTransaction] =
     useState<IClientType>(defaultClientDetails);
 
   const updateClientDetailsForNewTransaction = (value: IClientType) =>
     setClientDetailsForNewTransaction(value);
+
+  const [isDeleteInvoiceModalOpen, setIsDeleteInvoiceModalOpen] =
+    useState(false);
+
+  const toggleDeleteInvoiceModel = () => {
+    setIsDeleteInvoiceModalOpen(!isDeleteInvoiceModalOpen);
+  };
+
 
   const refetchClient = () => {
     setIsClientDataRefetched(true);
@@ -81,6 +102,10 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const toggleIsCreateClientModalOpen = () =>
     setIsCreateClientModalOpen(!isCreateClientModalOpen);
 
+  const toggleIsUpdateProfileModalOpen = () => {
+    setIsUpdateProfileModalOpen(!isUpdateProfileModalOpen);
+  };
+
   const toggleIsCreateInvoicedModalOpen = () =>
     setIsCreateInvoiceModalOpen(!isCreateInvoiceModalOpen);
 
@@ -98,6 +123,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         toggleIsForgetPasswordModalOpen,
         isCreateInvoiceModalOpen,
         isCreateClientModalOpen,
+        isUpdateProfileModalOpen,
+        toggleIsUpdateProfileModalOpen,
         toggleIsCreateClientModalOpen,
         toggleIsCreateInvoicedModalOpen,
         isClientDataRefetched,
@@ -106,6 +133,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         refetchInvoice,
         clientDetailsForNewTransaction,
         updateClientDetailsForNewTransaction,
+        toggleDeleteInvoiceModel,
+        isDeleteInvoiceModalOpen,
       }}
     >
       {children}

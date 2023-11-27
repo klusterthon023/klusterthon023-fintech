@@ -2,14 +2,26 @@ import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { motion } from "framer-motion";
 import { useNavigate, useParams } from "react-router-dom";
-import { Button, Typography } from "../../../../../design-system";
+import { Button, Table, Typography } from "../../../../../design-system";
 import { RouteNames } from "../../../../../routers/interface";
 import { useQuery } from "react-query";
 import { getInvoiceById } from "../invoice-api";
 import dayjs from "dayjs";
+import { useState, useEffect } from "react";
+import { CustomColumns } from "./custom-cols";
+import { useAppContext } from "../../../../../contexts";
 
+type product = {
+  product_name: string;
+  quantity: number;
+  unit_price: number;
+  _id: string;
+};
 function InvoiceDetailPage() {
   const { invoiceId } = useParams();
+  const { toggleDeleteInvoiceModel } = useAppContext();
+  const [products, setProducts] = useState<product[]>([]);
+  const [total, setTotal] = useState(0);
 
   const { data } = useQuery(["getInvoiceById"], () =>
     getInvoiceById(invoiceId!)
@@ -20,6 +32,21 @@ function InvoiceDetailPage() {
   const customers = invoice?.customers[0];
 
   const navigate = useNavigate();
+  useEffect(() => {
+    if (invoice?.products) {
+      setProducts(invoice.products);
+
+      let totalAmount = 0;
+      for (const product of invoice.products) {
+        totalAmount += product.quantity * product.unit_price;
+      }
+      setTotal(totalAmount);
+    }
+  }, [invoice?.products]);
+
+  function handleDelete() {
+    toggleDeleteInvoiceModel();
+  }
 
   return (
     <motion.div
@@ -37,7 +64,7 @@ function InvoiceDetailPage() {
             className="text-gray-300 cursor-pointer"
           />
           <Typography variant="h6">{invoiceId}</Typography>
-          {invoice?.status === "pending" ? (
+          {invoice?.status === "Pending" ? (
             <Typography
               className="!text-[#F27E3B] !border px-[13.5px] py-[1.5px] !border-[#F27E3B] !bg-orange-50 !rounded-xl"
               variant={"body4"}
@@ -55,7 +82,13 @@ function InvoiceDetailPage() {
             </Typography>
           )}
         </div>
-        <Button>Generate Invoice</Button>
+        <Button
+          variant="outlined"
+          className="!border !bg-transparent !text-color-red !border-color-red"
+          onClick={handleDelete}
+        >
+          Delete invoice
+        </Button>
       </div>
       <div className="flex justify-between gap-5 items-center">
         <div className="px-4 py-5 w-full rounded-lg bg-white border border-gray-100">
@@ -120,6 +153,27 @@ function InvoiceDetailPage() {
           </div>
         </div>
       </div>
+      {products && (
+        <div className="bg-white p-4">
+          <Typography
+            variant="body3"
+            color="gray.100"
+            className="!uppercase !font-semibold !opacity-70"
+          >
+            ITEMS
+          </Typography>
+          {/* @ts-ignore */}
+          <Table columns={CustomColumns()} dataSource={products} />
+          <div className="flex gap-2 justify-end pt-4">
+            <Typography variant="body4">Extra Charges:</Typography>
+            <Typography variant="body4">₦0.00</Typography>
+          </div>
+          <div className="flex gap-2 justify-end pt-3">
+            <Typography variant="body4">Grand Total:</Typography>
+            <Typography variant="body4">₦{total}</Typography>
+          </div>
+        </div>
+      )}
     </motion.div>
   );
 }

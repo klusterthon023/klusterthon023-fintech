@@ -7,6 +7,8 @@ import { getDataFromLocalStorage } from "../../utils/helper";
 import CreateInvoice from "./components/create-invoice";
 import CreateClient from "./components/create-client";
 import Footer from "./components/Footer";
+import UpdateProfile from "./pages/Invoice/components/UpdateProfile";
+import DeleteInvoice from "./pages/Invoice/components/DeleteInvoice";
 
 function DashboardPage() {
   const { pathname } = useLocation();
@@ -39,6 +41,8 @@ function DashboardPage() {
       </div>
       <CreateClient />
       <CreateInvoice />
+      <UpdateProfile />
+      <DeleteInvoice />
     </>
   );
 }

@@ -43,12 +43,12 @@ export const getInvoiceById = async (id: string): Promise<{ data: any[] }> => {
 //   }
 // };
 
-// export const deleteClient = async (id: string) => {
-//   try {
-//     const response = await ApiAxiosInterceptor.delete<any>(`/customers/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     console.error(error);
-//     throw error;
-//   }
-// };
+export const deleteInvoice = async (id: string) => {
+  try {
+    const response = await ApiAxiosInterceptor.delete(`/invoices/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};

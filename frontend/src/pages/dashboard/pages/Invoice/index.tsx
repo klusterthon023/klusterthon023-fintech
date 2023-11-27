@@ -12,7 +12,6 @@ import { IInvoice } from "../Dashboard/types";
 
 function InvoicePage() {
   const { data } = useQuery(["TRANSACTIONS"], getRecentTransactions);
-
   const [startDate, setStartDate] = useState(new Date());
   const [invoicesWithClientName, setInvoicesWithClientName] = useState<
     IInvoice[]

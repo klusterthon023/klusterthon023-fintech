@@ -16,6 +16,7 @@ export default function ClientDetails() {
   const { clientId } = useParams();
   const [isEditModalOpen, setIsEditModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState<boolean>(false);
+
   const [isDataRefetch, setIsDataRefetch] = useState<boolean>(false);
 
   const { data, refetch } = useQuery(["getCustomerById"], () =>
