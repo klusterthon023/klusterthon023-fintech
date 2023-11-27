@@ -17,6 +17,7 @@ function PaymentPage() {
   const name = searchParams.get("to") || "";
   const email = searchParams.get("for") || "";
   const token = searchParams.get("token") || "";
+  const paymentToken = searchParams.get("paymentToken") || "";
 
   const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice);
 
@@ -36,7 +37,7 @@ function PaymentPage() {
     publicKey: String(paystackPublicKey) || "",
     text: "Pay Now",
     onSuccess: () => {
-      mutateAsync(token!);
+      mutateAsync(paymentToken!);
     },
   };
 
