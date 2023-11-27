@@ -14,14 +14,17 @@ type invoice = {
   due_date: string;
 };
 
-export default function RecentTransactions() {
+export default function RecentTransactions({
+  notNavigatable,
+}: {
+  notNavigatable: boolean;
+}) {
   const { data, isLoading } = useQuery(["TRANSACTIONS"], getRecentTransactions);
   const [invoiceList, setInvoiceList] = useState<invoice[]>([]);
 
   useEffect(() => {
     if (data?.data) {
-      console.log(data.data);
-      setInvoiceList(data.data.slice(0, 5));
+      setInvoiceList(data.data.slice(0, notNavigatable ? 3 : 5));
     }
   }, [data]);
 
@@ -31,12 +34,17 @@ export default function RecentTransactions() {
   return (
     <section>
       <div className="w-full pb-4 grid gap-5 bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
-        <Typography className="!text-base !font-bold">
-          Recent Transactions
-        </Typography>
+        {!notNavigatable && (
+          <Typography className="!text-base !font-bold">
+            Recent Transactions
+          </Typography>
+        )}
         {invoiceList && invoiceList.length > 0 && (
           <>
-            <Table columns={custom_columns} dataSource={invoiceList} />
+            <Table
+              columns={custom_columns(notNavigatable)}
+              dataSource={invoiceList}
+            />
             <Link to={RouteNames.INVOICE}>
               <Typography
                 variant="body4"

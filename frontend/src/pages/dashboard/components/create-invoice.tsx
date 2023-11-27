@@ -48,15 +48,18 @@ export default function CreateInvoice() {
     label: option.name,
     value: option._id,
   }));
-  const { toggleIsCreateInvoicedModalOpen, isCreateInvoiceModalOpen } =
-    useAppContext();
+  const {
+    toggleIsCreateInvoicedModalOpen,
+    refetchInvoice,
+    isCreateInvoiceModalOpen,
+  } = useAppContext();
 
   const { mutateAsync, isLoading, isError, error } = useMutation(createInvoice);
 
   const handleSubmit = async (values: FormValues) => {
-    //console.log(values);
     try {
       const result = await mutateAsync(values);
+      refetchInvoice();
       toast(result?.message);
       toggleIsCreateInvoicedModalOpen();
     } catch (error) {
@@ -120,7 +123,7 @@ export default function CreateInvoice() {
                     {({ push, remove }) => (
                       <div>
                         {formik.values.products.map((_, index) => (
-                          <div key={index}>
+                          <div className="space-y-4" key={index}>
                             <Input
                               label={`${"Product name"}`}
                               {...getFieldProps(
