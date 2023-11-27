@@ -15,7 +15,7 @@ function PaymentPage() {
   const [searchParams] = useSearchParams();
   const amount = searchParams.get("amount") || "";
   const name = searchParams.get("to") || "";
-  const email = searchParams.get("from") || "";
+  const email = searchParams.get("for") || "";
   const token = searchParams.get("token") || "";
 
   const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice);
