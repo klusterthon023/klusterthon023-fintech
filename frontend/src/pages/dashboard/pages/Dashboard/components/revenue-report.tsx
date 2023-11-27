@@ -10,8 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useQuery } from "react-query";
-import { showStatics } from "../api-dashboard";
+// import { useQuery } from "react-query";
+// import { showStatics } from "../api-dashboard";
 import dayjs from "dayjs";
 
 ChartJS.register(
@@ -25,7 +25,7 @@ ChartJS.register(
 );
 
 export default function RevenueReports() {
-  const { data } = useQuery(["showStatics"], showStatics);
+  // const { data } = useQuery(["showStatics"], showStatics);
   const labels = Array.from({ length: 12 }, (_, i) =>
     dayjs().month(i).format("MMM")
   );
