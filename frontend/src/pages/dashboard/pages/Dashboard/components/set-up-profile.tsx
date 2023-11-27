@@ -2,17 +2,12 @@ import { useState, useEffect } from "react";
 import { Typography } from "../../../../../design-system";
 import close from "../../../../../assets/dashboard/close.svg";
 import { getDataFromLocalStorage } from "../../../../../utils/helper";
-import { useMutation } from "react-query";
-import { resendEmail, updateProfile } from "../api-dashboard";
-import { toast } from "react-toastify";
-import AppLoadingState from "../../../../../components/loader/AppLoader";
 import { useAppContext } from "../../../../../contexts";
 
 export default function UpdateProfile() {
   const currentUserData = getDataFromLocalStorage("currentUser");
   const user = JSON.parse(currentUserData as any);
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const { toggleIsUpdateProfileModalOpen } = useAppContext();
 
   function handleVerificationModel() {
@@ -40,10 +35,6 @@ export default function UpdateProfile() {
   function handleUpdate() {
     toggleIsUpdateProfileModalOpen();
     setIsOpen(false);
-  }
-
-  if (isLoading) {
-    return <AppLoadingState isLoading={isLoading} />;
   }
 
   return (

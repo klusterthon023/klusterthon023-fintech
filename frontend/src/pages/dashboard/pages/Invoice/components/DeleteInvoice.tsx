@@ -21,6 +21,7 @@ export default function DeleteInvoice() {
   async function handleDelete() {
     try {
       const result = mutateAsync(invoiceId as string);
+      console.log(result);
       toast("You've sucessfully deleted the the invoice.");
       toggleDeleteInvoiceModel();
       navigate(RouteNames.INVOICE);
