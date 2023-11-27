@@ -9,5 +9,5 @@ export enum RouteNames {
   DESIGN_SYSTEM = "/design-system",
   ACCOUNT_VERIFIED = "/verification-completed",
   ACCOUNT_NOT_VERIFIED = "/verification-failed",
-  PAYMENT = "/payment",
+  PAYMENT = "/pay-invoice",
 }
