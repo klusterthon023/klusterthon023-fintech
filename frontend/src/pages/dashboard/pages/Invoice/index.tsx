@@ -51,7 +51,13 @@ function InvoicePage() {
       <FirstRow />
       <div className="border-gray-100 bg-white border rounded-lg">
         <div className="px-4 py-5 flex justify-between items-center">
-          <Input placeholder="Search..." onChange={handleSearch} />
+          <div className="max-w-[280px] w-full">
+            <Input
+              placeholder="Search by ID, Name, Email or Status ..."
+              onChange={handleSearch}
+              className="w-full"
+            />
+          </div>
           <div className="z-50">
             <DatePicker
               className="py-4 h-12 border border-gray-100 text-center rounded-lg cursor-pointer outline-none"
