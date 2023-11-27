@@ -14,24 +14,24 @@ export default function HeroText() {
       />
       <div className="grid gap-4">
         <div className="flex gap-3 items-center">
-          <Typography color="secondary.300" fontWeight={500}>
+          <Typography variant="body3" color="secondary.300" fontWeight={600}>
             SIMPLE
           </Typography>
           <div className="w-[5px] h-[5px] rounded-full bg-[#73AE64]"></div>
-          <Typography color="secondary.300" fontWeight={500}>
+          <Typography color="secondary.300" fontWeight={600}>
             TRANSPARENT
           </Typography>
           <div className="w-[5px] h-[5px] rounded-full bg-[#73AE64]"></div>
-          <Typography color="secondary.300" fontWeight={500}>
+          <Typography color="secondary.300" fontWeight={600}>
             SECURE
           </Typography>
         </div>
         <div className="w-full">
-          <Typography className="!w-full !text-4xl md:!text-5xl" variant="h1">
+          <Typography className="!w-full !text-4xl md:!text-5xl" variant="h2">
             The Efficient Way to Manage your
             <Typography
               className="!w-full !text-4xl md:!text-5xl"
-              variant="h1"
+              variant="h2"
               color="tertiary.300"
             >
               Online Payment
@@ -41,7 +41,7 @@ export default function HeroText() {
         </div>
       </div>
       <div>
-        <Typography>
+        <Typography variant="body3" color="gray.300">
           Streamlining your finances effortlessly, we simplify online payments
           with our efficient payment management system.
         </Typography>

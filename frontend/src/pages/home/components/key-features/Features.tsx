@@ -50,10 +50,14 @@ export default function Features() {
         p-6 justify-center items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={paymentManagementIcon} alt="" className=" mx-auto" />
-        <Typography className="!text-xl !font-semibold !mx-auto">
+        <Typography variant="h6" className="!text-xl !font-semibold !mx-auto">
           Payment Management
         </Typography>
-        <Typography color="gray.300" className="!text-center !text-base">
+        <Typography
+          variant="body3"
+          color="gray.300"
+          className="!text-center !text-base"
+        >
           Facilitating secure transactions and overseeing financial flows via
           seamless payment management solutions
         </Typography>
@@ -72,10 +76,14 @@ export default function Features() {
         items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={trackingIcon} alt="" className=" mx-auto" />
-        <Typography className="!text-xl !font-semibold !mx-auto">
+        <Typography variant="h6" className="!text-xl !font-semibold !mx-auto">
           Invoice Tracking
         </Typography>
-        <Typography color="gray.300" className="!text-center !text-base">
+        <Typography
+          variant="body3"
+          color="gray.300"
+          className="!text-center !text-base"
+        >
           We enhance financial processes by automating accurate invoice tracking
           for seamless management
         </Typography>
@@ -94,10 +102,14 @@ export default function Features() {
         items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={paymentTrackingIcon} alt="" className=" mx-auto" />
-        <Typography className="!text-xl !font-semibold !mx-auto">
+        <Typography variant="h6" className="!text-xl !font-semibold !mx-auto">
           Integrated Payments
         </Typography>
-        <Typography color="gray.300" className="!text-center !text-base">
+        <Typography
+          variant="body3"
+          color="gray.300"
+          className="!text-center !text-base"
+        >
           We specialize in delivering secure and efficient payment solutions,
           ensuring seamless financial transactions for our clients
         </Typography>
@@ -116,10 +128,14 @@ export default function Features() {
         items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={dashboardIcon} alt="" className=" mx-auto" />
-        <Typography className="!text-xl !font-semibold !mx-auto">
+        <Typography variant="h6" className="!text-xl !font-semibold !mx-auto">
           Personal Dashboard
         </Typography>
-        <Typography color="gray.300" className="!text-center !text-base">
+        <Typography
+          variant="body3"
+          color="gray.300"
+          className="!text-center !text-base"
+        >
           Integrated user-centric interface that offers insights, data, and
           tools for organizing and facilitating informed decisions and task
           management
@@ -146,10 +162,14 @@ export default function Features() {
         items-stretch hover:shadow-lg transition-shadow duration-500 ease-in-out"
       >
         <img src={clientManagementIcon} alt="" className=" mx-auto" />
-        <Typography className="!text-xl !font-semibold !mx-auto">
+        <Typography variant="h6" className="!text-xl !font-semibold !mx-auto">
           Client Management
         </Typography>
-        <Typography color="gray.300" className="!text-center !text-base">
+        <Typography
+          variant="body3"
+          color="gray.300"
+          className="!text-center !text-base"
+        >
           Our solution facilitate the process of creating, updating, and
           managing clients ensuring seamless communication
         </Typography>
