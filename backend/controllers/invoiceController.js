@@ -4,6 +4,7 @@ const Customer = require('../models/Customer');
 const Owner = require('../models/Owner');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const Notification = require('../models/Notifications');
 // const {setCachedData, getCachedData} = require('../utils/caching');
 
 const crypto = require('crypto');
@@ -85,6 +86,13 @@ exports.createInvoice = async (req, res) => {
       paymentToken
     });
 
+    const newNotification = {
+      notification_type: 'invoiceCreate',
+      owner: req.owner._id,
+      description: `Invoice ${newInvoice._id} was created for ${foundCustomer.name}`
+    };
+    await Notification.create(newNotification);
+
     // send email to customer
 
     const url = `https://klusterthon023-fintech.vercel.app/pay-invoice?token=${urlPaymentToken}&to=${
@@ -111,11 +119,6 @@ exports.createInvoice = async (req, res) => {
         data: null
       });
     }
-
-    //  return res.status(201).json({
-    //    message: 'Invoice created successfully',
-    //    data: newInvoice
-    //  });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -130,7 +133,8 @@ exports.updateInvoice = async (req, res) => {
     const foundInvoice = await Invoice.findOne({
       _id: invoiceId,
       owner_id: req.owner._id
-    });
+    }).populate('customers');
+
     if (!foundInvoice) {
       return res.status(404).json({
         message: 'Invoice not found!',
@@ -145,6 +149,13 @@ exports.updateInvoice = async (req, res) => {
         runValidators: true
       }
     );
+
+    const newNotification = {
+      notification_type: 'invoiceUpdate',
+      owner: req.owner._id,
+      description: `Invoice ${updatedInvoice._id} created for ${customers.name} was updated`
+    };
+    await Notification.create(newNotification);
 
     return res.status(201).json({
       message: 'Invoice Updated successfully',
@@ -201,6 +212,13 @@ exports.updateInvoiceToPaid = async (req, res) => {
     foundInvoice.paymentToken = undefined;
     foundInvoice.save();
 
+    const newNotification = {
+      notification_type: 'invoicePaid',
+      owner: foundCustomer.name,
+      description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid`
+    };
+    await Notification.create(newNotification);
+
     // send mails to customer and owner
     const url = 'Some Random URL for now';
     try {
@@ -233,11 +251,6 @@ exports.updateInvoiceToPaid = async (req, res) => {
         data: null
       });
     }
-
-    //  return res.status(201).json({
-    //    message: 'Invoice Updated successfully',
-    //    data: 'updatedInvoice'
-    //  });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -252,7 +265,7 @@ exports.deleteOneInvoice = async (req, res) => {
     const foundInvoice = await Invoice.findOne({
       _id: invoiceId,
       owner_id: req.owner._id
-    });
+    }).populate('customers');
     if (!foundInvoice) {
       return res.status(404).json({
         message: 'Invoice not found!',
@@ -260,7 +273,14 @@ exports.deleteOneInvoice = async (req, res) => {
       });
     }
 
-    const deletedInvoice = await Invoice.findByIdAndDelete(invoiceId);
+    await Invoice.findByIdAndDelete(invoiceId);
+
+    const newNotification = {
+      notification_type: 'invoiceDelete',
+      owner: customers.name,
+      description: `Invoice ${invoiceId} created for ${customers.name} was deleted`
+    };
+    await Notification.create(newNotification);
 
     return res.status(204).json({
       message: 'Invoice deleted successfully',

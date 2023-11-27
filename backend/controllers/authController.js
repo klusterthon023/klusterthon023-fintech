@@ -47,18 +47,6 @@ exports.register = catchAsync(async (req, res, next) => {
     .digest('hex');
   const activationTokenExpire = Date.now() + 20 * 60 * 1000;
 
-  // const newOwnerDetails = {
-  //   business_name: req.body.business_name,
-  //   owner_name: req.body.owner_name,
-  //   email: req.body.email,
-  //   business_address: req.body.business_address,
-  //   business_description: req.body.business_description,
-  //   contact_number: req.body.contact_number,
-  //   password: req.body.password,
-  //   activationToken,
-  //   activationTokenExpire
-  // };
-
   const newOwnerDetails = {
     owner_name: req.body.owner_name,
     email: req.body.email,

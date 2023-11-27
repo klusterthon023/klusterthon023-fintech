@@ -2,7 +2,7 @@ const Customer = require('../models/Customer');
 const mongoose = require('mongoose');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
-// const {getCachedData, setCachedData} = require('../utils/caching');
+const Notification = require('../models/Notifications');
 
 exports.getAllCustomers = catchAsync(async (req, res) => {
   const allCustomers = await Customer.find({});
@@ -15,17 +15,6 @@ exports.getAllCustomers = catchAsync(async (req, res) => {
 // Implemented after AUTH
 exports.getMyCustomers = catchAsync(async (req, res, next) => {
   const owner = req.owner;
-
-  // const cachekey = `customers_${owner._id}`;
-  // const cachedData = getCachedData(cachekey);
-  // if (cachedData) {
-  //   return res.status(200).json({
-  //     message: `Customers for ${
-  //       owner.business_name ? owner.business_name : owner.owner_name
-  //     }: `,
-  //     data: cachedData
-  //   });
-  // }
 
   const allCustomers = await Customer.find({ owner_id: owner._id });
   // setCachedData(cachekey, allCustomers);
@@ -79,6 +68,14 @@ exports.createCustomer = async (req, res) => {
     }
 
     const newCustomer = await Customer.create(newCustomerDetails);
+
+    const newNotification = {
+      notification_type: 'customerCreate',
+      owner: req.owner._id,
+      description: `You created a new client, ${newCustomer.name}`
+    };
+    await Notification.create(newNotification);
+
     return res.status(201).json({
       message: 'Customer created successfully',
       data: newCustomer
@@ -106,6 +103,13 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
   if (!foundCustomer) {
     return next('Customer not found!', 404);
   }
+  const newNotification = {
+    notification_type: 'customerUpdate',
+    owner: req.owner._id,
+    description: `You updated your client, ${foundCustomer.name}'s details.`
+  };
+  await Notification.create(newNotification);
+
   return res.status(201).json({
     message: 'Customer Updated successfully',
     data: foundCustomer
@@ -121,6 +125,13 @@ exports.deleteOneCustomer = catchAsync(async (req, res, next) => {
   if (!deletedCustomer) {
     return next('Customer not found!', 404);
   }
+  const newNotification = {
+    notification_type: 'customerDelete',
+    owner: req.owner._id,
+    description: `You deleted your client, ${deletedCustomer.name}.`
+  };
+  await Notification.create(newNotification);
+
   return res.status(204).json({
     message: 'Customer deleted successfully',
     data: null
