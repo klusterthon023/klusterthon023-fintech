@@ -94,7 +94,7 @@ export default function CreateClient() {
             onSubmit={handleSubmit}
           >
             {(formik) => {
-              const { getFieldProps, dirty } = formik;
+              const { getFieldProps } = formik;
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
@@ -145,12 +145,7 @@ export default function CreateClient() {
                     className=" placeholder:text-sm"
                   />
 
-                  <Button
-                    type="submit"
-                    loading={isLoading}
-                    disabled={!dirty}
-                    fullWidth
-                  >
+                  <Button type="submit" loading={isLoading} fullWidth>
                     Save
                   </Button>
                 </Form>

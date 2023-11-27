@@ -1,4 +1,5 @@
 import { createContext, useContext, ReactNode, useState } from "react";
+import { IClientType } from "../pages/dashboard/pages/Client/types";
 
 interface AppContextType {
   currentSection: string;
@@ -13,7 +14,21 @@ interface AppContextType {
   refetchClient: () => void;
   isInvoiceDataRefetched: boolean;
   refetchInvoice: () => void;
+  clientDetailsForNewTransaction: IClientType;
+  updateClientDetailsForNewTransaction: (value: IClientType) => void;
 }
+
+export const defaultClientDetails = {
+  business_address: "",
+  created_date: "",
+  customer_type: "",
+  phone_number: "",
+  email: "",
+  id: "",
+  name: "",
+  owner_id: "",
+  _id: "",
+};
 
 const AppContext = createContext<AppContextType>({
   currentSection: "",
@@ -28,6 +43,8 @@ const AppContext = createContext<AppContextType>({
   isInvoiceDataRefetched: false,
   refetchClient: () => {},
   refetchInvoice: () => {},
+  clientDetailsForNewTransaction: defaultClientDetails,
+  updateClientDetailsForNewTransaction: () => {},
 });
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
@@ -41,6 +58,11 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
   const [isClientDataRefetched, setIsClientDataRefetched] = useState(false);
   const [isInvoiceDataRefetched, setIsInvoiceDataRefetched] = useState(false);
+  const [clientDetailsForNewTransaction, setClientDetailsForNewTransaction] =
+    useState<IClientType>(defaultClientDetails);
+
+  const updateClientDetailsForNewTransaction = (value: IClientType) =>
+    setClientDetailsForNewTransaction(value);
 
   const refetchClient = () => {
     setIsClientDataRefetched(true);
@@ -82,6 +104,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         isInvoiceDataRefetched,
         refetchClient,
         refetchInvoice,
+        clientDetailsForNewTransaction,
+        updateClientDetailsForNewTransaction,
       }}
     >
       {children}

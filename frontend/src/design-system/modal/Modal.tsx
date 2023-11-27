@@ -57,14 +57,14 @@ export default function Modal(props: ModalProps) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={closeModal}
-          className="fixed rounded-lg top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70 z-50 backdrop-blur-sm"
+          className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-gray-900 bg-opacity-70 z-50 backdrop-blur-sm"
         >
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className={`relative bg-white !max-w-[700px] !max-h-[80vh] overflow-y-scroll max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
+            className={`relative bg-white !max-w-[700px] !max-h-[80vh] overflow-y-scroll custom_scroll_bar max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
           >
             <div
               className={ClassNames("flex justify-between items-center", {

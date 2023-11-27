@@ -81,8 +81,12 @@ button:focus-visible {
 }
 
 .bg-gradient {
-  background: linear-gradient(261.6deg, #EEF5EC 0%, rgba(255, 255, 255, 0.516081) 26.29%, rgba(150, 192, 255, 0.75) 99.87%);
-
+  background: linear-gradient(
+    261.6deg,
+    #eef5ec 0%,
+    rgba(255, 255, 255, 0.516081) 26.29%,
+    rgba(150, 192, 255, 0.75) 99.87%
+  );
 }
 
 .bg-hero {
@@ -116,6 +120,19 @@ button:focus-visible {
     scrollbar-color: #2b7fff #fff;
     scrollbar-width: auto;
   }
+}
+
+.custom_scroll_bar::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+}
+
+.custom_scroll_bar::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.custom_scroll_bar::-webkit-scrollbar-track {
+  background-color: transparent;
 }
 
 .placeholder::placeholder {

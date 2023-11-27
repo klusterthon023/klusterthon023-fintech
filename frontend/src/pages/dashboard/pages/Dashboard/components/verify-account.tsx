@@ -40,7 +40,7 @@ export default function VerifyAccount() {
 
   return (
     <div
-      className={`${isOpen ? "block" : "hidden"} absolute right-6 top-2
+      className={`${isOpen ? "block" : "hidden"} absolute right-6 top-2 !z-50
      bg-white w-80 h-auto p-5 rounded-lg border-4 border-x-0 border-b-0 border-orange-500 shadow-lg grid gap-5`}
     >
       <div className="flex items-center justify-between">

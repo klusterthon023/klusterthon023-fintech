@@ -26,7 +26,8 @@ function InvoicePage() {
       invoicesWithClientName.filter(
         (client) =>
           client.status.toLowerCase().includes(value.toLowerCase()) ||
-          client.id.toLowerCase().includes(value.toLowerCase())
+          client.id.toLowerCase().includes(value.toLowerCase()) ||
+          client.client_name.toLowerCase().includes(value.toLowerCase())
       )
     );
   };
@@ -50,7 +51,6 @@ function InvoicePage() {
       <FirstRow />
       <div className="border-gray-100 bg-white border rounded-lg max-sm:w-[300px] ">
         <div className="px-4 py-5 flex max-sm:flex-col max-sm:gap-5 justify-between items-center">
-
           <div className="max-w-[280px] w-full">
             <Input
               placeholder="Search by ID, Name, Email or Status ..."

@@ -12,7 +12,6 @@ import { createInvoice } from "../pages/Dashboard/api-dashboard";
 import { formikHelper } from "../../../utils/helper";
 import { toast } from "react-toastify";
 import { Product } from "../pages/Dashboard/types";
-
 import { useAppContext } from "../../../contexts";
 import { getAllClient } from "../pages/Client/client-api";
 import DatePicker from "react-datepicker";
@@ -34,7 +33,7 @@ interface AxiosError {
 }
 
 const validationSchema = Yup.object().shape({
-  customer_id: Yup.string().required("Customer ID is required"),
+  // customer_id: Yup.string().required("Customer is required"),
   transcation_details: Yup.string().required(
     "Transaction details are required"
   ),
@@ -53,10 +52,12 @@ export default function CreateInvoice() {
     label: option.name,
     value: option._id,
   }));
+
   const {
     toggleIsCreateInvoicedModalOpen,
     refetchInvoice,
     isCreateInvoiceModalOpen,
+    clientDetailsForNewTransaction,
   } = useAppContext();
 
   const { mutateAsync, isLoading, isError, error } = useMutation(createInvoice);
@@ -65,6 +66,7 @@ export default function CreateInvoice() {
     try {
       const result = await mutateAsync({
         ...values,
+        customer_id: clientDetailsForNewTransaction._id || values.customer_id,
         due_date: values.due_date.toString(),
       });
       refetchInvoice();
@@ -103,18 +105,23 @@ export default function CreateInvoice() {
             onSubmit={handleSubmit}
           >
             {(formik) => {
-              const { getFieldProps, dirty, isValid } = formik;
+              const { getFieldProps } = formik;
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
                   <Select
+                    defaultValue={{
+                      label: clientDetailsForNewTransaction.name,
+                      value: clientDetailsForNewTransaction._id,
+                    }}
                     value={options?.find(
                       (option) => option.value === formik.values.customer_id
                     )}
-                    onChange={(option) =>
+                    disabled={!!clientDetailsForNewTransaction.name}
+                    onChange={(option) => {
                       // @ts-ignore
-                      formik.setFieldValue("customer_id", option.value)
-                    }
+                      formik.setFieldValue("customer_id", option.value);
+                    }}
                     className=" placeholder:text-sm"
                     label="Customer Name"
                     placeholder="Select a customer"
@@ -197,12 +204,7 @@ export default function CreateInvoice() {
                     )}
                   </Field>
 
-                  <Button
-                    type="submit"
-                    disabled={!dirty || !isValid}
-                    loading={isLoading}
-                    fullWidth
-                  >
+                  <Button type="submit" loading={isLoading} fullWidth>
                     Send
                   </Button>
                 </Form>
