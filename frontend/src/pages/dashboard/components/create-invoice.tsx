@@ -1,13 +1,20 @@
-import { Formik, Form, FormikHelpers } from "formik";
+import { Formik, Form, FieldArray } from "formik";
 import * as Yup from "yup";
-import { useMutation } from "react-query";
-import { Button, Input, Modal, Typography } from "../../../design-system";
+import { useMutation, useQuery } from "react-query";
+import {
+  Button,
+  Input,
+  Modal,
+  Select,
+  Typography,
+} from "../../../design-system";
 import { createInvoice } from "../pages/Dashboard/api-dashboard";
 import { formikHelper } from "../../../utils/helper";
 import { toast } from "react-toastify";
 import { Product } from "../pages/Dashboard/types";
-import { useState } from "react";
+
 import { useAppContext } from "../../../contexts";
+import { getAllClient } from "../pages/Client/client-api";
 
 interface FormValues {
   customer_id: string;
@@ -32,18 +39,22 @@ export default function CreateInvoice() {
   const initialValues: FormValues = {
     customer_id: "",
     transcation_details: "",
-    products: [],
+    products: [{ description: "", quantity: 1, unit_price: 0 }],
     due_date: "",
   };
+  const { data } = useQuery(["GetAllCustomer"], getAllClient);
 
+  const options = data?.data?.map((option) => ({
+    label: option.name,
+    value: option._id,
+  }));
   const { toggleIsCreateInvoicedModalOpen, isCreateInvoiceModalOpen } =
     useAppContext();
-
-  const [showMore, setShowMore] = useState(false);
 
   const { mutateAsync, isLoading, isError, error } = useMutation(createInvoice);
 
   const handleSubmit = async (values: FormValues) => {
+    //console.log(values);
     try {
       const result = await mutateAsync(values);
       toast(result?.message);
@@ -85,58 +96,87 @@ export default function CreateInvoice() {
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
+                  <Select
+                    value={formik.values.customer_id}
+                    onChange={(option) =>
+                      // @ts-ignore
+                      formik.setFieldValue("customer_id", option.value)
+                    }
+                    className=" placeholder:text-sm"
+                    label="Customer Name"
+                    placeholder="Select a customer"
+                    options={options}
+                  />
+
                   <Input
-                    placeholder="Customer ID"
-                    {...getFieldProps("customer_id")}
-                    {...formikHelper(formik, "customer_id")}
+                    type="text"
+                    label="Transcation Details"
+                    placeholder="Transaction details"
+                    {...getFieldProps("transcation_details")}
+                    {...formikHelper(formik, "transcation_details")}
+                    className=" placeholder:text-sm"
+                  />
+                  <FieldArray name="products">
+                    {({ push, remove }) => (
+                      <div>
+                        {formik.values.products.map((_, index) => (
+                          <div key={index}>
+                            <Input
+                              label={`${"Product name"}`}
+                              {...getFieldProps(
+                                `products.${index}.product_name`
+                              )}
+                            />
+                            <Input
+                              label={`Product Quantity`}
+                              type="number"
+                              {...getFieldProps(`products.${index}.quantity`)}
+                            />
+                            <Input
+                              label={`Product Price`}
+                              type="number"
+                              {...getFieldProps(`products.${index}.unit_price`)}
+                            />
+                            {index > 0 && (
+                              <button
+                                type="button"
+                                onClick={() => remove(index)}
+                              >
+                                Remove Product
+                              </button>
+                            )}
+                          </div>
+                        ))}
+                        <button
+                          type="button"
+                          onClick={() =>
+                            push({
+                              product_name: "",
+                              quantity: 1,
+                              unit_price: 0,
+                            })
+                          }
+                        >
+                          Add More Products
+                        </button>
+                      </div>
+                    )}
+                  </FieldArray>
+                  <Input
+                    type="text"
+                    placeholder="Due Date"
+                    {...getFieldProps("due_date")}
+                    {...formikHelper(formik, "due_date")}
                     className=" placeholder:text-sm"
                   />
 
-                  {!showMore && (
-                    <div className="flex justify-start">
-                      <Typography
-                        onClick={() => setShowMore(true)}
-                        variant="body4"
-                        className="!cursor-pointer"
-                        color="primary.300"
-                      >
-                        Add manually
-                      </Typography>
-                    </div>
-                  )}
-
-                  {showMore && (
-                    <>
-                      <Input
-                        type="text"
-                        placeholder="Transaction details"
-                        {...getFieldProps("transcation_details")}
-                        {...formikHelper(formik, "transcation_details")}
-                        className=" placeholder:text-sm"
-                      />
-                      <Input
-                        type="text"
-                        placeholder="Products"
-                        {...getFieldProps("products")}
-                        {...formikHelper(formik, "products")}
-                        className=" placeholder:text-sm"
-                      />
-                      <Input
-                        type="text"
-                        placeholder="Due Date"
-                        {...getFieldProps("due_date")}
-                        {...formikHelper(formik, "due_date")}
-                        className=" placeholder:text-sm"
-                      />
-                    </>
-                  )}
                   <Button
                     type="submit"
                     disabled={!dirty || !isValid}
                     loading={isLoading}
                     fullWidth
                   >
-                    Save
+                    Send
                   </Button>
                 </Form>
               );

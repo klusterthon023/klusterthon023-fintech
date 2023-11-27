@@ -28,8 +28,10 @@ export default function WhatWeDoCard() {
         className="grid gap-6 text-center lg:max-w-[350px] lg:row-start-1 lg:col-start-1"
       >
         <img src={paymentIcon} alt="" className="mx-auto" />
-        <Typography variant="h4">Payment Solution</Typography>
-        <Typography className="lg:max-w-[40ch]">
+        <Typography fontWeight={600} className="!text-[28px]">
+          Payment Solution
+        </Typography>
+        <Typography variant="body3" className="lg:max-w-[40ch]">
           We specialize in delivering secure and efficient payment solutions,
           ensuring seamless financial transactions for our clients
         </Typography>
@@ -40,8 +42,10 @@ export default function WhatWeDoCard() {
         className="grid gap-6 text-center lg:max-w-[350px] lg:row-start-2 lg:col-start-2 lg:mt-4"
       >
         <img src={searchIcon} alt="" className="mx-auto" />
-        <Typography variant="h4">Invoice Tracking</Typography>
-        <Typography className="lg:max-w-[40ch]">
+        <Typography fontWeight={600} className="!text-[28px]">
+          Invoice Tracking
+        </Typography>
+        <Typography variant="body3" className="lg:max-w-[40ch]">
           We enhance financial processes by automating accurate invoice tracking
           for seamless management
         </Typography>
@@ -52,8 +56,10 @@ export default function WhatWeDoCard() {
         className="grid gap-6 text-center lg:max-w-[350px] lg:row-start-1 lg:col-start-3"
       >
         <img src={groupIcon} alt="" className="mx-auto" />
-        <Typography variant="h4">Client Management</Typography>
-        <Typography className="lg:max-w-[40ch]">
+        <Typography fontWeight={600} className="!text-[28px]">
+          Client Management
+        </Typography>
+        <Typography variant="body3" className="lg:max-w-[40ch]">
           Our solution facilitate the process of creating, updating, and
           managing clients ensuring seamless communication
         </Typography>

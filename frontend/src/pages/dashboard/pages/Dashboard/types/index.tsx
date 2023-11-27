@@ -19,7 +19,7 @@ export type ICreateClientResponse = {
 };
 
 export type Product = {
-  product_name: string;
+  description: string;
   quantity: number;
   unit_price: number;
 };

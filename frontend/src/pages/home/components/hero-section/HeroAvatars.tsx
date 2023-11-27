@@ -14,7 +14,7 @@ export default function HeroAvatars() {
         <img src={avatar4} alt="" className=" ml-[-10px]" />
       </div>
       <div>
-        <Typography>4k+ Active Users</Typography>
+        <Typography variant="body4">4k+ Active Users</Typography>
       </div>
     </div>
   );
