@@ -11,7 +11,7 @@ export default function RecentNotifications() {
     return <RecentNotificationsLoadingSkeleton />;
   }
   return (
-    <section className="bg-white rounded-lg border border-gray-200 border-opacity-20">
+    <section className="bg-white max-lg:w-full lg:w-[35%] max-h-[550px] overflow-y-scroll rounded-lg border border-gray-200 border-opacity-20">
       <div className="grid gap-5 bg-white  rounded-lg p-4">
         <Typography variant="body3" className="!font-bold">
           Recent Notifications

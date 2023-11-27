@@ -39,7 +39,7 @@ export const custom_columns = (notNavigatable?: boolean) => [
   {
     title: "Client name",
     dataIndex: "client_name",
-    key: "4",
+    key: "2",
     render: (client_name: string) => {
       return (
         <Typography variant={"body4"} color={"gray.600"}>

@@ -25,7 +25,8 @@ function InvoicePage() {
       invoicesWithClientName.filter(
         (client) =>
           client.status.toLowerCase().includes(value.toLowerCase()) ||
-          client.id.toLowerCase().includes(value.toLowerCase())
+          client.id.toLowerCase().includes(value.toLowerCase()) ||
+          client.client_name.toLowerCase().includes(value.toLowerCase())
       )
     );
   };

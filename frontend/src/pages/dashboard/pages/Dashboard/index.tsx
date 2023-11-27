@@ -18,8 +18,8 @@ function DashBoard() {
       >
         <TopStatics />
         <RecentTransactions />
-        <div className="flex flex-col xl:grid xl:grid-cols-2 gap-5 h-full">
-          <div className="flex flex-col gap-5">
+        <div className="flex max-lg:flex-col lg:justify-between lg:flex gap-5">
+          <div className="flex flex-col gap-5 lg:w-[65%] max-lg:w-full">
             <QuickActions />
             <RevenueReports />
           </div>

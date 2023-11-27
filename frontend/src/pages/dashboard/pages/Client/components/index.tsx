@@ -10,6 +10,7 @@ import EditClient from "./EditClient";
 import { useEffect, useState } from "react";
 import DeleteClient from "./DeleteClient";
 import RecentTransactions from "../../Dashboard/components/recent-transaction";
+import { defaultClientDetails, useAppContext } from "../../../../../contexts";
 
 export default function ClientDetails() {
   const { clientId } = useParams();
@@ -21,6 +22,12 @@ export default function ClientDetails() {
   const { data, refetch } = useQuery(["getCustomerById"], () =>
     getClientById(clientId!)
   );
+
+  const {
+    toggleIsCreateInvoicedModalOpen,
+    updateClientDetailsForNewTransaction,
+    isCreateInvoiceModalOpen,
+  } = useAppContext();
 
   const refetchData = () => {
     setIsDataRefetch(true);
@@ -38,6 +45,15 @@ export default function ClientDetails() {
       refetch();
     }
   }, [isDataRefetch]);
+
+  useEffect(() => {
+    if (!isCreateInvoiceModalOpen) {
+      updateClientDetailsForNewTransaction(defaultClientDetails);
+    }
+    return () => {
+      updateClientDetailsForNewTransaction(defaultClientDetails);
+    };
+  }, []);
 
   return (
     <>
@@ -110,9 +126,17 @@ export default function ClientDetails() {
             <Typography fontWeight={600} variant="body3" color="gray.100">
               TRANSACTION HISTORY
             </Typography>
-            <Button variant="outlined">New Transaction</Button>
+            <Button
+              onClick={() => {
+                toggleIsCreateInvoicedModalOpen();
+                updateClientDetailsForNewTransaction(client!);
+              }}
+              variant="outlined"
+            >
+              New Transaction
+            </Button>
           </div>
-          <RecentTransactions notNavigatable={true} />
+          <RecentTransactions notNavigatable={true} clientId={client?._id!} />
         </div>
       </motion.div>
       <DeleteClient

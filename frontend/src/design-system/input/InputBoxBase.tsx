@@ -43,8 +43,9 @@ const inputContainerCss = (
     justify-content: center;
 
     ${status === "danger" && dangerBorderColor(theme)};
-    font-size: 14px;
-    color: ${theme.palette.gray[500]};
+    ${css(theme.typography.body4)};
+    color: ${theme.palette.gray[400]};
+    font-weight: 500;
 
     &:focus-within {
       border-color: ${theme.palette.primary[300]};

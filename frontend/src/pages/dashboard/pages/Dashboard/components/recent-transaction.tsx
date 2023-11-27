@@ -18,8 +18,10 @@ type invoice = {
 
 export default function RecentTransactions({
   notNavigatable,
+  clientId,
 }: {
   notNavigatable?: boolean;
+  clientId?: string;
 }) {
   const { data, isLoading } = useQuery(["TRANSACTIONS"], getRecentTransactions);
   const [invoiceList, setInvoiceList] = useState<invoice[]>([]);
@@ -27,13 +29,20 @@ export default function RecentTransactions({
   useEffect(() => {
     if (data?.data) {
       const newInvoiceList = data.data.map((invoice) => {
-        // Assuming the customer you're interested in is the first one in the array
         const client_name = invoice.customers[0]?.name;
         return { ...invoice, client_name };
       });
-      setInvoiceList(newInvoiceList.slice(0, notNavigatable ? 3 : 5));
+      const clientByIdData = data?.data.filter(
+        (invoice) => invoice.customer_id === clientId
+      );
+
+      setInvoiceList(
+        clientId
+          ? clientByIdData.slice(0, notNavigatable ? 3 : 5)
+          : newInvoiceList.slice(0, notNavigatable ? 3 : 5)
+      );
     }
-  }, [data]);
+  }, [data, clientId]);
 
   if (isLoading) {
     return <RecentTransactionsSkeleton />;

@@ -85,7 +85,7 @@ const selectCss = (theme: Theme) => css`
 
   .select__singleValue {
     ${css(theme.typography.body4)};
-    color: ${theme.palette.gray[300]};
+    color: ${theme.palette.gray[400]};
     font-weight: 500;
   }
 
