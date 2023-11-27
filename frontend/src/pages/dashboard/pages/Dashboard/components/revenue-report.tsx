@@ -13,6 +13,7 @@ import { Line } from "react-chartjs-2";
 // import { useQuery } from "react-query";
 // import { showStatics } from "../api-dashboard";
 import dayjs from "dayjs";
+import { Typography } from "../../../../../design-system";
 
 ChartJS.register(
   CategoryScale,
@@ -83,7 +84,10 @@ export default function RevenueReports() {
   };
   return (
     <section className="bg-white w-full max-sm:w-[300px] max-[400px]:w-[250px] p-4 border border-gray-200 border-opacity-20 rounded-lg">
-      <div className="flex justify-center mx-auto">
+      <Typography color="gray.400" fontWeight={600} variant="body3">
+        Revenue Reports
+      </Typography>
+      <div className="flex justify-center mx-auto mt-4">
         <Line data={info} options={options} />
       </div>
     </section>
