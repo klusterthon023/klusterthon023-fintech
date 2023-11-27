@@ -7,6 +7,7 @@ import {
   IGetNotifications,
   IGetStatics,
   IResendEmail,
+  IUpdateProfile,
 } from "../types";
 
 export const createClient = async (data: ICreateClientRequest) => {
@@ -73,6 +74,27 @@ export const getRecentTransactions = async () => {
   try {
     const response = await ApiAxiosInterceptor.get<IGetAllInvoices>(
       "/invoices"
+    );
+    return response?.data;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
+};
+
+export type IOwnerDetails = {
+  business_name: string;
+  owner_name: string;
+  contact_number: string;
+  business_address: string;
+  business_description: string;
+};
+
+export const updateProfile = async (data: IOwnerDetails) => {
+  try {
+    const response = await ApiAxiosInterceptor.patch<IUpdateProfile>(
+      "/auth/updateOwner",
+      data
     );
     return response?.data;
   } catch (error) {

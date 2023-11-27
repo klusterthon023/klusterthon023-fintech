@@ -87,6 +87,7 @@ function ClientPage() {
     useAppContext();
   // fetching
   const { data, refetch } = useQuery(["GetAllCustomer"], getAllClient);
+  console.log(data);
 
   const [searchedClient, setSearchedClient] = useState<IClientType[]>();
 

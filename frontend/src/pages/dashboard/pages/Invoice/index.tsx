@@ -12,7 +12,6 @@ import { IInvoice } from "../Dashboard/types";
 
 function InvoicePage() {
   const { data } = useQuery(["TRANSACTIONS"], getRecentTransactions);
-
   const [startDate, setStartDate] = useState(new Date());
   const [invoicesWithClientName, setInvoicesWithClientName] = useState<
     IInvoice[]
@@ -50,7 +49,6 @@ function InvoicePage() {
       <FirstRow />
       <div className="border-gray-100 bg-white border rounded-lg max-sm:w-[300px] ">
         <div className="px-4 py-5 flex max-sm:flex-col max-sm:gap-5 justify-between items-center">
-
           <div className="max-w-[280px] w-full">
             <Input
               placeholder="Search by ID, Name, Email or Status ..."

@@ -112,3 +112,22 @@ export type IGetAllInvoices = {
   message: string;
   data: IInvoice[];
 };
+
+export type IUpdateProfile = {
+  status: string;
+  data: {
+    owner: {
+      _id: string;
+      business_name: string;
+      owner_name: string;
+      email: string;
+      business_address: string;
+      business_description: string;
+      contact_number: string;
+      active: boolean;
+      role: string;
+      __v: number;
+      passwordChangedAt: string;
+    };
+  };
+};
