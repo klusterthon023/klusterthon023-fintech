@@ -1,10 +1,7 @@
 import { useQuery } from "react-query";
 import { Typography } from "../../../../../design-system";
 import { showStatics } from "../api-dashboard";
-import graphesRed from "../../../../../assets/dashboard/graphes-red.svg";
 import graphesGreen from "../../../../../assets/dashboard/graphs-green.svg";
-import arrowUp from "../../../../../assets/dashboard/arrow-up.svg";
-import arrowDown from "../../../../../assets/dashboard/arrow-down.svg";
 import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
 
 export default function TopStatics() {
@@ -27,15 +24,6 @@ export default function TopStatics() {
             >
               {data?.numberOfClients ? data?.numberOfClients : 0}
             </Typography>
-            <div className=" flex items-center gap-1">
-              <img src={arrowUp} alt="" />
-              <Typography variant="body4" className=" !text-[#569E44]">
-                56%
-              </Typography>
-              <Typography variant="body5" color="gray.100">
-                vs last month
-              </Typography>
-            </div>
           </div>
           <div className="">
             <img src={graphesGreen} alt="" className="mx-auto" />
@@ -52,18 +40,9 @@ export default function TopStatics() {
             >
               {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
             </Typography>
-            <div className=" flex items-center gap-1">
-              <img src={arrowDown} alt="" />
-              <Typography variant="body4" color="red">
-                5%
-              </Typography>
-              <Typography variant="body5" color="gray.100">
-                vs last month
-              </Typography>
-            </div>
           </div>
           <div className="">
-            <img src={graphesRed} alt="" className="mx-auto" />
+            <img src={graphesGreen} alt="" className="mx-auto" />
           </div>
         </div>
         <div className="w-full flex items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
@@ -77,15 +56,6 @@ export default function TopStatics() {
             >
               {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
-            <div className=" flex items-center gap-1">
-              <img src={arrowUp} alt="" />
-              <Typography variant="body4" className=" !text-[#569E44]">
-                24%
-              </Typography>
-              <Typography variant="body5" color="gray.100">
-                vs last month
-              </Typography>
-            </div>
           </div>
           <div className="">
             <img src={graphesGreen} alt="" className="mx-auto" />
