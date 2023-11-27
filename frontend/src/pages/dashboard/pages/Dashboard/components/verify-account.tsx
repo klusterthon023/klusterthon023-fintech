@@ -5,7 +5,7 @@ import { getDataFromLocalStorage } from "../../../../../utils/helper";
 import { useMutation } from "react-query";
 import { resendEmail } from "../api-dashboard";
 import { toast } from "react-toastify";
-import ApiLoadingState from "../../../../../components/loader/ApiLoadingState";
+import AppLoadingState from "../../../../../components/loader/AppLoader";
 
 export default function VerifyAccount() {
   const currentUserData = getDataFromLocalStorage("currentUser");
@@ -35,7 +35,7 @@ export default function VerifyAccount() {
   }, [user?.active]);
 
   if (isLoading) {
-    return <ApiLoadingState />;
+    return <AppLoadingState isLoading={isLoading} />;
   }
 
   return (

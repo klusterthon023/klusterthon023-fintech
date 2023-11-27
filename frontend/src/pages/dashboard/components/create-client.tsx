@@ -78,7 +78,7 @@ export default function CreateClient() {
       }}
     >
       {isCreateClientModalOpen && (
-        <section className="sm:!w-auto md:!w-[500px] mt-4">
+        <section className="sm:!w-auto md:!w-[500px] rounded-lg mt-4">
           <>
             {isError && error && (
               <div className="p-2 mb-5 flex justify-center items-center bg-color-red rounded-lg">
