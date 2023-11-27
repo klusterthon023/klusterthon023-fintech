@@ -42,7 +42,7 @@ export default function CreateInvoice() {
     products: [{ description: "", quantity: 1, unit_price: 0 }],
     due_date: "",
   };
-  const { data, refetch } = useQuery(["GetAllCustomer"], getAllClient);
+  const { data } = useQuery(["GetAllCustomer"], getAllClient);
 
   const options = data?.data?.map((option) => ({
     label: option.name,
@@ -55,18 +55,6 @@ export default function CreateInvoice() {
 
   const handleSubmit = async (values: FormValues) => {
     //console.log(values);
-    const valuesSent = {
-      customer_id: values.customer_id,
-      transcation_details: "Invoice for Random Stuffs (Price in Euros)",
-      products: [
-        {
-          product_name: validationSchema,
-          quantity: 5,
-          unit_price: 900,
-        },
-      ],
-      due_date: values.due_date,
-    };
     try {
       const result = await mutateAsync(values);
       toast(result?.message);
@@ -111,6 +99,7 @@ export default function CreateInvoice() {
                   <Select
                     value={formik.values.customer_id}
                     onChange={(option) =>
+                      // @ts-ignore
                       formik.setFieldValue("customer_id", option.value)
                     }
                     className=" placeholder:text-sm"
@@ -130,10 +119,10 @@ export default function CreateInvoice() {
                   <FieldArray name="products">
                     {({ push, remove }) => (
                       <div>
-                        {formik.values.products.map((product, index) => (
+                        {formik.values.products.map((_, index) => (
                           <div key={index}>
                             <Input
-                              label={`Product Name`}
+                              label={`${"Product name"}`}
                               {...getFieldProps(
                                 `products.${index}.product_name`
                               )}
