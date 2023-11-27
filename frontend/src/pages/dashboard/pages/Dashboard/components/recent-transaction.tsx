@@ -20,7 +20,7 @@ export default function RecentTransactions() {
 
   useEffect(() => {
     if (data?.data) {
-      console.log(data.data[0].id);
+      console.log(data.data);
       setInvoiceList(data.data.slice(0, 5));
     }
   }, [data]);

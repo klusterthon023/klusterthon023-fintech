@@ -82,9 +82,10 @@ const columns = [
 ];
 
 function ClientPage() {
+  // getting state
   const { toggleIsCreateClientModalOpen, isClientDataRefetched } =
     useAppContext();
-
+  // fetching
   const { data, refetch } = useQuery(["GetAllCustomer"], getAllClient);
 
   const [searchedClient, setSearchedClient] = useState<IClientType[]>();
