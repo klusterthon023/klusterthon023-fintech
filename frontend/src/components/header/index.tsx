@@ -55,6 +55,7 @@ function Header() {
               }}
             >
               <Typography
+                variant="body4"
                 className="!cursor-pointer"
                 color={currentSection === label ? "tertiary" : "gray.300"}
               >
@@ -122,6 +123,7 @@ function Header() {
                       }}
                     >
                       <Typography
+                        variant="body4"
                         className="!cursor-pointer"
                         color={
                           currentSection === label ? "tertiary" : "gray.300"

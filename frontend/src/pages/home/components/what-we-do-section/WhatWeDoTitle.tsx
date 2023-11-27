@@ -4,7 +4,11 @@ export default function WhatWeDoTitle() {
   return (
     <div className="grid gap-10">
       <div className="flex items-center flex-col gap-4">
-        <Typography color="secondary.300" className=" uppercase text-center">
+        <Typography
+          variant="body3"
+          color="secondary.200"
+          className=" uppercase text-center"
+        >
           WHAT WE DO
         </Typography>
         <Typography className="!max-w-[28ch] text-center !text-3xl md:!text-4xl !font-semibold md:!font-bold">
