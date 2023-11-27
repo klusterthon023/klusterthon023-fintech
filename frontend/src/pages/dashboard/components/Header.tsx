@@ -1,7 +1,5 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import lang from "../../../assets/dashboard/en.svg";
-import { Input, Typography } from "../../../design-system";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { Typography } from "../../../design-system";
 import {
   getDataFromLocalStorage,
   getGravatarImage,
@@ -28,12 +26,12 @@ function Header() {
       <Typography variant="h5" className="max-sm:!text-lg !text-[28px]">
         {capitalizeFirstLetter(title)}
       </Typography>
-      <div className="max-lg:hidden w-full mx-auto max-w-[350px]">
+      {/* <div className="max-lg:hidden w-full mx-auto max-w-[350px]">
         <Input
           placeholder="Search..."
           startIcon={<FontAwesomeIcon icon={faSearch} />}
         />
-      </div>
+      </div> */}
       <div className="flex gap-2 md:gap-6 items-center">
         <img src={lang} alt="" />
         <Dropdown

@@ -28,7 +28,7 @@ export default function RevenueReports() {
     },
   };
   return (
-    <section className="bg-white w-full p-4 border border-gray-200 border-opacity-20 rounded-lg">
+    <section className="bg-white w-full max-sm:w-[300px] max-[400px]:w-[250px] p-4 border border-gray-200 border-opacity-20 rounded-lg">
       <div className="flex justify-center mx-auto">
         <Pie data={info} options={options} />
       </div>

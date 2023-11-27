@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Input, Table } from "../../../../design-system";
+import { Input, Table, Typography } from "../../../../design-system";
 import FirstRow from "./components/FirstRow";
 import { getRecentTransactions } from "../Dashboard/api-dashboard";
 import { custom_columns } from "../Dashboard/types/columns";
@@ -34,7 +34,6 @@ function InvoicePage() {
   useEffect(() => {
     if (data?.data) {
       const newInvoicesWithClientName = data.data.map((invoice) => {
-        // Assuming the customer you're interested in is the first one in the array
         const client_name = invoice.customers[0]?.name;
         return { ...invoice, client_name };
       });
@@ -46,11 +45,11 @@ function InvoicePage() {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray min-h-screen"
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray mx-auto min-h-screen"
     >
       <FirstRow />
-      <div className="border-gray-100 bg-white border rounded-lg">
-        <div className="px-4 py-5 flex justify-between items-center">
+      <div className="border-gray-100 bg-white border rounded-lg max-sm:w-[300px] ">
+        <div className="px-4 py-5 flex max-sm:flex-col max-sm:gap-5 justify-between items-center">
           <Input placeholder="Search..." onChange={handleSearch} />
           <div className="z-50">
             <DatePicker
@@ -68,6 +67,11 @@ function InvoicePage() {
             dataSource={searchedInvoice || invoicesWithClientName}
           />
         </div>
+        {!invoicesWithClientName.length && (
+          <div className="text-center py-4">
+            <Typography variant="body3">No Invoice Yet</Typography>
+          </div>
+        )}
       </div>
     </motion.div>
   );

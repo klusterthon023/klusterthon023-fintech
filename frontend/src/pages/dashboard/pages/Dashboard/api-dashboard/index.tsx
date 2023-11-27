@@ -60,7 +60,7 @@ export const showStatics = async () => {
 export const recentNotifications = async (): Promise<IGetNotifications> => {
   try {
     const response = await ApiAxiosInterceptor.get<IGetNotifications>(
-      "/notification?page=1&limit=3"
+      "/notification?page=1&limit=10"
     );
     return response?.data;
   } catch (error) {

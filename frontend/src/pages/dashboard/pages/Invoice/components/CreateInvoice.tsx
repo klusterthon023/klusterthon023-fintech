@@ -9,7 +9,7 @@ function CreateInvoice() {
     <>
       <div
         onClick={() => toggleIsCreateInvoicedModalOpen()}
-        className="p-5 cursor-pointer !h-[150px] !w-[350px] bg-color-white rounded-lg border border-color-primary flex flex-col justify-center items-center"
+        className="p-5 cursor-pointer !h-[150px] !w-[350px] lg:!w-full max-sm:!w-[300px] bg-color-white rounded-lg border border-color-primary flex flex-col justify-center items-center"
       >
         <div className="bg-color-primary mb-4 w-6 h-6 justify-center items-center flex text-color-white">
           <FontAwesomeIcon icon={faPlus} />
