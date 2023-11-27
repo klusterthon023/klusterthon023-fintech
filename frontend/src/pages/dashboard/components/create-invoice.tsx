@@ -1,4 +1,4 @@
-import { Formik, Form, FieldArray } from "formik";
+import { Formik, Form, FieldArray, Field } from "formik";
 import * as Yup from "yup";
 import { useMutation, useQuery } from "react-query";
 import {
@@ -15,12 +15,14 @@ import { Product } from "../pages/Dashboard/types";
 
 import { useAppContext } from "../../../contexts";
 import { getAllClient } from "../pages/Client/client-api";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 interface FormValues {
   customer_id: string;
   transcation_details: string;
   products: Product[];
-  due_date: string;
+  due_date: Date;
 }
 
 interface AxiosError {
@@ -32,7 +34,10 @@ interface AxiosError {
 }
 
 const validationSchema = Yup.object().shape({
-  customer_id: Yup.string(),
+  customer_id: Yup.string().required("Customer ID is required"),
+  transcation_details: Yup.string().required(
+    "Transaction details are required"
+  ),
 });
 
 export default function CreateInvoice() {
@@ -40,7 +45,7 @@ export default function CreateInvoice() {
     customer_id: "",
     transcation_details: "",
     products: [{ description: "", quantity: 1, unit_price: 0 }],
-    due_date: "",
+    due_date: new Date(),
   };
   const { data } = useQuery(["GetAllCustomer"], getAllClient);
 
@@ -58,7 +63,10 @@ export default function CreateInvoice() {
 
   const handleSubmit = async (values: FormValues) => {
     try {
-      const result = await mutateAsync(values);
+      const result = await mutateAsync({
+        ...values,
+        due_date: values.due_date.toString(),
+      });
       refetchInvoice();
       toast(result?.message);
       toggleIsCreateInvoicedModalOpen();
@@ -100,7 +108,9 @@ export default function CreateInvoice() {
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
                   <Select
-                    value={formik.values.customer_id}
+                    value={options?.find(
+                      (option) => option.value === formik.values.customer_id
+                    )}
                     onChange={(option) =>
                       // @ts-ignore
                       formik.setFieldValue("customer_id", option.value)
@@ -152,6 +162,7 @@ export default function CreateInvoice() {
                         ))}
                         <button
                           type="button"
+                          className="pt-4 underline"
                           onClick={() =>
                             push({
                               product_name: "",
@@ -160,18 +171,31 @@ export default function CreateInvoice() {
                             })
                           }
                         >
-                          Add More Products
+                          <Typography variant="body4">
+                            Add More Products
+                          </Typography>
                         </button>
                       </div>
                     )}
                   </FieldArray>
-                  <Input
-                    type="text"
-                    placeholder="Due Date"
-                    {...getFieldProps("due_date")}
-                    {...formikHelper(formik, "due_date")}
-                    className=" placeholder:text-sm"
-                  />
+                  <label
+                    htmlFor="due_date"
+                    className="block text-sm font-medium text-gray-700"
+                  >
+                    Due Date
+                  </label>
+                  <Field name="due_date">
+                    {({ field, form }: { field: any; form: any }) => (
+                      <DatePicker
+                        className="w-full py-4 h-12 border border-gray-100 text-center rounded-lg cursor-pointer outline-none"
+                        selected={field.value}
+                        onChange={(date: Date) =>
+                          form.setFieldValue(field.name, date)
+                        }
+                        dateFormat="MM/dd/yyyy"
+                      />
+                    )}
+                  </Field>
 
                   <Button
                     type="submit"
