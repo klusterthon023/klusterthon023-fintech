@@ -15,6 +15,8 @@ interface AppContextType {
   refetchClient: () => void;
   isInvoiceDataRefetched: boolean;
   refetchInvoice: () => void;
+  isDeleteInvoiceModalOpen: boolean;
+  toggleDeleteInvoiceModel: () => void;
 }
 
 const AppContext = createContext<AppContextType>({
@@ -32,6 +34,8 @@ const AppContext = createContext<AppContextType>({
   refetchInvoice: () => {},
   isUpdateProfileModalOpen: false,
   toggleIsUpdateProfileModalOpen: () => {},
+  isDeleteInvoiceModalOpen: false,
+  toggleDeleteInvoiceModel: () => {},
 });
 
 export function AppContextProvider({ children }: { children: ReactNode }) {
@@ -47,6 +51,12 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
   const [isCreateClientModalOpen, setIsCreateClientModalOpen] = useState(false);
   const [isClientDataRefetched, setIsClientDataRefetched] = useState(false);
   const [isInvoiceDataRefetched, setIsInvoiceDataRefetched] = useState(false);
+  const [isDeleteInvoiceModalOpen, setIsDeleteInvoiceModalOpen] =
+    useState(false);
+
+  const toggleDeleteInvoiceModel = () => {
+    setIsDeleteInvoiceModalOpen(!isDeleteInvoiceModalOpen);
+  };
 
   const refetchClient = () => {
     setIsClientDataRefetched(true);
@@ -94,6 +104,8 @@ export function AppContextProvider({ children }: { children: ReactNode }) {
         isInvoiceDataRefetched,
         refetchClient,
         refetchInvoice,
+        toggleDeleteInvoiceModel,
+        isDeleteInvoiceModalOpen,
       }}
     >
       {children}
