@@ -24,7 +24,7 @@ function PaymentPage() {
   const { data } = useQuery(["getAllInvoices"], getAllInvoices);
 
   const invoice = data?.data?.find((invoice) => invoice.paymentToken === token);
-
+  console.log(invoice);
   const navigate = useNavigate();
 
   const componentProps = {
