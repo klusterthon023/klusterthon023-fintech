@@ -3,6 +3,7 @@ import { useAppContext } from "../../../../../contexts";
 import { Button, Input, Modal } from "../../../../../design-system";
 import {
   formikHelper,
+  removeDataFromLocalStorage,
   setDataToLocalStorage,
 } from "../../../../../utils/helper";
 import { useMutation } from "react-query";
@@ -39,9 +40,10 @@ export default function UpdateProfile() {
     try {
       console.log(initialValues);
       const result = await mutateAsync(values);
+      removeDataFromLocalStorage("currentUser");
       setDataToLocalStorage(
         "currentUser",
-        JSON.stringify((result.data.owner as any).data.user)
+        JSON.stringify(result.data.owner as any)
       );
       toggleIsUpdateProfileModalOpen();
       toast("You've sucessfully updated your profile.");
