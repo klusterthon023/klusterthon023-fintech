@@ -17,13 +17,14 @@ function PaymentPage() {
   const name = searchParams.get("to") || "";
   const email = searchParams.get("for") || "";
   const token = searchParams.get("token") || "";
+  const paymentToken = searchParams.get("paymentToken") || "";
 
   const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice);
 
   const { data } = useQuery(["getAllInvoices"], getAllInvoices);
 
   const invoice = data?.data?.find((invoice) => invoice.paymentToken === token);
-
+  console.log(invoice);
   const navigate = useNavigate();
 
   const componentProps = {
@@ -36,7 +37,7 @@ function PaymentPage() {
     publicKey: String(paystackPublicKey) || "",
     text: "Pay Now",
     onSuccess: () => {
-      mutateAsync(token!);
+      mutateAsync(paymentToken!);
     },
   };
 

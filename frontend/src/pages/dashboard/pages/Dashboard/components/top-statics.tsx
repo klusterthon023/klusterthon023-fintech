@@ -6,6 +6,7 @@ import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
 
 export default function TopStatics() {
   const { data, isLoading } = useQuery(["showStatics"], showStatics);
+  console.log(data);
   if (isLoading) {
     return <TopStaticsLoadingSkeleton />;
   }
@@ -24,6 +25,14 @@ export default function TopStatics() {
             >
               {data?.numberOfClients ? data?.numberOfClients : 0}
             </Typography>
+            <div className="flex gap-2 items-center">
+              <Typography variant="body4" className="!text-green-400">
+                {data?.percentageChangeInNumberOFClients}%
+              </Typography>
+              <Typography color="gray.300" variant="body5">
+                Vs last month
+              </Typography>
+            </div>
           </div>
           <div className="">
             <img src={graphesGreen} alt="" className="mx-auto" />
@@ -40,6 +49,14 @@ export default function TopStatics() {
             >
               {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
             </Typography>
+            <div className="flex gap-2 items-center">
+              <Typography variant="body4" className="!text-green-400">
+                {data?.percentageChangeInNumberOfInvoices}%
+              </Typography>
+              <Typography color="gray.300" variant="body5">
+                Vs last month
+              </Typography>
+            </div>
           </div>
           <div className="">
             <img src={graphesGreen} alt="" className="mx-auto" />
@@ -56,6 +73,14 @@ export default function TopStatics() {
             >
               {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
+            <div className="flex gap-2 items-center">
+              <Typography variant="body4" className="!text-green-400">
+                {data?.percentageChangeInRevenue}%
+              </Typography>
+              <Typography color="gray.300" variant="body5">
+                Vs last month
+              </Typography>
+            </div>
           </div>
           <div className="">
             <img src={graphesGreen} alt="" className="mx-auto" />

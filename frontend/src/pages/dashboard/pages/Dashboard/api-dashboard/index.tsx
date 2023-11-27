@@ -48,7 +48,7 @@ export const resendEmail = async () => {
   }
 };
 
-export const showStatics = async () => {
+export const showStatics = async (): Promise<IGetStatics> => {
   try {
     const response = await ApiAxiosInterceptor.get<IGetStatics>("/dashboard");
     return response?.data;
