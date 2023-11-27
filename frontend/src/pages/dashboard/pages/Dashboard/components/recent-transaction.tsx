@@ -6,12 +6,14 @@ import { getRecentTransactions } from "../api-dashboard";
 import { custom_columns } from "../types/columns";
 import { useEffect, useState } from "react";
 import RecentTransactionsSkeleton from "./recent-transaction-skeleton";
+import "react-datepicker/dist/react-datepicker.css";
 
 type invoice = {
   id: string;
   total_amount: number;
   status: "Paid" | "Pending" | "Canceled";
   due_date: string;
+  client_name: string; // Add this line
 };
 
 export default function RecentTransactions({
@@ -24,7 +26,12 @@ export default function RecentTransactions({
 
   useEffect(() => {
     if (data?.data) {
-      setInvoiceList(data.data.slice(0, notNavigatable ? 3 : 5));
+      const newInvoiceList = data.data.map((invoice) => {
+        // Assuming the customer you're interested in is the first one in the array
+        const client_name = invoice.customers[0]?.name;
+        return { ...invoice, client_name };
+      });
+      setInvoiceList(newInvoiceList.slice(0, notNavigatable ? 3 : 5));
     }
   }, [data]);
 
@@ -33,19 +40,20 @@ export default function RecentTransactions({
   }
   return (
     <section>
-      <div className="w-full pb-4 grid gap-5 bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+      <div className="w-full pb-4 grid bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
         {!notNavigatable && (
           <Typography className="!text-base !font-bold">
             Recent Transactions
           </Typography>
         )}
+
         {invoiceList && invoiceList.length > 0 && (
           <>
             <Table
               columns={custom_columns(notNavigatable)}
               dataSource={invoiceList}
             />
-            <Link to={RouteNames.INVOICE}>
+            <Link to={RouteNames.INVOICE} className="pt-5">
               <Typography
                 variant="body4"
                 color="primary"
@@ -57,9 +65,19 @@ export default function RecentTransactions({
           </>
         )}
         {invoiceList.length === 0 && (
-          <Typography color="gray.300" variant="body4" className="text-center">
-            No recent transactions
-          </Typography>
+          <>
+            <Table
+              columns={custom_columns(notNavigatable)}
+              dataSource={invoiceList}
+            />
+            <Typography
+              color="gray.300"
+              variant="body4"
+              className="text-center pt-5"
+            >
+              No recent transactions
+            </Typography>
+          </>
         )}
       </div>
     </section>
