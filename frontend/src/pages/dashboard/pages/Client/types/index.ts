@@ -2,6 +2,7 @@ export type IClientType = {
   business_address: string;
   created_date: string;
   customer_type: string;
+  phone_number: string;
   email: string;
   id: string;
   name: string;

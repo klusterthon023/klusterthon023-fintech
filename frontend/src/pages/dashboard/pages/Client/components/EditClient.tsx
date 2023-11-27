@@ -49,7 +49,7 @@ export default function EditClient({
     name: client?.name,
     email: client?.email,
     customer_type: "",
-    phone_number: "",
+    phone_number: client?.phone_number,
     business_address: client?.business_address,
   };
 
@@ -97,7 +97,7 @@ export default function EditClient({
             onSubmit={handleSubmit}
           >
             {(formik) => {
-              const { getFieldProps, dirty } = formik;
+              const { getFieldProps } = formik;
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
@@ -152,12 +152,7 @@ export default function EditClient({
                     className=" placeholder:text-sm"
                   />
 
-                  <Button
-                    type="submit"
-                    loading={isLoading}
-                    disabled={!dirty}
-                    fullWidth
-                  >
+                  <Button type="submit" loading={isLoading} fullWidth>
                     Save
                   </Button>
                 </Form>

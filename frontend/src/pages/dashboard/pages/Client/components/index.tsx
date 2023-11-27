@@ -9,6 +9,7 @@ import { RouteNames } from "../../../../../routers/interface";
 import EditClient from "./EditClient";
 import { useEffect, useState } from "react";
 import DeleteClient from "./DeleteClient";
+import RecentTransactions from "../../Dashboard/components/recent-transaction";
 
 export default function ClientDetails() {
   const { clientId } = useParams();
@@ -66,7 +67,7 @@ export default function ClientDetails() {
             </Button>
           </div>
         </div>
-        <div className="px-4 py-5 rounded bg-white border border-color-gray">
+        <div className="px-4 py-5 rounded-lg bg-white border border-gray-100">
           <Typography fontWeight={600} variant="body3" color="gray.100">
             CLIENT INFORMATION
           </Typography>
@@ -90,12 +91,27 @@ export default function ClientDetails() {
           </div>
           <div className="flex gap-10 items-center mb-4">
             <Typography className="!w-40" variant="body4" fontWeight={600}>
-              Addess
+              Phone number
+            </Typography>
+            <Typography variant="body4">: {client?.phone_number} </Typography>
+          </div>
+          <div className="flex gap-10 items-center mb-4">
+            <Typography className="!w-40" variant="body4" fontWeight={600}>
+              Address
             </Typography>
             <Typography variant="body4">
               : {client?.business_address}{" "}
             </Typography>
           </div>
+        </div>
+        <div className="bg-white">
+          <div className="flex justify-between items-center mb-4 px-4 pt-5">
+            <Typography fontWeight={600} variant="body3" color="gray.100">
+              TRANSACTION HISTORY
+            </Typography>
+            <Button variant="outlined">New Transaction</Button>
+          </div>
+          <RecentTransactions notNavigatable={true} />
         </div>
       </motion.div>
       <DeleteClient
