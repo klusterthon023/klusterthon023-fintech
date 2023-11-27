@@ -11,7 +11,7 @@ import { RouteNames } from "../../../routers/interface";
 import logo from "../../../assets/invoice-hub-logo.svg";
 import sidebarIcon from "../../../assets/dashboard/sidebarIcon.svg";
 import { removeDataFromLocalStorage } from "../../../utils/helper";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ClassNames from "classnames";
 import { MdDashboard, MdOutlineDashboard } from "react-icons/md";
@@ -61,6 +61,21 @@ function SideBar() {
 
   const isActive = (itemPath: string) =>
     pathname.split("/")[1] === itemPath.split("/")[1];
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSidebarCollapsed(window.innerWidth <= 768);
+    };
+
+    // Set initial value
+    handleResize();
+
+    // Add event listener
+    window.addEventListener("resize", handleResize);
+
+    // Remove event listener on cleanup
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <AnimatePresence exitBeforeEnter={false} mode="wait">
