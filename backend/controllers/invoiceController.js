@@ -88,7 +88,7 @@ exports.createInvoice = async (req, res) => {
 
     const url = `https://klusterthon023-fintech.vercel.app/pay-invoice?token=${urlPaymentToken}&to=${
       req.owner.business_name ? req.owner.business_name : req.owner.owner_name
-    }&for=${foundCustomer.name}&amount=${newInvoice.total_amount}`;
+    }&for=${foundCustomer.email}&amount=${newInvoice.total_amount}`;
     try {
       await new Email(
         foundCustomer,
