@@ -10,8 +10,7 @@ function CreateInvoice() {
   const currentUserData = getDataFromLocalStorage("currentUser");
   const currentUser = JSON.parse(currentUserData as any);
   function handleCreateInvoice() {
-    if (currentUser?.active == "true" && currentUser?.business_name) {
-      console.log("HERE HERE HERE ");
+    if (currentUser?.active === true && currentUser?.business_name !== "") {
       toggleIsCreateInvoicedModalOpen();
     } else {
       toggleIsUpdateProfileModalOpen();
