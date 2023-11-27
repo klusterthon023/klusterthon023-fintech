@@ -26,10 +26,13 @@ function FooterContext() {
         </div>
       </div>
       <div className="w-full md:w-auto flex flex-wrap justify-between md:grid md:grid-cols-3 gap-[84px] max-sm:gap-3 item-center">
-        <div className="mb-8">
-          <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
+        <div className="mb-6">
+          <Typography
+            variant="body1"
+            className="max-md:text-xl font-semibold mb-4 pb-[10px] "
+          >
             Quick Links
-          </h2>
+          </Typography>
           <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {QUICK_LINKS.map((label, index) => (
@@ -49,10 +52,13 @@ function FooterContext() {
             ))}
           </div>
         </div>
-        <div className="mb-8">
-          <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
+        <div className="mb-6">
+          <Typography
+            variant="body1"
+            className="max-md:text-xl font-semibold mb-4 pb-[10px] "
+          >
             Support
-          </h2>
+          </Typography>
           <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {SUPPORT.map((label, index) => (
@@ -67,10 +73,13 @@ function FooterContext() {
             ))}
           </div>
         </div>
-        <div className="mb-8">
-          <h2 className="text-2xl max-xl:text-lg font-semibold mb-4 pb-1 ">
+        <div className="mb-6">
+          <Typography
+            variant="body1"
+            className="max-md:text-xl font-semibold mb-4 pb-[10px] "
+          >
             Contact Info
-          </h2>
+          </Typography>
           <div className="w-9 bg-tertiary-300 h-[0.5px] mb-5" />
           <div className="flex flex-col gap-2">
             {CONTACTS.map((label, index) => (

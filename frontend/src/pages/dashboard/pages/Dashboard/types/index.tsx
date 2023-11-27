@@ -19,7 +19,7 @@ export type ICreateClientResponse = {
 };
 
 export type Product = {
-  product_name: string;
+  description: string;
   quantity: number;
   unit_price: number;
 };
@@ -78,12 +78,27 @@ export type IProduct = {
   _id: string;
 };
 
+export type Customer = {
+  _id: string;
+  name: string;
+  customer_type: "Business" | "Individual";
+  email: string;
+  business_address: string;
+  owner_id: string;
+  __v: number;
+  created_date: string;
+  phone_number: string;
+  id: string;
+};
+
 export type IInvoice = {
   _id: string;
   owner_id: string;
   customer_id: string;
   transcation_details: string;
   products: Product[];
+  client_name: string;
+  customers: Customer[];
   total_amount: number;
   status: "Pending" | "Paid";
   created_date: string;

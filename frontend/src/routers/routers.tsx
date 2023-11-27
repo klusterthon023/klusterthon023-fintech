@@ -12,6 +12,7 @@ import {
   InvoicePage,
   ClientDetailPage,
   PaymentPage,
+  InvoiceDetailPage,
 } from "../pages";
 import VerificationSucessfull from "../pages/account-verification/components/verification-successfull";
 import VerificationFailed from "../pages/account-verification/components/verification-failed";
@@ -54,10 +55,10 @@ export const CHILDREN_ROUTES = [
         element: <InvoicePage />,
         path: `${RouteNames.MAIN}${RouteNames.INVOICE}`,
       },
-      // {
-      //   element: <InvoiceDetailPage />,
-      //   path: `${RouteNames.MAIN}${RouteNames.CLIENT}/:invoiceId`,
-      // },
+      {
+        element: <InvoiceDetailPage />,
+        path: `${RouteNames.MAIN}${RouteNames.INVOICE}/:invoiceId`,
+      },
     ],
   },
   {

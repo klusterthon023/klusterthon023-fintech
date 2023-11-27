@@ -44,6 +44,10 @@ const customerSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'Owner'
     },
+    phone_number: {
+      type: String,
+      require: [true, "Please enter customer's phone number"]
+    },
     created_date: {
       type: Date,
       default: Date.now()

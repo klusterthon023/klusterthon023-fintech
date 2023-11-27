@@ -17,6 +17,8 @@ interface TableColumnType<RecordType> {
 interface TableProps<RecordType> extends TableHTMLAttributes<HTMLTableElement> {
   columns: TableColumnType<RecordType>[];
   dataSource: RecordType[];
+  stickyHeader?: boolean;
+  stickyHeaderBackgroundColor?: string;
 }
 
 export const tableStyles = () => css`
@@ -26,11 +28,12 @@ export const tableStyles = () => css`
   width: 100%;
 `;
 
-// export const headerStyles = () => css`
-//   position: sticky;
-//   top: 0;
-//   z-index: 10;
-// `;
+export const headerStyles = (stickyHeaderBackgroundColor: any) => css`
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: ${stickyHeaderBackgroundColor};
+`;
 
 const headerCellStyles = (theme: Theme) => css`
   padding: 8px 12px;
@@ -77,7 +80,8 @@ const cellStyles = (theme: Theme) => css`
 `;
 
 function Table<RecordType>(props: TableProps<RecordType>) {
-  const { dataSource, columns } = props;
+  const { dataSource, columns, stickyHeader, stickyHeaderBackgroundColor } =
+    props;
 
   const [currentSortColumnIndex, setCurrentSortColumnIndex] = useState<
     string | null
@@ -125,65 +129,79 @@ function Table<RecordType>(props: TableProps<RecordType>) {
   }, [dataSource]);
 
   return (
-    <table className={cx(tableStyles())}>
-      <thead>
-        <tr>
-          {columns.map(({ title, key, dataIndex, sortable, sorter }) => {
-            return (
-              <th key={key} scope="col" className={cx(headerCellStyles(theme))}>
-                <div className={cx(titleCellStyles())}>
-                  <Typography fontWeight={500} variant="body5" color="gray.200">
-                    {title}
-                  </Typography>
-                  {sortable && dataIndex && (
-                    <div className={cx(cellStyles(theme))}>
-                      <FontAwesomeIcon
-                        onClick={() => handleSort(dataIndex, sorter)}
-                        icon={faCaretUp}
-                        fontSize={10}
-                        className={cx("icon-up", {
-                          active:
-                            sortOrder === "asc" &&
-                            dataIndex === currentSortColumnIndex,
-                        })}
-                      />
-                      <FontAwesomeIcon
-                        onClick={() => handleSort(dataIndex, sorter)}
-                        icon={faCaretDown}
-                        fontSize={10}
-                        className={cx({
-                          active:
-                            sortOrder === "desc" &&
-                            dataIndex === currentSortColumnIndex,
-                        })}
-                      />
-                    </div>
-                  )}
-                </div>
-              </th>
-            );
-          })}
-        </tr>
-      </thead>
-      <tbody className="bg-color-white">
-        {items.map((row, rowIndex) => (
-          <tr key={rowIndex} className={cx(bodyCellStyles(theme))}>
-            {columns.map((column, colIndex) => (
-              <td className={cx(dataCellStyles(theme))} key={colIndex}>
-                {column.render
-                  ? column.render(
-                      row[column.dataIndex as keyof RecordType],
-                      row
-                    )
-                  : (row[
-                      column.dataIndex as keyof RecordType
-                    ] as React.ReactNode)}
-              </td>
-            ))}
+    <div style={{ overflowX: "auto" }}>
+      <table className={cx(tableStyles())}>
+        <thead>
+          <tr
+            className={
+              stickyHeader ? cx(headerStyles(stickyHeaderBackgroundColor)) : ""
+            }
+          >
+            {columns.map(({ title, key, dataIndex, sortable, sorter }) => {
+              return (
+                <th
+                  key={key}
+                  scope="col"
+                  className={cx(headerCellStyles(theme))}
+                >
+                  <div className={cx(titleCellStyles())}>
+                    <Typography
+                      fontWeight={500}
+                      variant="body5"
+                      color="gray.200"
+                    >
+                      {title}
+                    </Typography>
+                    {sortable && dataIndex && (
+                      <div className={cx(cellStyles(theme))}>
+                        <FontAwesomeIcon
+                          onClick={() => handleSort(dataIndex, sorter)}
+                          icon={faCaretUp}
+                          fontSize={10}
+                          className={cx("icon-up", {
+                            active:
+                              sortOrder === "asc" &&
+                              dataIndex === currentSortColumnIndex,
+                          })}
+                        />
+                        <FontAwesomeIcon
+                          onClick={() => handleSort(dataIndex, sorter)}
+                          icon={faCaretDown}
+                          fontSize={10}
+                          className={cx({
+                            active:
+                              sortOrder === "desc" &&
+                              dataIndex === currentSortColumnIndex,
+                          })}
+                        />
+                      </div>
+                    )}
+                  </div>
+                </th>
+              );
+            })}
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody className="bg-color-white">
+          {items.map((row, rowIndex) => (
+            <tr key={rowIndex} className={cx(bodyCellStyles(theme))}>
+              {columns.map((column, colIndex) => (
+                <td className={cx(dataCellStyles(theme))} key={colIndex}>
+                  {column.render
+                    ? column.render(
+                        row[column.dataIndex as keyof RecordType],
+                        row
+                      )
+                    : (row[
+                        column.dataIndex as keyof RecordType
+                      ] as React.ReactNode)}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 

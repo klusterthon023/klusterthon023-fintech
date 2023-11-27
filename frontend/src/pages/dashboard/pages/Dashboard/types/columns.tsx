@@ -1,5 +1,8 @@
+import dayjs from "dayjs";
 import { Typography } from "../../../../../design-system";
-export const custom_columns = [
+import { Link } from "react-router-dom";
+import { RouteNames } from "../../../../../routers/interface";
+export const custom_columns = (notNavigatable?: boolean) => [
   {
     title: "Invoice ID",
     dataIndex: "id",
@@ -8,15 +11,40 @@ export const custom_columns = [
     render: (id: string) => {
       return (
         <div className="flex gap-2 items-center ">
-          <Typography
-            fontWeight={500}
-            variant={"body4"}
-            className="cursor-pointer"
-            color={"gray.600"}
-          >
-            {id}
-          </Typography>
+          {!notNavigatable ? (
+            <Typography
+              to={`${RouteNames.INVOICE}/${id}`}
+              component={Link}
+              fontWeight={500}
+              variant={"body4"}
+              className="cursor-pointer hover:!text-color-primary"
+              color={"gray.600"}
+            >
+              {id}
+            </Typography>
+          ) : (
+            <Typography
+              fontWeight={500}
+              variant={"body4"}
+              className="cursor-pointer hover:!text-color-primary"
+              color={"gray.600"}
+            >
+              {id}
+            </Typography>
+          )}
         </div>
+      );
+    },
+  },
+  {
+    title: "Client name",
+    dataIndex: "client_name",
+    key: "4",
+    render: (client_name: string) => {
+      return (
+        <Typography variant={"body4"} color={"gray.600"}>
+          {client_name}
+        </Typography>
       );
     },
   },
@@ -66,7 +94,7 @@ export const custom_columns = [
     render: (due_date: string) => {
       return (
         <Typography variant={"body4"} color={"gray.600"}>
-          {due_date.split("T")[0].split("-").reverse().join("-")}
+          {dayjs(due_date).format("MMMM D, YYYY")}
         </Typography>
       );
     },

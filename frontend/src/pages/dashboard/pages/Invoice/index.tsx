@@ -1,118 +1,76 @@
 import { motion } from "framer-motion";
-import { Input, Table, Typography } from "../../../../design-system";
+import { Input, Table } from "../../../../design-system";
 import FirstRow from "./components/FirstRow";
+import { getRecentTransactions } from "../Dashboard/api-dashboard";
+import { custom_columns } from "../Dashboard/types/columns";
+import { useQuery } from "react-query";
+import { useEffect, useState } from "react";
+import DatePicker from "react-datepicker";
 
-type TableDataType = {
-  displayName: string;
-  email: string;
-  role: any;
-};
-
-const columns = [
-  {
-    title: "Names",
-    dataIndex: "displayName",
-    key: "1",
-    sortable: true,
-    render: (name: string, _: TableDataType) => {
-      return (
-        <div className="flex gap-2 items-center">
-          <Typography
-            fontWeight={500}
-            variant={"body4"}
-            className="cursor-pointer"
-            color={"gray.600"}
-          >
-            {name}
-          </Typography>
-        </div>
-      );
-    },
-  },
-  {
-    title: "Email",
-    dataIndex: "email",
-    key: "2",
-    render: (email: number) => {
-      return (
-        <Typography variant={"body4"} color={"gray.600"}>
-          {email}
-        </Typography>
-      );
-    },
-  },
-];
+import "react-datepicker/dist/react-datepicker.css";
+import { IInvoice } from "../Dashboard/types";
 
 function InvoicePage() {
+  const { data } = useQuery(["TRANSACTIONS"], getRecentTransactions);
+
+  const [startDate, setStartDate] = useState(new Date());
+  const [invoicesWithClientName, setInvoicesWithClientName] = useState<
+    IInvoice[]
+  >([]);
+  const [searchedInvoice, setSearchedInvoice] = useState<IInvoice[]>();
+
+  const handleSearch = (e: any) => {
+    const { value } = e.target;
+    if (!value) return setSearchedInvoice(undefined);
+    setSearchedInvoice(
+      invoicesWithClientName.filter(
+        (client) =>
+          client.status.toLowerCase().includes(value.toLowerCase()) ||
+          client.id.toLowerCase().includes(value.toLowerCase())
+      )
+    );
+  };
+
+  useEffect(() => {
+    if (data?.data) {
+      const newInvoicesWithClientName = data.data.map((invoice) => {
+        // Assuming the customer you're interested in is the first one in the array
+        const client_name = invoice.customers[0]?.name;
+        return { ...invoice, client_name };
+      });
+      setInvoicesWithClientName(newInvoicesWithClientName);
+    }
+  }, [data]);
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen"
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray min-h-screen"
     >
       <FirstRow />
-      <div className="!border-color-gray !border !rounded-lg">
-        <div className="px-4 py-5 bg-white">
-          <Input placeholder="Search..." />
+      <div className="border-gray-100 bg-white border rounded-lg">
+        <div className="px-4 py-5 flex justify-between items-center">
+          <Input placeholder="Search..." onChange={handleSearch} />
+          <div className="z-50">
+            <DatePicker
+              className="py-4 h-12 border border-gray-100 text-center rounded-lg cursor-pointer outline-none"
+              selected={startDate}
+              onChange={(date: any) => setStartDate(date)}
+            />
+          </div>
         </div>
-        <Table columns={columns} dataSource={users} />
+        <div className="max-h-[430px] overflow-y-scroll">
+          <Table
+            stickyHeaderBackgroundColor={"#F0F0F4"}
+            stickyHeader={true}
+            columns={custom_columns()}
+            dataSource={searchedInvoice || invoicesWithClientName}
+          />
+        </div>
       </div>
     </motion.div>
   );
 }
 
 export default InvoicePage;
-
-const users: TableDataType[] = [
-  {
-    displayName: "John Doe",
-    email: "john.doe@example.com",
-    role: "Admin",
-  },
-  {
-    displayName: "Jane Smith",
-    email: "jane.smith@example.com",
-    role: "Editor",
-  },
-  {
-    displayName: "Bob Johnson",
-    email: "bob.johnson@example.com",
-    role: "Viewer",
-  },
-  {
-    displayName: "Alice Williams",
-    email: "alice.williams@example.com",
-    role: "Admin",
-  },
-  {
-    displayName: "Charlie Brown",
-    email: "charlie.brown@example.com",
-    role: "Editor",
-  },
-  {
-    displayName: "Eva Davis",
-    email: "eva.davis@example.com",
-    role: "Viewer",
-  },
-  {
-    displayName: "Frank Miller",
-    email: "frank.miller@example.com",
-    role: "Admin",
-  },
-  {
-    displayName: "Grace Wilson",
-    email: "grace.wilson@example.com",
-    role: "Editor",
-  },
-  {
-    displayName: "Henry Lee",
-    email: "henry.lee@example.com",
-    role: "Viewer",
-  },
-  {
-    displayName: "Ivy Taylor",
-    email: "ivy.taylor@example.com",
-    role: "Admin",
-  },
-];
