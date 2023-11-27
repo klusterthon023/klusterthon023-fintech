@@ -26,7 +26,6 @@ export default function UpdateProfile() {
   //     }
   //   }
   useEffect(() => {
-    console.log(user);
     if (user?.active && !user?.business_name) {
       setIsOpen(true);
     }
