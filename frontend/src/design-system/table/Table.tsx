@@ -16,6 +16,7 @@ interface TableColumnType<RecordType> {
 
 interface TableProps<RecordType> extends TableHTMLAttributes<HTMLTableElement> {
   columns: TableColumnType<RecordType>[];
+  // @ts-ignore
   dataSource: RecordType[];
   stickyHeader?: boolean;
   stickyHeaderBackgroundColor?: string;
