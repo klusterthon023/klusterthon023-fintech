@@ -14,7 +14,9 @@ const customerRoutes = require('./routes/customerRoutes');
 const invoiceRoutes = require('./routes/invoiceRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
 const notificationRoutes = require('./routes/notificationRoutes');
+const feedbackRoutes = require('./routes/feedbackRoutes');
 const globalErrorHandler = require('./controllers/errorController');
+
 const AppError = require('./utils/appError');
 
 require('dotenv').config();
@@ -57,7 +59,7 @@ app.use('/v1/customers', customerRoutes);
 app.use('/v1/invoices', invoiceRoutes);
 app.use('/v1/dashboard', dashboardRoutes);
 app.use('/v1/notification', notificationRoutes);
-
+app.use('/v1/feedback', feedbackRoutes);
 app.use('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404));
 });

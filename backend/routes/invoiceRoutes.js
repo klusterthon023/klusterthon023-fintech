@@ -1,6 +1,9 @@
 const invoiceController = require('../controllers/invoiceController');
 const authController = require('../controllers/authController');
-const { isAccountVerified, isDetailsComplete } = require('../middlewares/isAccountVerfied');
+const {
+  isAccountVerified,
+  isDetailsComplete
+} = require('../middlewares/isAccountVerfied');
 
 const router = require('express').Router();
 

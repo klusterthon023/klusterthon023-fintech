@@ -16,7 +16,9 @@ exports.getMyCustomers = catchAsync(async (req, res, next) => {
   const owner = req.owner;
   const allCustomers = await Customer.find({ owner_id: owner._id });
   return res.status(200).json({
-    message: `Customers for ${owner.business_name ? owner.business_name : owner.owner_name}: `,
+    message: `Customers for ${
+      owner.business_name ? owner.business_name : owner.owner_name
+    }: `,
     data: allCustomers
   });
 });
@@ -46,18 +48,22 @@ exports.createCustomer = async (req, res) => {
       email: req.body.email,
       contact_number: req.body.contact_number,
       business_address: req.body.business_address,
-      owner_id: req.owner._id
+      owner_id: req.owner._id,
+      phone_number: req.body.phone_number
     };
-  
+
     // check if a customer with this email already exists for the current owner
-    const foundCustomer = await Customer.findOne({ email: req.body.email, owner_id: req.owner._id });
-    if(foundCustomer) {
+    const foundCustomer = await Customer.findOne({
+      email: req.body.email,
+      owner_id: req.owner._id
+    });
+    if (foundCustomer) {
       return res.status(400).json({
         message: 'Customer with this email already exists',
         data: null
-      })
+      });
     }
-  
+
     const newCustomer = await Customer.create(newCustomerDetails);
     return res.status(201).json({
       message: 'Customer created successfully',
@@ -67,7 +73,7 @@ exports.createCustomer = async (req, res) => {
     return res.status(500).json({
       message: 'An error occurred while creating customer: ' + error.message,
       data: null
-    })
+    });
   }
 };
 
@@ -88,14 +94,16 @@ exports.updateCustomer = catchAsync(async (req, res, next) => {
   }
   return res.status(201).json({
     message: 'Customer Updated successfully',
-    data: updatedCustomer
+    data: foundCustomer
   });
 });
 
-
 exports.deleteOneCustomer = catchAsync(async (req, res, next) => {
   const customerId = req.params.id;
-  const deletedCustomer = await Customer.findOneAndDelete({ _id: customerId, owner_id: req.owner._id });
+  const deletedCustomer = await Customer.findOneAndDelete({
+    _id: customerId,
+    owner_id: req.owner._id
+  });
   if (!deletedCustomer) {
     return next('Customer not found!', 404);
   }
