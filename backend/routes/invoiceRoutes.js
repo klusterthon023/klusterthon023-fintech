@@ -10,7 +10,7 @@ const router = require('express').Router();
 // router.use(authController.protect);
 // router.use(authController.restrictTo('owner'));
 
-router.get('/all-invoices', invoiceController.getAllInvoices);
+// router.get('/all-invoices', invoiceController.getAllInvoices);
 
 router
   .route('/')
