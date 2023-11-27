@@ -6,7 +6,7 @@ import { useMutation } from "react-query";
 import { resendToken, verifyToken } from "../../api-for-sign-in";
 import { IVerifyTokenPayload } from "../../types";
 import { toast } from "react-toastify";
-import Loader from "../../../../components/loader/ApiLoadingState";
+import Loader from "../../../../components/loader/AppLoader";
 import { removeDataFromLocalStorage } from "../../../../utils/helper";
 
 function VerifyToken({ handleNext }: { handleNext: () => void }) {
@@ -37,7 +37,7 @@ function VerifyToken({ handleNext }: { handleNext: () => void }) {
           </div>
         )}
       </>
-      {isLoading && <Loader />}
+      {isLoading && <Loader isLoading={isLoading} />}
       <Formik
         initialValues={{ token: "" }}
         validationSchema={validationSchemaVerifyToken}
@@ -86,7 +86,7 @@ const ResendToken = () => {
 
   return (
     <>
-      {isLoading && <Loader />}
+      {isLoading && <Loader isLoading={isLoading} />}
       <div className="flex justify-center ">
         <Typography
           onClick={handleSubmitResendToken}

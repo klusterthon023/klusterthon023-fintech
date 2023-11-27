@@ -1,6 +1,9 @@
 import { PaystackButton } from "react-paystack";
+import { useEffect, useRef } from "react";
 
 function PaymentPage() {
+  const paystackButtonRef = useRef<any>(null);
+
   const componentProps = {
     email: "tsowafelix0@gmail.com",
     amount: 1000 * 100,
@@ -9,7 +12,8 @@ function PaymentPage() {
       user: "12345",
       phone: "09032328670",
     },
-    publicKey: "",
+    publicKey: "pk_test_0b1f344bf81fcc1c9d3d77e548eddc5f215a2b20",
+
     text: "Pay Now",
     // onSuccess: (res: any) => {
     //   mutate({
@@ -19,14 +23,17 @@ function PaymentPage() {
     //   });
     // },
   };
+  useEffect(() => {
+    if (paystackButtonRef.current) {
+      paystackButtonRef.current.click();
+    }
+  }, []);
 
   return (
-    <div>
-      <PaystackButton
-        className="ant-btn ant-btn-primary ant-btn-lg ant-btn-block mb-5"
-        {...componentProps}
-      />
-    </div>
+    <button ref={paystackButtonRef}>
+      {/* @ts-ignore */}
+      <PaystackButton {...componentProps} />
+    </button>
   );
 }
 

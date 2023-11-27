@@ -68,7 +68,7 @@ export default function Modal(props: ModalProps) {
           >
             <div
               className={ClassNames("flex justify-between items-center", {
-                ["justify-end"]: !title,
+                ["justify-end"]: !title || showCloseButton,
                 ["justify-start"]: !showCloseButton,
                 ["hidden"]: !title && !showCloseButton,
               })}
