@@ -27,6 +27,9 @@ function FirstRow() {
             >
               {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
+            <Typography variant="body4" className="!text-green-400">
+              {data?.percentageChangeInRevenue}%
+            </Typography>
           </div>
           <div className="grid md:flex justify-start w-full">
             <img src={graphesGreen} alt="" className="mx-auto" />
@@ -42,6 +45,9 @@ function FirstRow() {
               className="!flex !items-center gap-1 !font-bold"
             >
               {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
+            </Typography>
+            <Typography variant="body4" className="!text-green-400">
+              {data?.percentageChangeInNumberOfInvoices}%
             </Typography>
           </div>
           <div className="grid md:flex justify-start w-full">
