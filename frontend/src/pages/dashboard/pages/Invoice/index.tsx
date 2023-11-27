@@ -11,7 +11,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { IInvoice } from "../Dashboard/types";
 
 function InvoicePage() {
-  const { data, isLoading } = useQuery(["TRANSACTIONS"], getRecentTransactions);
+  const { data } = useQuery(["TRANSACTIONS"], getRecentTransactions);
   const [startDate, setStartDate] = useState(new Date());
 
   const [searchedInvoice, setSearchedInvoice] = useState<IInvoice[]>();

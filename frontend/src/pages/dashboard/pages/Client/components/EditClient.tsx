@@ -97,7 +97,7 @@ export default function EditClient({
             onSubmit={handleSubmit}
           >
             {(formik) => {
-              const { getFieldProps, dirty } = formik;
+              const { getFieldProps } = formik;
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">

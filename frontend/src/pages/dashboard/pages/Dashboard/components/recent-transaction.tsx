@@ -17,7 +17,7 @@ type invoice = {
 export default function RecentTransactions({
   notNavigatable,
 }: {
-  notNavigatable: boolean;
+  notNavigatable?: boolean;
 }) {
   const { data, isLoading } = useQuery(["TRANSACTIONS"], getRecentTransactions);
   const [invoiceList, setInvoiceList] = useState<invoice[]>([]);
