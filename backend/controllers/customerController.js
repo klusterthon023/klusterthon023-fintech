@@ -2,6 +2,7 @@ const Customer = require('../models/Customer');
 const mongoose = require('mongoose');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const {getCachedData, setCachedData} = require('../utils/caching');
 
 exports.getAllCustomers = catchAsync(async (req, res) => {
   const allCustomers = await Customer.find({});
@@ -14,7 +15,19 @@ exports.getAllCustomers = catchAsync(async (req, res) => {
 // Implemented after AUTH
 exports.getMyCustomers = catchAsync(async (req, res, next) => {
   const owner = req.owner;
+  const cachekey = `customers_${owner._id}`;
+  const cachedData = getCachedData(cachekey);
+  if (cachedData) {
+    return res.status(200).json({
+      message: `Customers for ${
+        owner.business_name ? owner.business_name : owner.owner_name
+      }: `,
+      data: cachedData
+    });
+  }
+
   const allCustomers = await Customer.find({ owner_id: owner._id });
+  setCachedData(cachekey, allCustomers);
   return res.status(200).json({
     message: `Customers for ${
       owner.business_name ? owner.business_name : owner.owner_name
