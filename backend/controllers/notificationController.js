@@ -6,11 +6,12 @@ exports.getOwnerNotifications = catchAsync(async (req, res, next) => {
   const limit = req.query.limit * 1 || 10;
   const skip = limit * page - limit;
   const notifications = await Notification.find({ owner: req.owner._id })
+    .sort({ createAt: -1 })
     .skip(skip)
     .limit(limit);
 
   res.status(200).json({
-    status: 'sucess',
+    status: 'success',
     notifications
   });
 });
@@ -18,7 +19,7 @@ exports.getOwnerNotifications = catchAsync(async (req, res, next) => {
 exports.getOneNotification = catchAsync(async (req, res, next) => {
   const notification = await Notification.findOne({ _id: req.params.id });
   res.status(200).json({
-    status: 'sucess',
+    status: 'success',
     notification
   });
 });

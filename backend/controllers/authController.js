@@ -45,7 +45,7 @@ exports.register = catchAsync(async (req, res, next) => {
     .createHash('sha256')
     .update(urlActivationToken)
     .digest('hex');
-  const activationTokenExpire = Date.now() + 20 * 60 * 1000;
+  const activationTokenExpire = Date.now() + 40 * 60 * 1000;
 
   const newOwnerDetails = {
     owner_name: req.body.owner_name,
@@ -79,7 +79,7 @@ exports.resendActivationToken = catchAsync(async (req, res, next) => {
     .createHash('sha256')
     .update(urlActivationToken)
     .digest('hex');
-  const activationTokenExpire = Date.now() + 20 * 60 * 1000;
+  const activationTokenExpire = Date.now() + 40 * 60 * 1000;
   const newOwner = await Owner.findById(req.owner._id);
 
   newOwner.activationTokenExpire = activationTokenExpire;

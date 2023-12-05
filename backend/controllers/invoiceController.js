@@ -170,6 +170,7 @@ exports.updateInvoice = async (req, res) => {
 };
 
 exports.updateInvoiceToPaid = async (req, res) => {
+  console.log('Yes, reached');
   try {
     const hashedToken = crypto
       .createHash('sha256')
@@ -210,7 +211,7 @@ exports.updateInvoiceToPaid = async (req, res) => {
     foundInvoice.status = 'Paid';
     foundInvoice.date_paid = Date.now();
     foundInvoice.paymentToken = undefined;
-    foundInvoice.save();
+    await foundInvoice.save();
 
     const newNotification = {
       notification_type: 'invoicePaid',
