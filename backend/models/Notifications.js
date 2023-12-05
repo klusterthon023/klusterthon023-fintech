@@ -39,7 +39,7 @@ const notifySchema = new mongoose.Schema(
 );
 
 notifySchema.index({ owner: 1 });
-notifySchema.index({ createdAt: -1 });
+notifySchema.index({ createAt: -1 });
 
 notifySchema.virtual('invoice', {
   ref: 'Invoice',

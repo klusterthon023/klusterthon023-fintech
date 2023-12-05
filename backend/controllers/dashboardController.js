@@ -4,14 +4,19 @@ const catchAsync = require('../utils/catchAsync');
 
 const calculatePercentage = (numberOfClientsPerMonth, prop) => {
   const monthYears = Object.keys(numberOfClientsPerMonth);
+  let percentageChange = 0;
+  if (monthYears.length === 0) {
+    return percentageChange;
+  }
   const lastMonthCount =
     numberOfClientsPerMonth[monthYears[monthYears.length - 1]][prop];
+
   let secondToLastMonthCount = lastMonthCount;
   if (monthYears.length >= 2) {
     secondToLastMonthCount =
       numberOfClientsPerMonth[monthYears[monthYears.length - 2]][prop];
   }
-  const percentageChange =
+  percentageChange =
     ((lastMonthCount - secondToLastMonthCount) / secondToLastMonthCount) * 100;
 
   return percentageChange.toFixed(2) * 1;
@@ -37,7 +42,7 @@ const calculateStatsPerMonth = (data, type) => {
         acc[monthYear].revenue = acc[monthYear].revenue + doc.total_amount;
         acc[monthYear].paidInvoiceCount++;
       } else if (doc.status !== 'Paid') {
-        acc[monthYear].unpaid = acc[monthYear].revenue + doc.total_amount;
+        acc[monthYear].unpaid = acc[monthYear].unpaid + doc.total_amount;
         acc[monthYear].unpaidInvoiceCount++;
       }
     } else {
@@ -58,7 +63,6 @@ exports.getStats = catchAsync(async (req, res, next) => {
     'customers'
   );
   const customers = await Customer.find({ owner_id: req.owner._id });
-  console.log(invoices, customers);
   // For client Logic
   let percentageChangeInNumberOFClients = 0;
   let numberOfClientsPerMonth = {};
@@ -111,16 +115,14 @@ exports.getStats = catchAsync(async (req, res, next) => {
       IndividualInvoices,
       'invoice'
     );
+
     totalRevenuePerMonth = calculateStatsPerMonth(paidInvoices, 'invoice');
+    numberOfInvoicesPerMonth = calculateStatsPerMonth(invoices, 'invoices');
+
     totalAmountOutstandingPerMonth = calculateStatsPerMonth(
       unpaidInvoices,
       'invoice'
     );
-    numberOfInvoicesPerMonth = calculateStatsPerMonth(
-      invoices,
-      'totalinvoices'
-    );
-
     percentageChangeInNumberOfInvoices = calculatePercentage(
       numberOfInvoicesPerMonth,
       'count'
