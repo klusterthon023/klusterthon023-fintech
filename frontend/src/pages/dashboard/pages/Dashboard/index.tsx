@@ -17,7 +17,7 @@ function DashBoard() {
         className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-[#F0F0F4] min-h-screen relative"
       >
         <TopStatics />
-        <RecentTransactions />
+        <RecentTransactions dashboardTransaction={true} />
         <div className="flex max-lg:flex-col lg:justify-between lg:flex gap-5">
           <div className="flex flex-col gap-5 lg:w-[65%] max-lg:w-full">
             <QuickActions />

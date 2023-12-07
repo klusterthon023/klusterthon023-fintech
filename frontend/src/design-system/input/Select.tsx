@@ -17,13 +17,8 @@ const selectCss = (theme: Theme) => css`
   padding: 0 16px;
   outline: none;
 
-  .css-x66v87-MenuList2 {
-    max-height: 190px !important;
-  }
-
   .css-cp01gg-control {
-    min-height: 34px;
-    margin-top: 7px;
+    margin-top: 4px;
   }
 
   .select__placeholder {
@@ -38,7 +33,6 @@ const selectCss = (theme: Theme) => css`
     background-color: ${theme.color.white};
     border: 1px solid ${theme.palette.gray[100]};
     border-radius: 8px;
-    max-height: 200px !important;
     margin-top: 4px;
     padding: 4px;
   }
@@ -182,7 +176,7 @@ function Select(props: SelectProps) {
           singleValue: () => "select__singleValue",
         }}
         isDisabled={disabled}
-        isClearable={isClearable}
+        isClearable={true}
       />
     </InputBoxBase>
   );

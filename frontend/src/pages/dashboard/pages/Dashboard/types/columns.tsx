@@ -40,6 +40,7 @@ export const custom_columns = (notNavigatable?: boolean) => [
     title: "Client name",
     dataIndex: "client_name",
     key: "2",
+    sortable: true,
     render: (client_name: string) => {
       return (
         <Typography variant={"body4"} color={"gray.600"}>
@@ -64,6 +65,7 @@ export const custom_columns = (notNavigatable?: boolean) => [
     title: "Status",
     dataIndex: "status",
     key: "5",
+    sortable: true,
     render: (status: string) => {
       if (status === "Pending") {
         return (
