@@ -11,7 +11,7 @@ export default function RecentNotifications() {
     return <RecentNotificationsLoadingSkeleton />;
   }
   return (
-    <section className="bg-white max-lg:w-full lg:w-[35%] max-h-[550px] overflow-y-scroll rounded-lg border border-gray-200 border-opacity-20">
+    <section className="bg-white max-lg:w-full lg:w-[35%] max-h-[600px] overflow-y-scroll rounded-lg border border-gray-200 border-opacity-20">
       <div className="grid gap-5 bg-white  rounded-lg p-4">
         <Typography variant="body3" className="!font-bold">
           Recent Notifications
@@ -20,11 +20,14 @@ export default function RecentNotifications() {
           data?.notifications?.map(
             (notification: notifications, index: number) => {
               return (
-                <div className="border-b border-gray-100 border-opacity-20 flex justify-between">
-                  <Typography variant="body4" className=" pb-3" key={index}>
+                <div
+                  key={index}
+                  className="border-b border-gray-100 border-opacity-20 pb-3 flex gap-4 justify-between"
+                >
+                  <Typography variant="body4">
                     {notification?.description}
                   </Typography>
-                  <Typography variant="body5" className=" pb-3" key={index}>
+                  <Typography variant="body5">
                     {notification?.createAt
                       .split("T")[0]
                       .split("-")

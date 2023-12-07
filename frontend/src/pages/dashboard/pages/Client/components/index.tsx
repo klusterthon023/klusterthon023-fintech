@@ -61,10 +61,10 @@ export default function ClientDetails() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: "easeInOut" }}
-        className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray h-screen"
+        className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray min-h-screen pb-10"
       >
-        <div className="flex justify-between items-center mb-5">
-          <div className="flex gap-4 items-center">
+        <div className="flex max-sm:flex-col max-sm:gap-7 justify-between lg:items-center mb-5">
+          <div className="flex  gap-4 items-center">
             <FontAwesomeIcon
               onClick={() => navigate(RouteNames.CLIENT)}
               icon={faArrowLeft}
@@ -73,7 +73,7 @@ export default function ClientDetails() {
             />
             <Typography variant="h6">{client?.name}</Typography>
           </div>
-          <div className="flex gap-5 items-center">
+          <div className="flex gap-5 max-sm:justify-center items-center">
             <Button onClick={() => setIsEditModalOpen(true)}>Edit</Button>
             <Button
               onClick={() => setIsDeleteModalOpen(true)}
@@ -136,7 +136,7 @@ export default function ClientDetails() {
               New Transaction
             </Button>
           </div>
-          <RecentTransactions notNavigatable={true} clientId={client?._id!} />
+          <RecentTransactions clientId={client?._id!} />
         </div>
       </motion.div>
       <DeleteClient

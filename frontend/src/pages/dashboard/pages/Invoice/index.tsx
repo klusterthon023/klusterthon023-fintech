@@ -9,18 +9,24 @@ import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 import { IInvoice } from "../Dashboard/types";
+import { useAppContext } from "../../../../contexts";
 
 function InvoicePage() {
-  const { data } = useQuery(["TRANSACTIONS"], getRecentTransactions);
-  const [startDate, setStartDate] = useState(new Date());
+  const { data, refetch } = useQuery(["TRANSACTIONS"], getRecentTransactions);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [defaultInvoices, setDefaultInvoices] = useState<IInvoice[]>([]);
+
   const [invoicesWithClientName, setInvoicesWithClientName] = useState<
     IInvoice[]
   >([]);
+
   const [searchedInvoice, setSearchedInvoice] = useState<IInvoice[]>();
+  const { isInvoiceDataRefetched } = useAppContext();
 
   const handleSearch = (e: any) => {
     const { value } = e.target;
     if (!value) return setSearchedInvoice(undefined);
+    setSelectedDate(null);
     setSearchedInvoice(
       invoicesWithClientName.filter(
         (client) =>
@@ -31,24 +37,53 @@ function InvoicePage() {
     );
   };
 
+  const handleDateChange = (date: Date | null) => {
+    setSelectedDate(date);
+  };
+
+  const handleDatePickerBlur = () => {
+    setSelectedDate(null);
+    setSearchedInvoice(defaultInvoices);
+  };
+
   useEffect(() => {
     if (data?.data) {
       const newInvoicesWithClientName = data.data.map((invoice) => {
         const client_name = invoice.customers[0]?.name;
         return { ...invoice, client_name };
       });
+      setDefaultInvoices(newInvoicesWithClientName);
       setInvoicesWithClientName(newInvoicesWithClientName);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (selectedDate) {
+      setSearchedInvoice(
+        invoicesWithClientName.filter(
+          (client) =>
+            new Date(client.due_date).toDateString() ===
+            selectedDate.toDateString()
+        )
+      );
+    }
+  }, [selectedDate]);
+
+  useEffect(() => {
+    if (isInvoiceDataRefetched) {
+      refetch();
+    }
+  }, [isInvoiceDataRefetched]);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeInOut" }}
-      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray mx-auto min-h-screen"
+      className="flex-1 flex flex-col gap-5 p-10 max-sm:p-4 bg-color-gray mx-auto min-h-screen pb-10"
     >
       <FirstRow />
-      <div className="border-gray-100 bg-white border rounded-lg max-sm:w-[300px] ">
+      <div className="border-gray-100 bg-white border rounded-lg max-sm:max-w-[320px] ">
         <div className="px-4 py-5 flex max-sm:flex-col max-sm:gap-5 justify-between items-center">
           <div className="max-w-[280px] w-full">
             <Input
@@ -59,9 +94,11 @@ function InvoicePage() {
           </div>
           <div className="z-50">
             <DatePicker
+              placeholderText="Search by due date"
               className="py-4 h-12 border border-gray-100 text-center rounded-lg cursor-pointer outline-none"
-              selected={startDate}
-              onChange={(date: any) => setStartDate(date)}
+              selected={selectedDate}
+              onChange={handleDateChange}
+              onBlur={handleDatePickerBlur}
             />
           </div>
         </div>

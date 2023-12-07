@@ -16,8 +16,8 @@ function FirstRow() {
         <div className="w-full">
           <CreateInvoice />
         </div>
-        <div className="w-full max-sm:w-[300px] flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
-          <div className="grid gap-2 w-full">
+        <div className="w-full  flex items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+          <div className="grid gap-2 !w-full">
             <Typography variant="body4" className="!font-semibold !pb-2">
               Total Transaction
             </Typography>
@@ -36,12 +36,10 @@ function FirstRow() {
               </Typography>
             </div>
           </div>
-          <div className="grid md:flex justify-start w-full">
-            <img src={graphesGreen} alt="" className="mx-auto" />
-          </div>
+          <img src={graphesGreen} alt="" className="mx-auto" />
         </div>
-        <div className="w-full max-sm:w-[300px] flex flex-col md:flex-row items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
-          <div className="grid gap-2 w-full">
+        <div className="w-full  flex items-center bg-white border border-gray-200 border-opacity-20 rounded-lg p-4">
+          <div className="grid gap-2 !w-full">
             <Typography variant="body4" className="!font-semibold !pb-2">
               Invoice Generated
             </Typography>
@@ -60,9 +58,7 @@ function FirstRow() {
               </Typography>
             </div>
           </div>
-          <div className="grid md:flex justify-start w-full">
-            <img src={graphesGreen} alt="" className="mx-auto" />
-          </div>
+          <img src={graphesGreen} alt="" className="mx-auto" />
         </div>
       </div>
     </section>
