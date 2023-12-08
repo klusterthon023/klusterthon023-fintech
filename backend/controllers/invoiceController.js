@@ -215,7 +215,7 @@ exports.updateInvoiceToPaid = async (req, res) => {
 
     const newNotification = {
       notification_type: 'invoicePaid',
-      owner: foundCustomer.name,
+      owner: foundInvoice.owner_id,
       description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid`
     };
     await Notification.create(newNotification);
