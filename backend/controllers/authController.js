@@ -191,7 +191,6 @@ exports.signout = (req, res) => {
 
 exports.protect = catchAsync(async (req, res, next) => {
   // 1. Getting token and check if it's there
-  // console.log(req.cookies.jwt)
 
   let token;
   if (req.cookies && req.cookies.jwt) {
@@ -269,7 +268,6 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
       message: 'A reset token was sent your email!'
     });
   } catch (err) {
-    console.log(err);
     owner.passwordResetToken = undefined;
     owner.passwordResetExpires = undefined;
     await owner.save({ validateBeforeSave: false });
@@ -347,7 +345,6 @@ exports.resendToken = catchAsync(async (req, res, next) => {
       message: 'Another reset token was sent your email!'
     });
   } catch (err) {
-    // console.log(err);
     owner.passwordResetToken = undefined;
     owner.passwordResetExpires = undefined;
     await owner.save({ validateBeforeSave: false });

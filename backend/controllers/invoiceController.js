@@ -170,7 +170,7 @@ exports.updateInvoice = async (req, res) => {
 };
 
 exports.updateInvoiceToPaid = async (req, res) => {
-  console.log('Yes, reached');
+
   try {
     const hashedToken = crypto
       .createHash('sha256')
