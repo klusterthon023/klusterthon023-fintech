@@ -4,6 +4,7 @@ import { showStatics } from "../../Dashboard/api-dashboard";
 import CreateInvoice from "./CreateInvoice";
 import TopStaticsLoadingSkeleton from "../../Dashboard/components/top-statics-skeleton";
 import graphesGreen from "../../../../../assets/dashboard/graphs-green.svg";
+import classNames from "classnames";
 
 function FirstRow() {
   const { data, isLoading } = useQuery(["showStatics"], showStatics);
@@ -28,7 +29,13 @@ function FirstRow() {
               {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
             <div className="flex items-center gap-2">
-              <Typography variant="body4" className="!text-green-400">
+              <Typography
+                variant="body4"
+                className={classNames({
+                  ["!text-green-400"]: data?.percentageChangeInRevenue! > 0,
+                  ["!text-color-red"]: data?.percentageChangeInRevenue! < 0,
+                })}
+              >
                 {data?.percentageChangeInRevenue}%
               </Typography>
               <Typography color="gray.300" variant="body5">
@@ -50,7 +57,15 @@ function FirstRow() {
               {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
             </Typography>
             <div className="flex items-center gap-2">
-              <Typography variant="body4" className="!text-green-400">
+              <Typography
+                variant="body4"
+                className={classNames({
+                  ["!text-green-400"]:
+                    data?.percentageChangeInNumberOfInvoices! > 0,
+                  ["!text-color-red"]:
+                    data?.percentageChangeInNumberOfInvoices! < 0,
+                })}
+              >
                 {data?.percentageChangeInNumberOfInvoices}%
               </Typography>
               <Typography color="gray.300" variant="body5">

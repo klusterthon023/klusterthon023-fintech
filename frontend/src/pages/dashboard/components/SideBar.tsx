@@ -50,9 +50,9 @@ function SideBar() {
 
   const index = pathname.split("/")[0];
 
-  const isSmallScreen = useMediaQuery({ maxWidth: 768 });
+  const isSmallScreen = useMediaQuery({ maxWidth: 600 });
 
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(isSmallScreen);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   const toggleSidebar = () => {
     if (isSmallScreen) return;

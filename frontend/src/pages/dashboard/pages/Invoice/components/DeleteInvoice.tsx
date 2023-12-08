@@ -10,7 +10,7 @@ import { RouteNames } from "../../../../../routers/interface";
 export default function DeleteInvoice() {
   const { invoiceId } = useParams();
   const navigate = useNavigate();
-  const { isDeleteInvoiceModalOpen, toggleDeleteInvoiceModel } =
+  const { isDeleteInvoiceModalOpen, toggleDeleteInvoiceModel, refetchInvoice } =
     useAppContext();
   const { mutateAsync, isLoading } = useMutation(deleteInvoice);
 
@@ -21,6 +21,7 @@ export default function DeleteInvoice() {
   async function handleDelete() {
     try {
       mutateAsync(invoiceId as string);
+      refetchInvoice();
       toast("You've sucessfully deleted the the invoice.");
       toggleDeleteInvoiceModel();
       navigate(RouteNames.INVOICE);

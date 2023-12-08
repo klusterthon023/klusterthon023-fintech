@@ -1,4 +1,4 @@
-import { ApiAxiosInterceptor } from "../../../react-query";
+import { ApiAxiosInterceptor } from "../../../axios";
 import { IInvoice } from "../../dashboard/pages/Dashboard/types";
 
 export const paymentForInvoice = async (token: string) => {

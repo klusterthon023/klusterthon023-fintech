@@ -15,6 +15,7 @@ type invoice = {
   status: "Paid" | "Pending" | "Canceled";
   due_date: string;
   client_name: string; // Add this line
+  created_date: string | Date;
 };
 
 export default function RecentTransactions({
@@ -35,13 +36,21 @@ export default function RecentTransactions({
 
   useEffect(() => {
     if (data?.data) {
-      const newInvoiceList = data.data.map((invoice) => {
+      const sortedData = data.data.sort((a, b) =>
+        a.created_date.localeCompare(b.created_date)
+      );
+
+      const newInvoiceList = sortedData.map((invoice) => {
         const client_name = invoice.customers[0]?.name;
         return { ...invoice, client_name };
       });
-      const clientByIdData = data?.data.filter(
-        (invoice) => invoice.customer_id === clientId
-      );
+
+      const clientByIdData = sortedData
+        .filter((invoice) => invoice.customer_id === clientId)
+        .map((invoice) => {
+          const client_name = invoice.customers[0]?.name;
+          return { ...invoice, client_name };
+        });
 
       setInvoiceList(
         clientId

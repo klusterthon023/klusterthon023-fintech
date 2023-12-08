@@ -14,6 +14,7 @@ interface ModalProps {
   description?: string;
   showCloseButton?: boolean;
   closeModalOnlyFromTheContent?: boolean;
+  showScrollBar?: boolean;
 }
 
 export default function Modal(props: ModalProps) {
@@ -25,6 +26,7 @@ export default function Modal(props: ModalProps) {
     title,
     description,
     showCloseButton = true,
+    showScrollBar,
   } = props;
 
   const closeModal = (event: any) => {
@@ -64,7 +66,13 @@ export default function Modal(props: ModalProps) {
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.8, opacity: 0 }}
             transition={{ type: "spring", stiffness: 260, damping: 20 }}
-            className={`relative bg-white !max-w-[700px] !max-h-[80vh] overflow-y-scroll custom_scroll_bar max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `}
+            className={ClassNames(
+              `relative bg-white !max-w-[700px] !max-h-[80vh] overflow-y-scroll max-sm:!w-[90%] rounded-lg z-80 max-sm:p-4 p-9 `,
+              {
+                ["custom_scroll_bar_for_modal"]: showScrollBar,
+                ["custom_scroll_bar"]: !showScrollBar,
+              }
+            )}
           >
             <div
               className={ClassNames("flex justify-between items-center", {

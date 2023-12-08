@@ -22,10 +22,11 @@ export default function SignUpImage() {
             Efficient, Fast and Reliable
           </Typography>
           <Typography variant="body4" color="gray.300">
-            Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit
-            anim id est laborum.
+            Our platform is meticulously crafted to streamline your invoicing
+            process, ensuring swift transactions and unwavering dependability.
+            Experience the power of seamless financial management with
+            InvoiceHub, your trusted partner for efficient, fast, and reliable
+            solutions.
           </Typography>
         </div>
       </div>
