@@ -135,6 +135,20 @@ button:focus-visible {
   background-color: transparent;
 }
 
+.custom_scroll_bar_for_modal::-webkit-scrollbar {
+  width: 4px !important;
+  height: 5px !important;
+}
+
+.custom_scroll_bar_for_modal::-webkit-scrollbar-thumb {
+  background-color: #2b7fff;
+  border-radius: 2px !important;
+}
+
+.custom_scroll_bar_for_modal::-webkit-scrollbar-track {
+  background-color: #ababc4 !important;
+}
+
 .placeholder::placeholder {
   /* Chrome, Firefox, Opera, Safari 10.1+ */
   color: #ababc4;

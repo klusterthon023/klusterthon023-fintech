@@ -3,6 +3,7 @@ import { Typography } from "../../../../../design-system";
 import { showStatics } from "../api-dashboard";
 import graphesGreen from "../../../../../assets/dashboard/graphs-green.svg";
 import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
+import classNames from "classnames";
 
 export default function TopStatics() {
   const { data, isLoading } = useQuery(["showStatics"], showStatics);
@@ -26,7 +27,15 @@ export default function TopStatics() {
               {data?.numberOfClients ? data?.numberOfClients : 0}
             </Typography>
             <div className="flex gap-2 items-center">
-              <Typography variant="body4" className="!text-green-400">
+              <Typography
+                variant="body4"
+                className={classNames({
+                  ["!text-green-400"]:
+                    data?.percentageChangeInNumberOFClients! > 0,
+                  ["!text-color-red"]:
+                    data?.percentageChangeInNumberOFClients! < 0,
+                })}
+              >
                 {data?.percentageChangeInNumberOFClients}%
               </Typography>
               <Typography color="gray.300" variant="body5">
@@ -50,7 +59,15 @@ export default function TopStatics() {
               {data?.numberOfInvoices ? data?.numberOfInvoices : 0}
             </Typography>
             <div className="flex gap-2 items-center">
-              <Typography variant="body4" className="!text-green-400">
+              <Typography
+                variant="body4"
+                className={classNames({
+                  ["!text-green-400"]:
+                    data?.percentageChangeInNumberOfInvoices! > 0,
+                  ["!text-color-red"]:
+                    data?.percentageChangeInNumberOfInvoices! < 0,
+                })}
+              >
                 {data?.percentageChangeInNumberOfInvoices}%
               </Typography>
               <Typography color="gray.300" variant="body5">
@@ -74,7 +91,13 @@ export default function TopStatics() {
               {data?.totalRevenueGenerated ? data?.totalRevenueGenerated : 0}
             </Typography>
             <div className="flex gap-2 items-center">
-              <Typography variant="body4" className="!text-green-400">
+              <Typography
+                variant="body4"
+                className={classNames({
+                  ["!text-green-400"]: data?.percentageChangeInRevenue! > 0,
+                  ["!text-color-red"]: data?.percentageChangeInRevenue! < 0,
+                })}
+              >
                 {data?.percentageChangeInRevenue}%
               </Typography>
               <Typography color="gray.300" variant="body5">

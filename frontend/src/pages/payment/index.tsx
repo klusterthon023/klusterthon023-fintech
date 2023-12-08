@@ -1,12 +1,13 @@
 import { PaystackButton } from "react-paystack";
 import logo from "../../assets/invoice-hub-logo.svg";
 import payment_illustration from "../../assets/payment_illustration.svg";
-import { Button, Typography } from "../../design-system";
+import { Typography } from "../../design-system";
 import { useMutation, useQuery } from "react-query";
 import { getAllInvoices, paymentForInvoice } from "./payment-api";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import AppLoadingState from "../../components/loader/AppLoader";
-import { RouteNames } from "../../routers/interface";
+import { useEffect, useState } from "react";
+import { useAppContext } from "../../contexts";
 
 const paystackPublicKey = import.meta.env
   .VITE_APP_PAYSTACK_PAYMENT_API_PUBLIC_KEY;
@@ -19,13 +20,23 @@ function PaymentPage() {
   const token = searchParams.get("token") || "";
   const paymentToken = searchParams.get("paymentToken") || "";
 
-  const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice);
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const { data } = useQuery(["getAllInvoices"], getAllInvoices);
+  const { mutateAsync, isSuccess, isLoading } = useMutation(paymentForInvoice, {
+    onSuccess(data: any) {
+      setSuccessMessage(data?.message);
+    },
+  });
+
+  const { refetchInvoice } = useAppContext();
+
+  const {
+    data,
+    isLoading: dataLoading,
+    refetch,
+  } = useQuery(["getAllInvoices"], getAllInvoices);
 
   const invoice = data?.data?.find((invoice) => invoice.paymentToken === token);
-
-  const navigate = useNavigate();
 
   const componentProps = {
     email: email!,
@@ -38,8 +49,15 @@ function PaymentPage() {
     text: "Pay Now",
     onSuccess: () => {
       mutateAsync(paymentToken!);
+      refetchInvoice();
     },
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      refetch();
+    }
+  }, [isSuccess]);
 
   if (isLoading) return <AppLoadingState isLoading={isLoading} />;
 
@@ -49,7 +67,7 @@ function PaymentPage() {
       <img src={payment_illustration} className="mb-8" />
 
       <div className="w-[444px] max-sm:w-[300px] mb-8">
-        {invoice?.status === "Pending" && (
+        {invoice?.status === "Pending" && !dataLoading && (
           <>
             <Typography variant="body4" color="gray.400" fontWeight={600}>
               Payment Information
@@ -80,10 +98,11 @@ function PaymentPage() {
             </div>
           </>
         )}
-        {(invoice?.status === "Paid" || !invoice) && (
+        {(invoice?.status === "Paid" || !invoice) && !dataLoading && (
           <div className="flex text-center justify-center items-center mt-4">
             <Typography variant="body1" fontWeight={600}>
-              Invoice paid already
+              {successMessage ||
+                "Invoice has already been paid, please check your email for payment receipts."}
             </Typography>
           </div>
         )}
@@ -96,14 +115,6 @@ function PaymentPage() {
               {...componentProps}
               className="h-12 bg-primary-400 hover:bg-primary-500 outline-none border-none text-white rounded-lg px-5 flex justify-center text-center items-center py-4"
             />
-          </>
-        )}
-
-        {(isSuccess || invoice?.status === "Paid" || !invoice) && (
-          <>
-            <Button onClick={() => navigate(RouteNames.INVOICE)}>
-              Go to Invoice Dashboard
-            </Button>
           </>
         )}
       </div>

@@ -5,8 +5,16 @@ import dots from "../../../assets/auth/dots.svg";
 function RightSideContext() {
   return (
     <div className="relative w-full px-5 flex flex-col justify-center items-center max-lg:hidden overflow-hidden">
-      <img src={dots} alt="" className=" absolute top-0 right-5 z-0 opacity-90" />
-      <img src={dots} alt="" className=" absolute bottom-0 left-6 z-[-1] opacity-90" />
+      <img
+        src={dots}
+        alt=""
+        className=" absolute top-0 right-5 z-0 opacity-90"
+      />
+      <img
+        src={dots}
+        alt=""
+        className=" absolute bottom-0 left-6 z-[-1] opacity-90"
+      />
       <img
         className="xl:w-[700px] lg:w-[500px] "
         src={LoginIllustration}
@@ -17,10 +25,10 @@ function RightSideContext() {
           Efficient, Fast and Reliable
         </Typography>
         <Typography variant="body4" color="gray.300">
-          Duis aute irure dolor in reprehenderit in voluptate velit esse cillum
-          dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-          proident, sunt in culpa qui officia deserunt mollit anim id est
-          laborum.
+          Our platform is meticulously crafted to streamline your invoicing
+          process, ensuring swift transactions and unwavering dependability.
+          Experience the power of seamless financial management with InvoiceHub,
+          your trusted partner for efficient, fast, and reliable solutions.
         </Typography>
       </div>
     </div>

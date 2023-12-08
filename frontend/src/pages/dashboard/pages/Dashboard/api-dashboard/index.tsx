@@ -1,4 +1,4 @@
-import { ApiAxiosInterceptor } from "../../../../../react-query";
+import { ApiAxiosInterceptor } from "../../../../../axios";
 import {
   ICreateClientRequest,
   ICreateClientResponse,

@@ -82,6 +82,7 @@ export default function CreateInvoice() {
   return (
     <Modal
       title={"New Invoice"}
+      showScrollBar
       description={"Enter client information"}
       isModalOpen={isCreateInvoiceModalOpen}
       onClose={() => {

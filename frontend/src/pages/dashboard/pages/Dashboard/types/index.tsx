@@ -120,6 +120,7 @@ export type IUpdateProfile = {
       _id: string;
       business_name: string;
       owner_name: string;
+      created_date: string;
       email: string;
       business_address: string;
       business_description: string;

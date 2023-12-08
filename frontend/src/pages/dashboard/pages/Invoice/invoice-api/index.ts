@@ -1,4 +1,4 @@
-import { ApiAxiosInterceptor } from "../../../../../react-query";
+import { ApiAxiosInterceptor } from "../../../../../axios";
 
 // export const getAllClient = async (): Promise<{ data: IClientType[] }> => {
 //   try {

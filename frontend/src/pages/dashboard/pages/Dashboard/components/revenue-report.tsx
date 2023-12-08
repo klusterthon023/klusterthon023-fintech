@@ -67,35 +67,7 @@ export default function RevenueReports() {
     labels: labels,
     datasets: datasets,
   };
-  // function generateRandomData(length: any) {
-  //   return Array.from({ length }, () => Math.random() * 100);
-  // }
 
-  // const info = {
-  //   labels: labels,
-  //   datasets: [
-  //     {
-  //       label: "Business",
-  //       data: generateRandomData(12),
-  //       backgroundColor: "rgba(255, 99, 132, 0.2)",
-  //       borderColor: "rgba(255, 99, 132, 1)",
-  //       borderWidth: 2,
-  //       pointRadius: 8,
-  //       pointHoverRadius: 10,
-  //       pointBackgroundColor: "rgba(255, 99, 132, 1)",
-  //     },
-  //     {
-  //       label: "Individual",
-  //       data: generateRandomData(12),
-  //       backgroundColor: "rgba(54, 162, 235, 0.2)",
-  //       borderColor: "rgba(54, 162, 235, 1)",
-  //       borderWidth: 2,
-  //       pointRadius: 8,
-  //       pointHoverRadius: 10,
-  //       pointBackgroundColor: "rgba(54, 162, 235, 1)",
-  //     },
-  //   ],
-  // };
   const options: any = {
     responsive: true,
     plugins: {
@@ -104,9 +76,11 @@ export default function RevenueReports() {
         align: "start",
       },
     },
+    aspectRatio: window.innerWidth > 400 ? undefined : 1,
+    maintainAspectRatio: true,
   };
   return (
-    <section className="bg-white w-full max-sm:w-[300px] max-[400px]:w-[250px] p-4 border border-gray-200 border-opacity-20 rounded-lg">
+    <section className="bg-white w-full max-sm:w-[300px] p-4 border border-gray-200 border-opacity-20 rounded-lg">
       <Typography color="gray.400" fontWeight={600} variant="body3">
         Revenue Reports
       </Typography>

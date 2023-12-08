@@ -1,4 +1,4 @@
-import { ApiAxiosInterceptor } from "../../../react-query";
+import { ApiAxiosInterceptor } from "../../../axios";
 import { ISignUpPayload, ISignUpResponse } from "../types";
 
 export const signupUser = async (data: ISignUpPayload) => {
