@@ -216,7 +216,7 @@ exports.updateInvoiceToPaid = async (req, res) => {
     const newNotification = {
       notification_type: 'invoicePaid',
       owner: foundInvoice.owner_id,
-      description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid`
+      description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid.`
     };
     await Notification.create(newNotification);
 
@@ -241,7 +241,7 @@ exports.updateInvoiceToPaid = async (req, res) => {
       return res.status(201).json({
         status: 'success',
         message:
-          'Invoice Successfully Paid. Your receipt has been sent to your mailbox. Your client will be notified as well.',
+          'Invoice Successfully Paid. Kindly check you email for your payment receipt.',
         data: foundInvoice
       });
     } catch (err) {
