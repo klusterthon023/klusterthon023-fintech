@@ -24,7 +24,7 @@ function PaymentPage() {
   const { data } = useQuery(["getAllInvoices"], getAllInvoices);
 
   const invoice = data?.data?.find((invoice) => invoice.paymentToken === token);
-  console.log(invoice);
+
   const navigate = useNavigate();
 
   const componentProps = {
@@ -80,13 +80,11 @@ function PaymentPage() {
             </div>
           </>
         )}
-        {invoice?.status === "Paid" && (
-          <div>
-            <div className="flex  items-center mt-4">
-              <Typography variant="body3" fontWeight={600}>
-                Invoice as already be paid
-              </Typography>
-            </div>
+        {(invoice?.status === "Paid" || !invoice) && (
+          <div className="flex text-center justify-center items-center mt-4">
+            <Typography variant="body1" fontWeight={600}>
+              Invoice paid already
+            </Typography>
           </div>
         )}
       </div>
@@ -101,14 +99,13 @@ function PaymentPage() {
           </>
         )}
 
-        {isSuccess ||
-          (invoice?.status === "Paid" && (
-            <>
-              <Button onClick={() => navigate(RouteNames.CLIENT)}>
-                Go to Client Dashboard
-              </Button>
-            </>
-          ))}
+        {(isSuccess || invoice?.status === "Paid" || !invoice) && (
+          <>
+            <Button onClick={() => navigate(RouteNames.INVOICE)}>
+              Go to Invoice Dashboard
+            </Button>
+          </>
+        )}
       </div>
     </div>
   );

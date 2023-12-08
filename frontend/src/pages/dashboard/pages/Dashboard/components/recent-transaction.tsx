@@ -7,6 +7,7 @@ import { custom_columns } from "../types/columns";
 import { useEffect, useState } from "react";
 import RecentTransactionsSkeleton from "./recent-transaction-skeleton";
 import "react-datepicker/dist/react-datepicker.css";
+import { useAppContext } from "../../../../../contexts";
 
 type invoice = {
   id: string;
@@ -19,12 +20,18 @@ type invoice = {
 export default function RecentTransactions({
   notNavigatable,
   clientId,
+  dashboardTransaction,
 }: {
   notNavigatable?: boolean;
   clientId?: string;
+  dashboardTransaction?: boolean;
 }) {
-  const { data, isLoading } = useQuery(["TRANSACTIONS"], getRecentTransactions);
+  const { data, isLoading, refetch } = useQuery(
+    ["TRANSACTIONS"],
+    getRecentTransactions
+  );
   const [invoiceList, setInvoiceList] = useState<invoice[]>([]);
+  const { isInvoiceDataRefetched } = useAppContext();
 
   useEffect(() => {
     if (data?.data) {
@@ -38,11 +45,17 @@ export default function RecentTransactions({
 
       setInvoiceList(
         clientId
-          ? clientByIdData.slice(0, notNavigatable ? 3 : 5)
-          : newInvoiceList.slice(0, notNavigatable ? 3 : 5)
+          ? clientByIdData.slice(0, dashboardTransaction ? 3 : 5)
+          : newInvoiceList.slice(0, dashboardTransaction ? 3 : 5)
       );
     }
-  }, [data, clientId]);
+  }, [data, clientId, dashboardTransaction]);
+
+  useEffect(() => {
+    if (isInvoiceDataRefetched) {
+      refetch();
+    }
+  }, [isInvoiceDataRefetched]);
 
   if (isLoading) {
     return <RecentTransactionsSkeleton />;

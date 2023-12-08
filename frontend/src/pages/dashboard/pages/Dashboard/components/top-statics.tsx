@@ -6,7 +6,7 @@ import TopStaticsLoadingSkeleton from "./top-statics-skeleton";
 
 export default function TopStatics() {
   const { data, isLoading } = useQuery(["showStatics"], showStatics);
-  console.log(data);
+
   if (isLoading) {
     return <TopStaticsLoadingSkeleton />;
   }

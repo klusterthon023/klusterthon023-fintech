@@ -30,12 +30,15 @@ export default function NotificationsWindow() {
           data?.notifications?.map(
             (notification: notifications, index: number) => {
               return (
-                <div className="border-b border-gray-100 border-opacity-20 flex justify-between">
-                  <Typography variant="body5" className="pb-3">
+                <div
+                  key={index}
+                  className="border-b border-gray-100 border-opacity-20 pb-3 flex gap-4 justify-between"
+                >
+                  <Typography variant="body5">
                     {notification?.description}
                   </Typography>
 
-                  <Typography variant="body4" className=" pb-3" key={index}>
+                  <Typography variant="body5">
                     {notification?.createAt
                       .split("T")[0]
                       .split("-")

@@ -64,7 +64,7 @@ function SideBar() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsSidebarCollapsed(window.innerWidth <= 768);
+      setIsSidebarCollapsed(isSmallScreen);
     };
     handleResize();
     window.addEventListener("resize", handleResize);

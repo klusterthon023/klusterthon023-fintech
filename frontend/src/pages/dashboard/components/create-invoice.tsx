@@ -109,6 +109,16 @@ export default function CreateInvoice() {
 
               return (
                 <Form className="grid gap-5 placeholder:text-gray-100">
+                  <>
+                    {!options?.length && (
+                      <div className="p-2 mb-3 flex justify-center items-center bg-color-tertiary rounded-lg">
+                        <Typography variant="body3" color="white">
+                          Add client before you can create invoice
+                        </Typography>
+                      </div>
+                    )}
+                  </>
+
                   <Select
                     defaultValue={{
                       label: clientDetailsForNewTransaction.name,
@@ -117,12 +127,14 @@ export default function CreateInvoice() {
                     value={options?.find(
                       (option) => option.value === formik.values.customer_id
                     )}
-                    disabled={!!clientDetailsForNewTransaction.name}
+                    disabled={
+                      !!clientDetailsForNewTransaction.name || !options?.length
+                    }
                     onChange={(option) => {
                       // @ts-ignore
                       formik.setFieldValue("customer_id", option.value);
                     }}
-                    className=" placeholder:text-sm"
+                    className="placeholder:text-sm"
                     label="Customer Name"
                     placeholder="Select a customer"
                     options={options}
@@ -140,7 +152,7 @@ export default function CreateInvoice() {
                     {({ push, remove }) => (
                       <div>
                         {formik.values.products.map((_, index) => (
-                          <div className="space-y-4" key={index}>
+                          <div className="space-y-4 pb-4" key={index}>
                             <Input
                               label={`${"Product name"}`}
                               {...getFieldProps(

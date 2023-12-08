@@ -31,8 +31,8 @@ export default function Footer() {
         Copyright ©{year}. All rights reserved
       </div>
       <div className="flex justify-between lg:justify-end w-full">
-        {LINKS.map((link: LinkProps) => (
-          <Link to={link.path} className="lg:mx-2">
+        {LINKS.map((link: LinkProps, index) => (
+          <Link key={index} to={link.path} className="lg:mx-2">
             <Typography color="primary" className="!text-sm">
               {link.name}
             </Typography>
