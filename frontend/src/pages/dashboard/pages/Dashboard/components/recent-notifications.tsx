@@ -3,9 +3,14 @@ import { notifications } from "../types";
 import { useQuery } from "react-query";
 import { recentNotifications } from "../api-dashboard";
 import RecentNotificationsLoadingSkeleton from "./recent-notifications-skeleton";
+import { useNavigate } from "react-router-dom";
+import { RouteNames } from "../../../../../routers/interface";
+import classNames from "classnames";
 
 export default function RecentNotifications() {
   const { data, isLoading } = useQuery(["NOTIFICATION"], recentNotifications);
+
+  const navigate = useNavigate();
 
   if (isLoading) {
     return <RecentNotificationsLoadingSkeleton />;
@@ -17,12 +22,28 @@ export default function RecentNotifications() {
           Recent Notifications
         </Typography>
         {data &&
-          data?.notifications?.map(
-            (notification: notifications, index: number) => {
+          data?.notifications
+            ?.sort((a, b) => a.createAt.localeCompare(b.createAt))
+            ?.map((notification: notifications, index: number) => {
               return (
                 <div
+                  onClick={() => {
+                    if (
+                      notification.notification_type === "invoicePaid" ||
+                      "invoiceCreate"
+                    ) {
+                      navigate(`${RouteNames.INVOICE}/${notification?._id}`);
+                    }
+                  }}
                   key={index}
-                  className="border-b border-gray-100 border-opacity-20 pb-3 flex gap-4 justify-between"
+                  className={classNames(
+                    "border-b border-gray-100 border-opacity-20 pb-2 flex gap-4 justify-between",
+                    {
+                      ["hover:bg-neutral-100 cursor-pointer p-2 rounded-lg"]:
+                        notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate",
+                    }
+                  )}
                 >
                   <Typography variant="body4">
                     {notification?.description}
@@ -36,8 +57,7 @@ export default function RecentNotifications() {
                   </Typography>
                 </div>
               );
-            }
-          )}
+            })}
       </div>
     </section>
   );
