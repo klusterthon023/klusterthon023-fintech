@@ -108,6 +108,7 @@ function InvoicePage() {
             stickyHeader={true}
             columns={custom_columns()}
             dataSource={searchedInvoice || invoicesWithClientName}
+            isRowClickable={true}
           />
         </div>
         {!invoicesWithClientName.length && (

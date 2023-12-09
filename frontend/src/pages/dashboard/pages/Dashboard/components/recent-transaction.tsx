@@ -9,7 +9,7 @@ import RecentTransactionsSkeleton from "./recent-transaction-skeleton";
 import "react-datepicker/dist/react-datepicker.css";
 import { useAppContext } from "../../../../../contexts";
 
-type invoice = {
+export type invoice = {
   id: string;
   total_amount: number;
   status: "Paid" | "Pending" | "Canceled";
@@ -41,7 +41,7 @@ export default function RecentTransactions({
           const client_name = invoice.customers[0]?.name;
           return { ...invoice, client_name };
         })
-        .sort((a, b) => b.created_date.localeCompare(a.created_date));
+        .reverse();
 
       const clientByIdData = data?.data
         .filter((invoice) => invoice.customer_id === clientId)
@@ -49,7 +49,7 @@ export default function RecentTransactions({
           const client_name = invoice.customers[0]?.name;
           return { ...invoice, client_name };
         })
-        .sort((a, b) => b.created_date.localeCompare(a.created_date));
+        .reverse();
 
       setInvoiceList(
         clientId
@@ -99,6 +99,7 @@ export default function RecentTransactions({
             <Table
               columns={custom_columns(notNavigatable)}
               dataSource={invoiceList}
+              isRowClickable
             />
             <Typography
               color="gray.300"

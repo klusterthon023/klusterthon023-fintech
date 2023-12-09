@@ -23,7 +23,7 @@ function InvoiceDetailPage() {
   const [products, setProducts] = useState<product[]>([]);
   const [total, setTotal] = useState(0);
 
-  const { data } = useQuery(["getInvoiceById"], () =>
+  const { data } = useQuery(["getInvoiceById", invoiceId], () =>
     getInvoiceById(invoiceId!)
   );
 

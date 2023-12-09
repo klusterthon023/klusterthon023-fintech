@@ -20,6 +20,7 @@ interface TableProps<RecordType> extends TableHTMLAttributes<HTMLTableElement> {
   dataSource: RecordType[];
   stickyHeader?: boolean;
   stickyHeaderBackgroundColor?: string;
+  isRowClickable?: boolean;
 }
 
 export const tableStyles = () => css`
@@ -81,8 +82,13 @@ const cellStyles = (theme: Theme) => css`
 `;
 
 function Table<RecordType>(props: TableProps<RecordType>) {
-  const { dataSource, columns, stickyHeader, stickyHeaderBackgroundColor } =
-    props;
+  const {
+    dataSource,
+    columns,
+    stickyHeader,
+    stickyHeaderBackgroundColor,
+    isRowClickable,
+  } = props;
 
   const [currentSortColumnIndex, setCurrentSortColumnIndex] = useState<
     string | null
@@ -185,7 +191,11 @@ function Table<RecordType>(props: TableProps<RecordType>) {
         </thead>
         <tbody className="bg-color-white">
           {items.map((row, rowIndex) => (
-            <tr key={rowIndex} className={cx(bodyCellStyles(theme))}>
+            <tr
+              key={rowIndex}
+              className={cx(bodyCellStyles(theme))}
+              style={{ cursor: isRowClickable ? "pointer" : "default" }}
+            >
               {columns.map((column, colIndex) => (
                 <td className={cx(dataCellStyles(theme))} key={colIndex}>
                   {column.render
