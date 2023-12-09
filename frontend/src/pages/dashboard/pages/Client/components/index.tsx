@@ -19,7 +19,7 @@ export default function ClientDetails() {
 
   const [isDataRefetch, setIsDataRefetch] = useState<boolean>(false);
 
-  const { data, refetch } = useQuery(["getCustomerById"], () =>
+  const { data, refetch } = useQuery(["getCustomerById", clientId], () =>
     getClientById(clientId!)
   );
 

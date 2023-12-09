@@ -2,12 +2,14 @@ import dayjs from "dayjs";
 import { Typography } from "../../../../../design-system";
 import { Link } from "react-router-dom";
 import { RouteNames } from "../../../../../routers/interface";
+import { invoice } from "../components/recent-transaction";
 export const custom_columns = (notNavigatable?: boolean) => [
   {
     title: "Invoice ID",
     dataIndex: "id",
     key: "1",
     sortable: false,
+
     render: (id: string) => {
       return (
         <div className="flex gap-2 items-center ">
@@ -41,9 +43,16 @@ export const custom_columns = (notNavigatable?: boolean) => [
     dataIndex: "client_name",
     key: "2",
     sortable: true,
-    render: (client_name: string) => {
+    render: (client_name: string, record: invoice) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          to={`${RouteNames.INVOICE}/${record.id}`}
+          component={Link}
+          fontWeight={500}
+          variant={"body4"}
+          className="cursor-pointer hover:!text-color-primary"
+          color={"gray.600"}
+        >
           {client_name}
         </Typography>
       );
@@ -53,9 +62,16 @@ export const custom_columns = (notNavigatable?: boolean) => [
     title: "Total amount (₦)",
     dataIndex: "total_amount",
     key: "4",
-    render: (total_amount: string) => {
+    render: (total_amount: number, record: invoice) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          to={`${RouteNames.INVOICE}/${record.id}`}
+          component={Link}
+          fontWeight={500}
+          variant={"body4"}
+          className="cursor-pointer hover:!text-color-primary"
+          color={"gray.600"}
+        >
           {total_amount}
         </Typography>
       );
@@ -93,9 +109,16 @@ export const custom_columns = (notNavigatable?: boolean) => [
     title: "Due Date",
     dataIndex: "due_date",
     key: "6",
-    render: (due_date: string) => {
+    render: (due_date: string, record: invoice) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          to={`${RouteNames.INVOICE}/${record.id}`}
+          component={Link}
+          fontWeight={500}
+          variant={"body4"}
+          className="cursor-pointer hover:!text-color-primary"
+          color={"gray.600"}
+        >
           {dayjs(due_date).format("MMMM D, YYYY")}
         </Typography>
       );

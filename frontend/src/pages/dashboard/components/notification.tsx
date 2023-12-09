@@ -5,11 +5,24 @@ import { notifications } from "../pages/Dashboard/types";
 import classNames from "classnames";
 import { RouteNames } from "../../../routers/interface";
 import { useNavigate } from "react-router-dom";
+import { useAppContext } from "../../../contexts";
+import { useEffect } from "react";
 
 export default function NotificationsWindow() {
-  const { data, isLoading } = useQuery(["NOTIFICATION"], recentNotifications);
+  const { data, isLoading, refetch } = useQuery(
+    ["NOTIFICATION"],
+    recentNotifications
+  );
 
   const navigate = useNavigate();
+
+  const { isCreateInvoiceModalOpen } = useAppContext();
+
+  useEffect(() => {
+    if (isCreateInvoiceModalOpen) {
+      refetch();
+    }
+  }, [isCreateInvoiceModalOpen]);
 
   return (
     <section className="border shadow-lg border-color-gray border-opacity-20 px-5 py-6 w-[460px] max-sm:w-[300px] max-sm:px-2 max-sm:h-[300px] max-h-[400px]   overflow-y-scroll rounded-lg bg-color-white ">
@@ -30,16 +43,18 @@ export default function NotificationsWindow() {
         ) : (
           data &&
           data?.notifications
-            ?.sort((a, b) => a.createAt.localeCompare(b.createAt))
             ?.map((notification: notifications, index: number) => {
               return (
                 <div
                   onClick={() => {
                     if (
-                      notification.notification_type === "invoicePaid" ||
-                      "invoiceCreate"
+                      (notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate") &&
+                      notification.invoice_id
                     ) {
-                      navigate(`${RouteNames.INVOICE}/${notification?._id}`);
+                      navigate(
+                        `${RouteNames.INVOICE}/${notification.invoice_id}`
+                      );
                     }
                   }}
                   key={index}
@@ -52,7 +67,15 @@ export default function NotificationsWindow() {
                     }
                   )}
                 >
-                  <Typography variant="body4">
+                  <Typography
+                    variant="body4"
+                    c
+                    className={classNames("", {
+                      ["!text-color-primary"]:
+                        notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate",
+                    })}
+                  >
                     {notification?.description}
                   </Typography>
                   <Typography variant="body5">
@@ -65,6 +88,7 @@ export default function NotificationsWindow() {
                 </div>
               );
             })
+            ?.reverse()
         )}
       </div>
     </section>

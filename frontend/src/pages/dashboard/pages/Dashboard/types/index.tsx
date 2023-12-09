@@ -57,6 +57,7 @@ export type notifications = {
   owner: string;
   description: string;
   createAt: string;
+  invoice_id?: string;
   __v: number;
   id: string;
 };
