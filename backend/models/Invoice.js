@@ -49,7 +49,7 @@ const invoiceSchema = new mongoose.Schema(
     },
     created_date: {
       type: Date,
-      default: Date.now()
+      default: Date.now
     },
     due_date: {
       type: Date,
