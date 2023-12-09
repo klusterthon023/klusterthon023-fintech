@@ -89,7 +89,8 @@ exports.createInvoice = async (req, res) => {
     const newNotification = {
       notification_type: 'invoiceCreate',
       owner: req.owner._id,
-      description: `Invoice ${newInvoice._id} was created for ${foundCustomer.name}`
+      description: `Invoice ${newInvoice._id} was created for ${foundCustomer.name}`,
+      invoice_id: newInvoice._id
     };
     await Notification.create(newNotification);
 
@@ -153,7 +154,8 @@ exports.updateInvoice = async (req, res) => {
     const newNotification = {
       notification_type: 'invoiceUpdate',
       owner: req.owner._id,
-      description: `Invoice ${updatedInvoice._id} created for ${customers.name} was updated`
+      description: `Invoice ${updatedInvoice._id} created for ${customers.name} was updated`,
+      invoice_id: updatedInvoice._id
     };
     await Notification.create(newNotification);
 
@@ -170,7 +172,6 @@ exports.updateInvoice = async (req, res) => {
 };
 
 exports.updateInvoiceToPaid = async (req, res) => {
-
   try {
     const hashedToken = crypto
       .createHash('sha256')
@@ -216,7 +217,8 @@ exports.updateInvoiceToPaid = async (req, res) => {
     const newNotification = {
       notification_type: 'invoicePaid',
       owner: foundInvoice.owner_id,
-      description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid.`
+      description: `Invoice ${foundInvoice._id} created for ${foundCustomer.name} has been paid.`,
+      invoice_id: foundInvoice._id
     };
     await Notification.create(newNotification);
 
@@ -279,7 +281,8 @@ exports.deleteOneInvoice = async (req, res) => {
     const newNotification = {
       notification_type: 'invoiceDelete',
       owner: customers.name,
-      description: `Invoice ${invoiceId} created for ${customers.name} was deleted`
+      description: `Invoice ${invoiceId} created for ${customers.name} was deleted`,
+      invoice_id: invoiceId
     };
     await Notification.create(newNotification);
 
