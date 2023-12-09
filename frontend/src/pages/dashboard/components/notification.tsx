@@ -2,18 +2,20 @@ import { useQuery } from "react-query";
 import { Typography } from "../../../design-system";
 import { recentNotifications } from "../pages/Dashboard/api-dashboard";
 import { notifications } from "../pages/Dashboard/types";
+import classNames from "classnames";
+import { RouteNames } from "../../../routers/interface";
+import { useNavigate } from "react-router-dom";
 
 export default function NotificationsWindow() {
   const { data, isLoading } = useQuery(["NOTIFICATION"], recentNotifications);
 
+  const navigate = useNavigate();
+
   return (
     <section className="border shadow-lg border-color-gray border-opacity-20 px-5 py-6 w-[460px] max-sm:w-[300px] max-sm:px-2 max-sm:h-[300px] max-h-[400px]   overflow-y-scroll rounded-lg bg-color-white ">
       <div className="grid gap-5 bg-white  rounded-lg p-4">
-        <div className="flex justify-between items-center pb-3 border-b border-color-gray">
+        <div className="flex items-center pb-3 border-b border-color-gray">
           <Typography variant="h6">Notification</Typography>
-          <Typography variant="body4" color="primary">
-            Mark all as read
-          </Typography>
         </div>
         {isLoading ? (
           <div className="animate-pulse flex space-x-4">
@@ -27,17 +29,32 @@ export default function NotificationsWindow() {
           </div>
         ) : (
           data &&
-          data?.notifications?.map(
-            (notification: notifications, index: number) => {
+          data?.notifications
+            ?.sort((a, b) => a.createAt.localeCompare(b.createAt))
+            ?.map((notification: notifications, index: number) => {
               return (
                 <div
+                  onClick={() => {
+                    if (
+                      notification.notification_type === "invoicePaid" ||
+                      "invoiceCreate"
+                    ) {
+                      navigate(`${RouteNames.INVOICE}/${notification?._id}`);
+                    }
+                  }}
                   key={index}
-                  className="border-b border-gray-100 border-opacity-20 pb-3 flex gap-4 justify-between"
+                  className={classNames(
+                    "border-b border-gray-100 border-opacity-20 pb-2 flex gap-4 justify-between",
+                    {
+                      ["hover:bg-neutral-100 cursor-pointer p-2 rounded-lg"]:
+                        notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate",
+                    }
+                  )}
                 >
-                  <Typography variant="body5">
+                  <Typography variant="body4">
                     {notification?.description}
                   </Typography>
-
                   <Typography variant="body5">
                     {notification?.createAt
                       .split("T")[0]
@@ -47,8 +64,7 @@ export default function NotificationsWindow() {
                   </Typography>
                 </div>
               );
-            }
-          )
+            })
         )}
       </div>
     </section>
