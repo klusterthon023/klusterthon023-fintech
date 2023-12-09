@@ -36,21 +36,20 @@ export default function RecentTransactions({
 
   useEffect(() => {
     if (data?.data) {
-      const sortedData = data.data.sort((a, b) =>
-        a.created_date.localeCompare(b.created_date)
-      );
+      const newInvoiceList = data?.data
+        .map((invoice) => {
+          const client_name = invoice.customers[0]?.name;
+          return { ...invoice, client_name };
+        })
+        .sort((a, b) => b.created_date.localeCompare(a.created_date));
 
-      const newInvoiceList = sortedData.map((invoice) => {
-        const client_name = invoice.customers[0]?.name;
-        return { ...invoice, client_name };
-      });
-
-      const clientByIdData = sortedData
+      const clientByIdData = data?.data
         .filter((invoice) => invoice.customer_id === clientId)
         .map((invoice) => {
           const client_name = invoice.customers[0]?.name;
           return { ...invoice, client_name };
-        });
+        })
+        .sort((a, b) => b.created_date.localeCompare(a.created_date));
 
       setInvoiceList(
         clientId
