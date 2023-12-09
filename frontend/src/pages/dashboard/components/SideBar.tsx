@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Typography } from "../../../design-system";
+import { Button, Modal, Typography } from "../../../design-system";
 import {
   faChevronLeft,
   faChevronRight,
@@ -54,6 +54,8 @@ function SideBar() {
 
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
+  const [logout, setLogout] = useState(false);
+
   const toggleSidebar = () => {
     if (isSmallScreen) return;
     setIsSidebarCollapsed((prevState) => !prevState);
@@ -72,84 +74,119 @@ function SideBar() {
   }, []);
 
   return (
-    <AnimatePresence exitBeforeEnter={false} mode="wait">
-      <motion.div
-        initial={false}
-        animate={{ width: isSidebarCollapsed ? 80 : 260 }}
-        exit={{ width: 80 }}
-        transition={{ type: "spring", stiffness: 300, damping: 25 }}
-        className={classNames(
-          `min-h-screen bg-white border-r border-color-gray  py-6 `,
-          {
-            ["w-20 px-3"]: isSidebarCollapsed,
-            ["min-w-[260px] px-5"]: !isSidebarCollapsed,
-          }
-        )}
-      >
-        <div className={classNames("relative pb-12")}>
-          <img
-            src={isSidebarCollapsed ? sidebarIcon : logo}
-            className={classNames("", { ["w-7"]: isSidebarCollapsed })}
-            alt="invoicehub"
-          />
-        </div>
+    <>
+      <AnimatePresence exitBeforeEnter={false} mode="wait">
         <motion.div
-          className={ClassNames(
-            "absolute top-7 w-9 h-9 flex justify-center items-center bg-color-gray rounded-full p-2 cursor-pointer",
+          initial={false}
+          animate={{ width: isSidebarCollapsed ? 80 : 260 }}
+          exit={{ width: 80 }}
+          transition={{ type: "spring", stiffness: 300, damping: 25 }}
+          className={classNames(
+            `min-h-screen bg-white border-r border-color-gray  py-6 `,
             {
-              ["left-[240px]"]: !isSidebarCollapsed,
-              ["left-[60px]"]: isSidebarCollapsed,
+              ["w-20 px-3"]: isSidebarCollapsed,
+              ["min-w-[260px] px-5"]: !isSidebarCollapsed,
             }
           )}
-          onClick={toggleSidebar}
-          whileHover={{ scale: 1.0 }}
         >
-          <motion.div>
-            <FontAwesomeIcon
-              icon={isSidebarCollapsed ? faChevronRight : faChevronLeft}
-              fontSize={18}
-              className="text-primary-600"
+          <div className={classNames("relative pb-12")}>
+            <img
+              src={isSidebarCollapsed ? sidebarIcon : logo}
+              className={classNames("", { ["w-7"]: isSidebarCollapsed })}
+              alt="invoicehub"
             />
+          </div>
+          <motion.div
+            className={ClassNames(
+              "absolute top-7 w-9 h-9 flex justify-center items-center bg-color-gray rounded-full p-2 cursor-pointer",
+              {
+                ["left-[240px]"]: !isSidebarCollapsed,
+                ["left-[60px]"]: isSidebarCollapsed,
+              }
+            )}
+            onClick={toggleSidebar}
+            whileHover={{ scale: 1.0 }}
+          >
+            <motion.div>
+              <FontAwesomeIcon
+                icon={isSidebarCollapsed ? faChevronRight : faChevronLeft}
+                fontSize={18}
+                className="text-primary-600"
+              />
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        <div className="flex justify-between flex-col py-6">
-          {TAB_LIST.map((item) => (
-            <ListItem
-              key={item.id}
-              {...item}
-              isSidebarCollapsed={isSidebarCollapsed}
-              path={`${index}${item.path}`}
-              active={isActive(item.path)}
-            />
-          ))}
-        </div>
-        <div
-          className={classNames("absolute bottom-3 ", {
-            ["w-[220px]"]: !isSidebarCollapsed,
-          })}
-        >
+          <div className="flex justify-between flex-col py-6">
+            {TAB_LIST.map((item) => (
+              <ListItem
+                key={item.id}
+                {...item}
+                isSidebarCollapsed={isSidebarCollapsed}
+                path={`${index}${item.path}`}
+                active={isActive(item.path)}
+              />
+            ))}
+          </div>
           <div
+            className={classNames("absolute bottom-3 ", {
+              ["w-[220px]"]: !isSidebarCollapsed,
+            })}
+          >
+            <div
+              onClick={() => setLogout(true)}
+              className={classNames(
+                "flex justify-start mt-2 !items-center !w-full cursor-pointer gap-[14px] h-[52px] px-4 py-3 hover:bg-color-gray",
+                "rounded-lg text-gray-400",
+                { ["px-2  text-xl"]: isSidebarCollapsed }
+              )}
+            >
+              <IoIosLogOut size={25} />
+              {!isSidebarCollapsed && (
+                <Typography
+                  fontWeight={400}
+                  variant={"body3"}
+                  color={"gray.400"}
+                >
+                  Logout
+                </Typography>
+              )}
+            </div>
+          </div>
+        </motion.div>
+      </AnimatePresence>
+      <Modal
+        isModalOpen={logout}
+        onClose={() => setLogout(false)}
+        showCloseButton={false}
+      >
+        <div className="my-3 text-center">
+          <Typography variant="h6">Logout from InvoiceHub</Typography>
+        </div>
+        <div className="text-center">
+          <Typography variant="body3" color="gray.200">
+            Are you sure you are ready to logout?
+          </Typography>
+        </div>
+        <div className="flex w-full gap-4 justify-center items-center mt-9">
+          <Button
+            variant="outlined"
+            className="!border !bg-transparent !text-color-red !border-color-red"
+            onClick={() => setLogout(false)}
+          >
+            No, Close
+          </Button>
+          <Button
+            className="!border-color-red !bg-color-red !text-color-white !border"
             onClick={() => {
               removeDataFromLocalStorage("currentUser");
               navigate(RouteNames.SIGN_IN);
             }}
-            className={classNames(
-              "flex justify-start mt-2 !items-center !w-full cursor-pointer gap-[14px] h-[52px] px-4 py-3 hover:bg-color-gray",
-              "rounded-lg text-gray-400",
-              { ["px-2  text-xl"]: isSidebarCollapsed }
-            )}
           >
-            <IoIosLogOut size={25} />
-            {!isSidebarCollapsed && (
-              <Typography fontWeight={400} variant={"body3"} color={"gray.400"}>
-                Logout
-              </Typography>
-            )}
-          </div>
+            Yes
+          </Button>
         </div>
-      </motion.div>
-    </AnimatePresence>
+      </Modal>
+    </>
   );
 }
 

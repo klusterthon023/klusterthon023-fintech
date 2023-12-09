@@ -35,9 +35,15 @@ const columns = [
     title: "Email",
     dataIndex: "email",
     key: "3",
-    render: (email: number) => {
+    render: (email: number, record: IClientType) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          variant={"body4"}
+          color={"gray.600"}
+          component={Link}
+          to={`${RouteNames.CLIENT}/${record._id}`}
+          className="cursor-pointer hover:!text-color-primary"
+        >
           {email}
         </Typography>
       );
@@ -47,9 +53,15 @@ const columns = [
     title: "Category",
     dataIndex: "customer_type",
     key: "4",
-    render: (total_amount: string) => {
+    render: (total_amount: string, record: IClientType) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          variant={"body4"}
+          color={"gray.600"}
+          component={Link}
+          to={`${RouteNames.CLIENT}/${record._id}`}
+          className="cursor-pointer hover:!text-color-primary"
+        >
           {total_amount}
         </Typography>
       );
@@ -59,9 +71,15 @@ const columns = [
     title: "Location",
     dataIndex: "business_address",
     key: "5",
-    render: (business_address: string) => {
+    render: (business_address: string, record: IClientType) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          variant={"body4"}
+          color={"gray.600"}
+          component={Link}
+          to={`${RouteNames.CLIENT}/${record._id}`}
+          className="cursor-pointer hover:!text-color-primary"
+        >
           {business_address}
         </Typography>
       );
@@ -71,9 +89,15 @@ const columns = [
     title: "Date Added",
     dataIndex: "created_date",
     key: "6",
-    render: (date: string) => {
+    render: (date: string, record: IClientType) => {
       return (
-        <Typography variant={"body4"} color={"gray.600"}>
+        <Typography
+          variant={"body4"}
+          color={"gray.600"}
+          component={Link}
+          to={`${RouteNames.CLIENT}/${record._id}`}
+          className="cursor-pointer hover:!text-color-primary"
+        >
           {dayjs(date).format("MMMM D, YYYY")}
         </Typography>
       );
@@ -132,6 +156,7 @@ function ClientPage() {
             stickyHeader={true}
             columns={columns}
             dataSource={searchedClient || data?.data!}
+            isRowClickable={true}
           />
         </div>
         {!data?.data?.length && (

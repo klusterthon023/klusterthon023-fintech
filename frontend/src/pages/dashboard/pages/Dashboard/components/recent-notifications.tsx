@@ -6,12 +6,24 @@ import RecentNotificationsLoadingSkeleton from "./recent-notifications-skeleton"
 import { useNavigate } from "react-router-dom";
 import { RouteNames } from "../../../../../routers/interface";
 import classNames from "classnames";
+import { useEffect } from "react";
+import { useAppContext } from "../../../../../contexts";
 
 export default function RecentNotifications() {
-  const { data, isLoading } = useQuery(["NOTIFICATION"], recentNotifications);
+  const { data, isLoading, refetch } = useQuery(
+    ["NOTIFICATION"],
+    recentNotifications
+  );
 
   const navigate = useNavigate();
 
+  const { isCreateInvoiceModalOpen } = useAppContext();
+
+  useEffect(() => {
+    if (isCreateInvoiceModalOpen) {
+      refetch();
+    }
+  }, [isCreateInvoiceModalOpen]);
   if (isLoading) {
     return <RecentNotificationsLoadingSkeleton />;
   }
@@ -23,16 +35,18 @@ export default function RecentNotifications() {
         </Typography>
         {data &&
           data?.notifications
-            ?.sort((a, b) => a.createAt.localeCompare(b.createAt))
             ?.map((notification: notifications, index: number) => {
               return (
                 <div
                   onClick={() => {
                     if (
-                      notification.notification_type === "invoicePaid" ||
-                      "invoiceCreate"
+                      (notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate") &&
+                      notification.invoice_id
                     ) {
-                      navigate(`${RouteNames.INVOICE}/${notification?._id}`);
+                      navigate(
+                        `${RouteNames.INVOICE}/${notification.invoice_id}`
+                      );
                     }
                   }}
                   key={index}
@@ -45,7 +59,14 @@ export default function RecentNotifications() {
                     }
                   )}
                 >
-                  <Typography variant="body4">
+                  <Typography
+                    variant="body4"
+                    className={classNames("", {
+                      ["!text-color-primary"]:
+                        notification.notification_type === "invoicePaid" ||
+                        notification.notification_type === "invoiceCreate",
+                    })}
+                  >
                     {notification?.description}
                   </Typography>
                   <Typography variant="body5">
@@ -57,7 +78,8 @@ export default function RecentNotifications() {
                   </Typography>
                 </div>
               );
-            })}
+            })
+            ?.reverse()}
       </div>
     </section>
   );
