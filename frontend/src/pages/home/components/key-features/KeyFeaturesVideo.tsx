@@ -11,13 +11,13 @@ export default function KeyFeaturesVideo() {
 
   return (
     <div className="relative">
-      <div className="absolute w-full z-10 rounded-md">
+      <div className="absolute w-full z-10 !rounded-lg">
         <video
           onPlay={() => setPlaying(true)}
           onPause={() => setPlaying(false)}
           controls={playing}
           autoPlay={playing}
-          className="w-full rounded-lg"
+          className="w-full !rounded-lg"
         >
           <source src="./video.mp4" type="video/mp4" />
           Your browser does not support the video tag.
@@ -27,7 +27,7 @@ export default function KeyFeaturesVideo() {
           {!playing && (
             <button
               onClick={togglePlay}
-              className="absolute inset-0 flex max-xsm:w-full max-xsm:bg-opacity-0 max-[200px]:w-60 items-center justify-center w-full h-full text-white bg-color-black bg-opacity-50"
+              className="absolute inset-0 flex max-xsm:w-full max-[200px]:w-60 items-center justify-center w-full h-full text-white bg-color-black bg-opacity-50 backdrop-blur-sm"
             >
               <div className="p-3 bg-tertiary-400 justify-center items-center flex rounded-full w-14 h-14 ">
                 <FontAwesomeIcon
