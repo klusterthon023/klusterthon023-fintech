@@ -34,8 +34,8 @@ export default function RecentNotifications() {
           Recent Notifications
         </Typography>
         {data &&
-          data?.notifications
-            ?.map((notification: notifications, index: number) => {
+          data?.notifications?.map(
+            (notification: notifications, index: number) => {
               return (
                 <div
                   onClick={() => {
@@ -78,8 +78,8 @@ export default function RecentNotifications() {
                   </Typography>
                 </div>
               );
-            })
-            ?.reverse()}
+            }
+          )}
       </div>
     </section>
   );

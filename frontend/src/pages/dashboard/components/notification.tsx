@@ -42,8 +42,8 @@ export default function NotificationsWindow() {
           </div>
         ) : (
           data &&
-          data?.notifications
-            ?.map((notification: notifications, index: number) => {
+          data?.notifications?.map(
+            (notification: notifications, index: number) => {
               return (
                 <div
                   onClick={() => {
@@ -87,8 +87,8 @@ export default function NotificationsWindow() {
                   </Typography>
                 </div>
               );
-            })
-            ?.reverse()
+            }
+          )                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  
         )}
       </div>
     </section>
